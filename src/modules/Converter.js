@@ -11,7 +11,7 @@ ffmpeg.setFfprobePath(ffprobeStatic.path);
 class Converter {
     constructor({ input, output, options }) {
         this.info = { input, output };
-    
+
         this.metadata = {};
 
         this.defaults = {
@@ -68,9 +68,9 @@ class Converter {
             const { input, output } = this.info;
             const { width, height, fps } = this.metadata;
             const { start, duration, scaledFps, scaledDown, sampleColors, asGif } = this.options;
-    
+
             const outputPath = this._getOutputName(output, asGif);
-    
+
             ffmpeg()
                 .input(input)
                 .setStartTime(start)
@@ -167,6 +167,15 @@ class Converter {
             .then(gifData => this.saveFile(onProgress))
             .then(onFinish)
             .catch(onError);
+    }
+
+    static thumbnail(input) {
+      ffmpeg(input)
+        .screenshots({
+          timestamps: [0],
+          filename: 'thumb.png',
+          size: '320x240'
+        });
     }
 }
 

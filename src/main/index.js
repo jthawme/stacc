@@ -76,6 +76,8 @@ app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024
 ipcMain.on(Events.CONVERT, (event, data) => {
   const object = JSON.parse(data);
 
+  console.log(object);
+
   const c = new Converter({
     input: object.input,
     output: object.output,

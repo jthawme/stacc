@@ -1,0 +1,7 @@
+@import '../../../css/base';
+
+.btn {
+  @include btn;
+
+  font-family: inherit;
+}

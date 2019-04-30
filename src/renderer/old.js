@@ -8,7 +8,7 @@ ipcRenderer.on(Events.FINISHED, (event, arg) => {
 function createButton(txt) {
     const btn = document.createElement('button');
     btn.innerText = txt;
-    
+
     document.body.appendChild(btn);
 
     return btn;
@@ -20,16 +20,7 @@ let targetFile;
 function createStuff() {
     const openBtn = createButton('Open');
     openBtn.addEventListener('click', e => {
-        remote.dialog.showOpenDialog({
-            properties: ['openFile'],
-            filters: [
-                { name: 'Movies', extensions: ['mkv', 'avi', 'mp4', 'mov'] }
-            ],
-        }, (filePaths) => {
-            if (filePaths) {
-                videoFile = filePaths[0];
-            }
-        });
+
     });
 
     const exportBtn = createButton('Convert');
@@ -43,7 +34,7 @@ function createStuff() {
             }, (fileName) => {
                 if (fileName) {
                     targetFile = fileName;
-                    
+
                     ipcRenderer.send(Events.CONVERT, JSON.stringify({
                         input: videoFile,
                         output: targetFile
