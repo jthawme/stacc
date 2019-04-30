@@ -1,0 +1,53 @@
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function rem($size) {
+  $remSize: strip-unit($size) / 16;
+  @return #{$remSize}rem;
+}
+
+$global-gutter: 20px;
+$global-padding: 32px;
+$global-border: 2px;
+
+@function column-width($cols, $total: 12) {
+  $unit: (100%  / $total) ;
+  @return calc((#{$unit * $cols} - #{$gutter} ) + ( #{$gutter} / #{$total / $cols}));
+}
+
+@mixin columns($cols, $total: 12) {
+  min-width: column-width($cols, $total);
+  margin-right: $gutter;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+@mixin btn() {
+  display: inline-block;
+
+  width: 100%;
+
+  border: 0;
+
+  padding: rem(15px);
+
+  background-color: var(--color-primary);
+  color: var(--color-offset);
+
+  &:hover {
+    border: rem(2px) solid var(--color-primary);
+    padding: rem(13px);
+
+    background-color: transparent;
+    color: var(--color-primary);
+
+    cursor: pointer;
+  }
+}

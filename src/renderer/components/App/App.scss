@@ -1,0 +1,32 @@
+@import '../../css/base';
+@import '../../css/defaults';
+
+.app {
+  display: grid;
+  position: relative;
+
+  height: 100%;
+
+  grid-template-columns: 3fr 4fr;
+  grid-column-gap: rem($global-gutter);
+
+  &__fake-head {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: rem($global-padding * 0.75);
+
+    -webkit-app-region: drag;
+  }
+
+  &__control {
+    padding: rem($global-padding);
+  }
+
+  &__content {
+    padding: rem($global-padding);
+  }
+}

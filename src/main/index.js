@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeImage } from 'electron';
 import * as path from 'path';
 import { format as formatUrl } from 'url';
 
@@ -13,7 +13,14 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 let mainWindow
 
 function createMainWindow() {
-  const window = new BrowserWindow()
+  const window = new BrowserWindow({
+    width: 720,
+    height: 480,
+    titleBarStyle: 'hidden',
+    movable: true
+  });
+
+  window.setResizable(false);
 
   if (isDevelopment) {
     window.webContents.openDevTools()
@@ -62,7 +69,9 @@ app.on('activate', () => {
 // create main BrowserWindow when electron is ready
 app.on('ready', () => {
   mainWindow = createMainWindow()
-})
+});
+
+app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024.png`)));
 
 ipcMain.on(Events.CONVERT, (event, data) => {
   const object = JSON.parse(data);
