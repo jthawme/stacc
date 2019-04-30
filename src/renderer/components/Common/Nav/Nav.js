@@ -21,10 +21,6 @@ class Nav extends React.Component {
       {
         href: 'home',
         label: 'Video'
-      },
-      {
-        href: 'images',
-        label: 'Images'
       }
     ]
   }

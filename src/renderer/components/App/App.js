@@ -9,6 +9,7 @@ import classNames from 'classnames';
 // Components
 import Nav from '../Common/Nav/Nav';
 import Switcher from '../Common/Switcher/Switcher';
+import Progress from '../Common/Progress/Progress';
 import Home from '../Home/Home';
 
 // CSS, Requires
@@ -20,11 +21,16 @@ class App extends React.Component {
   };
 
   state = {
-    currentKey: 'home'
+    currentKey: 'home',
+    percent: 0,
+    exporting: false
   };
 
+  onProgress = percent => this.setState({ percent })
+  onExporting = exporting => this.setState({ exporting })
+
   render() {
-    const { currentKey } = this.state;
+    const { currentKey, percent, exporting } = this.state;
 
     const cls = classNames(
       'app'
@@ -32,6 +38,9 @@ class App extends React.Component {
 
     return (
       <div className={cls}>
+        { exporting ? (
+          <Progress className="app__progress" percent={percent}/>
+        ) : null }
         <div className="app__fake-head"/>
         <div className="app__control">
           <Nav location={currentKey}/>
@@ -39,7 +48,7 @@ class App extends React.Component {
 
         <div className="app__content">
           <Switcher location={currentKey}>
-            <Home key="home"/>
+            <Home key="home" onProgress={this.onProgress} onExporting={this.onExporting}/>
           </Switcher>
         </div>
       </div>

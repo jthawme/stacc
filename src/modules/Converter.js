@@ -9,11 +9,7 @@ ffmpeg.setFfmpegPath(ffmpegStatic.path);
 ffmpeg.setFfprobePath(ffprobeStatic.path);
 
 class Converter {
-    constructor({ input, output, options }) {
-        this.info = { input, output };
-
-        this.metadata = {};
-
+    constructor() {
         this.defaults = {
             start: 0,
             duration: 1,
@@ -22,8 +18,6 @@ class Converter {
             sampleColors: true,
             asGif: true
         };
-
-        this.options = Object.assign({}, this.defaults, options);
 
         this.extensions = {
             gif: 'gif',
@@ -64,23 +58,24 @@ class Converter {
     }
 
     saveFile(onProgress = () => {}) {
-        return new Promise((resolve, reject) => {
-            const { input, output } = this.info;
-            const { width, height, fps } = this.metadata;
-            const { start, duration, scaledFps, scaledDown, sampleColors, asGif } = this.options;
+      return new Promise((resolve, reject) => {
+        const { input, output } = this.info;
+        const { width, height, fps } = this.metadata;
+        const { start, duration, scaledFps, scaledDown, sampleColors, asGif } = this.options;
 
-            const outputPath = this._getOutputName(output, asGif);
+        const outputPath = this._getOutputName(output, asGif);
 
-            ffmpeg()
-                .input(input)
-                .setStartTime(start)
-                .duration(duration)
-                .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, asGif), 'output')
-                .on('progress', progress => this.reportProgress(progress, onProgress))
-                .on('error', reject)
-                .on('end', () => resolve(outputPath))
-                .save(outputPath);
-        });
+        this.command = ffmpeg()
+          .input(input)
+          .setStartTime(start)
+          .duration(duration)
+          .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, asGif), 'output');
+
+        this.command.on('progress', progress => this.reportProgress(progress, onProgress))
+          .on('error', reject)
+          .on('end', () => resolve(outputPath))
+          .save(outputPath);
+      });
     }
 
     _getOutputName(output, asGif) {
@@ -161,12 +156,27 @@ class Converter {
         }).reduce((prev, curr) => prev + curr, 0);
     }
 
-    convert(onProgress, onError, onFinish) {
-        this.getInfo(this.info.input)
-            .then(data => this._gatherData(data))
-            .then(gifData => this.saveFile(onProgress))
-            .then(onFinish)
-            .catch(onError);
+    convert({ input, output, options }, onProgress, onError, onFinish) {
+      this.info = { input, output };
+
+      this.metadata = {};
+
+      this.options = Object.assign({}, this.defaults, options);
+
+      this.getInfo(this.info.input)
+        .then(data => this._gatherData(data))
+        .then(gifData => this.saveFile(onProgress))
+        .then(path => {
+          this.command = null;
+          onFinish(path)
+        })
+        .catch(onError);
+    }
+
+    kill() {
+      if (this.command) {
+        this.command.kill();
+      }
     }
 
     static thumbnail(input) {

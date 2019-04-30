@@ -7,7 +7,7 @@
 
   height: 100%;
 
-  grid-template-columns: 3fr 4fr;
+  grid-template-columns: 2fr 4fr;
   grid-column-gap: rem($global-gutter);
 
   &__fake-head {
@@ -28,5 +28,18 @@
 
   &__content {
     padding: rem($global-padding);
+  }
+
+  &__progress {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    mix-blend-mode: exclusion;
+    pointer-events: none;
   }
 }

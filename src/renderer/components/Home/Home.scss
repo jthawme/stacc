@@ -1,4 +1,37 @@
 @import '../../css/base';
 
 .home {
+  &__row {
+    display: flex;
+
+    margin-bottom: rem($global-gutter);
+
+    &__col {
+      flex: 1 1 100%;
+
+      margin-right: rem($global-gutter);
+
+      &:nth-child(1) {
+        flex: 0 0 30%;
+      }
+
+      &:nth-child(2) {
+        flex: 0 0 70%;
+      }
+    }
+  }
+
+  &__url {
+    display: inline-block;
+
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    width: rem(200px);
+  }
+
+  &__progress {
+    height: rem(10px);
+  }
 }

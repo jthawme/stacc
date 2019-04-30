@@ -32,6 +32,8 @@ $global-border: 2px;
 @mixin btn() {
   display: inline-block;
 
+  outline: 0;
+
   width: 100%;
 
   border: 0;

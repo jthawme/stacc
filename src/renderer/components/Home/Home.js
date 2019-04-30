@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // 3rd Party Modules
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote, shell } from 'electron';
 import classNames from 'classnames';
 import Events from '../../../modules/Events';
 
@@ -10,6 +10,7 @@ import Events from '../../../modules/Events';
 
 // Components
 import Btn from '../Common/Btn/Btn';
+import Progress from '../Common/Progress/Progress';
 import VideoEditor from '../VideoEditor/VideoEditor';
 
 // CSS, Requires
@@ -32,7 +33,9 @@ class Home extends React.Component {
   state = {
     asGif: true,
     fileURL: false,
-    targetURL: false
+    targetURL: false,
+    exporting: false,
+    exportPercent: 0
   }
 
   componentDidMount() {
@@ -41,7 +44,29 @@ class Home extends React.Component {
 
   addEventListeners() {
     ipcRenderer.on(Events.FINISHED, (event, arg) => {
-      console.log(arg);
+      let myNotification = new Notification('Export completed', {
+        body: 'Click to view'
+      });
+
+      myNotification.onclick = () => {
+        shell.openItem(arg.directory);
+      }
+
+      this.setState({
+        fileURL: false,
+        exporting: false,
+        exportPercent: 0
+      });
+
+      this.props.onExporting(false);
+    });
+
+    ipcRenderer.on(Events.PROGRESS, (event, arg) => {
+      this.setState({
+        exportPercent: arg
+      });
+
+      this.props.onProgress(arg);
     });
   }
 
@@ -58,9 +83,9 @@ class Home extends React.Component {
         fileURL: filePaths[0]
       });
 
-      ipcRenderer.send(Events.THUMBNAIL, JSON.stringify({
-        input: filePaths[0]
-      }));
+      // ipcRenderer.send(Events.THUMBNAIL, JSON.stringify({
+      //   input: filePaths[0]
+      // }));
     }
   }
 
@@ -73,18 +98,26 @@ class Home extends React.Component {
   onExportCB = (fileName) => {
     if (fileName) {
       this.setState({
-        targetURL: fileName
+        targetURL: fileName,
+        exporting: true,
+        percent: 0
       });
 
-      ipcRenderer.send(Events.CONVERT, JSON.stringify({
+      ipcRenderer.send(Events.CONVERT, {
         input: this.state.fileURL,
         output: this.state.targetURL
-      }));
+      });
+      this.props.onExporting(true);
     }
-}
+  }
+
+  getDisplayUrl(fileUrl) {
+    const split = fileUrl.split('/');
+    return split[split.length - 1];
+  }
 
   render() {
-    const { fileURL } = this.state;
+    const { fileURL, exporting, exportPercent } = this.state;
 
     const cls = classNames(
       'home'
@@ -93,13 +126,26 @@ class Home extends React.Component {
     return (
       <div className={cls}>
         <div className="home__row">
-          {/* <Video url={ fileURL }/> */}
-          <Btn onClick={this.onFileChoose}>Choose file</Btn>
+          <div className="home__row__col">
+            <Btn onClick={this.onFileChoose}>Choose file</Btn>
+          </div>
+          <div className="home__row__col">
+            <span className="home__url">{ fileURL ? this.getDisplayUrl(fileURL) : 'Select file' }</span>
+          </div>
         </div>
-        {/* <VideoEditor
-          total={ 6000 }/> */}
+
+        <div className="home__row">
+          <div className="home__row__col">
+            <span className="home__title">Options</span>
+          </div>
+          <div className="home__row__col">
+
+          </div>
+        </div>
 
         <Btn className={'home__export'} onClick={this.onExport}>Export</Btn>
+
+        { exporting ? <Progress className="home__progress" percent={exportPercent}/> : null }
       </div>
     );
   }

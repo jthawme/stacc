@@ -56,6 +56,7 @@ app.on('window-all-closed', () => {
   // on macOS it is common for applications to stay open until the user explicitly quits
   if (process.platform !== 'darwin') {
     app.quit()
+    converter.kill();
   }
 })
 
@@ -73,29 +74,36 @@ app.on('ready', () => {
 
 app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024.png`)));
 
+
+const converter = new Converter();
+
 ipcMain.on(Events.CONVERT, (event, data) => {
-  const object = JSON.parse(data);
-
-  console.log(object);
-
-  const c = new Converter({
-    input: object.input,
-    output: object.output,
-    options: {
-        start: 50,
-        duration: 10,
-        scaledDown: 2,
-        scaledFps: 2,
-        sampleColors: true,
-        asGif: true
-    }
-  });
-
   const events = {
     onProgress: (percent) => event.sender.send(Events.PROGRESS, percent),
     onError: err => event.sender.send(Events.ERROR, err),
-    onFinish: path => event.sender.send(Events.FINISHED, path)
+    onFinish: filePath => {
+      event.sender.send(Events.FINISHED, {
+        filePath,
+        directory: path.dirname(filePath)
+      });
+    }
   };
 
-  c.convert(events.onProgress, events.onError, events.onFinish);
+  converter.convert(
+    {
+      input: data.input,
+      output: data.output,
+      options: {
+          start: 50,
+          duration: 10,
+          scaledDown: 2,
+          scaledFps: 2,
+          sampleColors: true,
+          asGif: true
+      }
+    },
+    events.onProgress,
+    events.onError,
+    events.onFinish
+  );
 });
