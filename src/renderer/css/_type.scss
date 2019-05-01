@@ -56,6 +56,6 @@ $font-family-mono: monospace;
   @include _compoundFont($family, $weight);
 }
 
-@mixin codeFont($family: $font-family-mono, $weight: $font-weight-normal) {
+@mixin codeFont($family: $font-family-mono, $weight: $font-weight-bold) {
   @include _compoundFont($family, $weight);
 }

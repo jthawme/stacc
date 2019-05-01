@@ -156,27 +156,31 @@ class Converter {
         }).reduce((prev, curr) => prev + curr, 0);
     }
 
-    convert({ input, output, options }, onProgress, onError, onFinish) {
+    convert({ input, output, options }, onProgress) {
       this.info = { input, output };
 
       this.metadata = {};
 
       this.options = Object.assign({}, this.defaults, options);
 
-      this.getInfo(this.info.input)
+      return this.getInfo(this.info.input)
         .then(data => this._gatherData(data))
         .then(gifData => this.saveFile(onProgress))
         .then(path => {
           this.command = null;
-          onFinish(path)
-        })
-        .catch(onError);
+          return path;
+        });
     }
 
     kill() {
       if (this.command) {
         this.command.kill();
       }
+    }
+
+    info(input) {
+      return this.getInfo(input)
+        .then(data => this._gatherData(data));
     }
 
     static thumbnail(input) {

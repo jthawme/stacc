@@ -1,0 +1,17 @@
+@import '../../../css/base';
+
+.optionnumber {
+  display: flex;
+
+  align-items: flex-start;
+
+  &__input {
+    display: inline-block;
+
+    width: rem(40px);
+  }
+
+  &__btn {
+    margin-left: rem(3px);
+  }
+}

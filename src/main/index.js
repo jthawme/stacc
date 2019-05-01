@@ -48,6 +48,41 @@ function createMainWindow() {
     })
   })
 
+  const converter = new Converter();
+  const convertDefaults = {
+    start: 50,
+    duration: 10,
+    scaledDown: 2,
+    scaledFps: 2,
+    sampleColors: true,
+    asGif: true
+  };
+
+  ipcMain.on(Events.CONVERT, (event, data) => {
+    converter.convert(
+      {
+        input: data.input,
+        output: data.output,
+        options: Object.assign({}, convertDefaults, data.options)
+      },
+      (percent) => event.sender.send(Events.PROGRESS, percent),
+    )
+      .then(filePath => {
+        event.sender.send(Events.FINISHED, {
+          filePath,
+          directory: path.dirname(filePath)
+        });
+      })
+      .catch(err => event.sender.send(Events.ERROR, err));
+  });
+
+  ipcMain.on(Events.INFO_REQUEST, (event, data) => {
+    converter.info(data.input)
+      .then(data => {
+        event.sender.send(Events.INFO, data);
+      });
+  });
+
   return window
 }
 
@@ -73,37 +108,3 @@ app.on('ready', () => {
 });
 
 app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024.png`)));
-
-
-const converter = new Converter();
-
-ipcMain.on(Events.CONVERT, (event, data) => {
-  const events = {
-    onProgress: (percent) => event.sender.send(Events.PROGRESS, percent),
-    onError: err => event.sender.send(Events.ERROR, err),
-    onFinish: filePath => {
-      event.sender.send(Events.FINISHED, {
-        filePath,
-        directory: path.dirname(filePath)
-      });
-    }
-  };
-
-  converter.convert(
-    {
-      input: data.input,
-      output: data.output,
-      options: {
-          start: 50,
-          duration: 10,
-          scaledDown: 2,
-          scaledFps: 2,
-          sampleColors: true,
-          asGif: true
-      }
-    },
-    events.onProgress,
-    events.onError,
-    events.onFinish
-  );
-});

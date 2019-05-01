@@ -3,7 +3,9 @@ const events = {
     FINISHED: 'finished',
     PROGRESS: 'progress',
     ERROR: 'error',
-    THUMBNAIL: 'thumbnail'
+    THUMBNAIL: 'thumbnail',
+    INFO_REQUEST: 'info_request',
+    INFO: 'info'
 };
 
 export default events;

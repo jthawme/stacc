@@ -22,6 +22,7 @@
     "react-dom": "^16.8.6",
     "replace": "^1.1.0",
     "source-map-support": "^0.5.10",
+    "svg-inline-loader": "^0.8.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {

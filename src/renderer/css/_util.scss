@@ -44,8 +44,8 @@ $global-border: 2px;
   color: var(--color-offset);
 
   &:hover {
-    border: rem(2px) solid var(--color-primary);
-    padding: rem(13px);
+    border: rem(1px) solid var(--color-primary);
+    padding: rem(14px);
 
     background-color: transparent;
     color: var(--color-primary);

@@ -7,6 +7,10 @@
 
   background-color: lighten($color-primary, 20);
 
+  &--transparent {
+    background-color: transparent;
+  }
+
   &__track {
     position: absolute;
 

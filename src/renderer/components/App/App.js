@@ -39,7 +39,7 @@ class App extends React.Component {
     return (
       <div className={cls}>
         { exporting ? (
-          <Progress className="app__progress" percent={percent}/>
+          <Progress className="app__progress" percent={percent} transparent/>
         ) : null }
         <div className="app__fake-head"/>
         <div className="app__control">

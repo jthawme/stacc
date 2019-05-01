@@ -1,0 +1,19 @@
+@import '../../../css/base';
+
+.btnicon {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: rem(32px);
+  height: rem(32px);
+
+  font-family: inherit;
+
+  padding: 0;
+
+  &:hover {
+    padding: 0;
+  }
+}

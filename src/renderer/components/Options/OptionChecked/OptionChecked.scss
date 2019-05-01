@@ -1,0 +1,11 @@
+@import '../../../css/base';
+
+.optionchecked {
+  display: block;
+
+  font-family: inherit;
+
+  input {
+    display: none;
+  }
+}

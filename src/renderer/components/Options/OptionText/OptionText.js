@@ -9,30 +9,27 @@ import classNames from 'classnames';
 // Components
 
 // CSS, Requires
-import "./Progress.scss";
+import "./OptionText.scss";
 
-class Progress extends React.Component {
+class OptionText extends React.Component {
   static propTypes = {
     className: PropTypes.string
   };
 
   render() {
-    const { className, percent, transparent } = this.props;
+    const { className } = this.props;
 
     const cls = classNames(
       className,
-      'progress',
-      {
-        'progress--transparent': transparent
-      }
+      'optiontext'
     );
 
     return (
       <div className={cls}>
-        <div className="progress__track" style={{ transform: `scaleX(${ percent })`}}/>
+        OptionText
       </div>
     );
   }
 }
 
-export default Progress;
+export default OptionText;
