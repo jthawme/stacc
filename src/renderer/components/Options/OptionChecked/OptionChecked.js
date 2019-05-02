@@ -40,10 +40,12 @@ class OptionChecked extends React.Component {
     return (
       <div className={cls}>
         <BtnIcon
+          subtle
+          invert={!value}
           className="optionchecked__box"
           onClick={this.onFakeChange}
           icon={ value ? 'checkmark' : 'close' }
-          size="large"/>
+          size="medium"/>
       </div>
     );
   }

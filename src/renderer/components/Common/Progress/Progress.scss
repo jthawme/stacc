@@ -5,7 +5,7 @@
 
   width: 100%;
 
-  background-color: lighten($color-primary, 20);
+  background-color: var(--color-primary-light);
 
   &--transparent {
     background-color: transparent;
@@ -26,6 +26,6 @@
       property: transform;
     }
 
-    background-color: $color-primary;
+    background-color: var(--color-primary);
   }
 }

@@ -82,6 +82,8 @@ class VideoEditor extends React.Component {
       [key]: val,
       [valKey]: this.toDisplaySeconds(val)
     });
+
+    this.props.onChange(key, val);
   }
 
   render() {
@@ -93,9 +95,11 @@ class VideoEditor extends React.Component {
       'videoeditor'
     );
 
+    console.log(start, end);
+
     return (
       <div className={cls}>
-        <div className="videoeditor__canvas">
+        {/* <div className="videoeditor__canvas">
           hey
         </div>
         <div className="videoeditor__control">
@@ -104,7 +108,7 @@ class VideoEditor extends React.Component {
             start={ start / total }
             end={ end / total }
             total={ total }/>
-        </div>
+        </div> */}
         <div className="videoeditor__starttime">
           <input type="text" name="start" value={ startVal } onChange={this.onTimeChange} onBlur={this.onTimeBlur}/>
         </div>

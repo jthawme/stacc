@@ -26,15 +26,17 @@ class Converter {
     }
 
     _gatherData(data) {
-        let stream = data.streams[0];
+      let stream = data.streams[0];
 
-        this.metadata = {
-            fps: this._parseFramerate(stream['r_frame_rate']),
-            width: stream.width,
-            height: stream.height
-        };
+      this.metadata = {
+        fps: this._parseFramerate(stream['r_frame_rate']),
+        width: stream.width,
+        height: stream.height,
+        start: data.format.start_time,
+        duration: data.format.duration * 1000
+      };
 
-        return this.metadata;
+      return this.metadata;
     }
 
     _parseFramerate(fpsStr) {
@@ -44,17 +46,17 @@ class Converter {
     }
 
     getInfo(input) {
-        return new Promise((resolve, reject) => {
-            ffmpeg()
-                .input(input)
-                .ffprobe((err, data) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(data);
-                    }
-                });
-        });
+      return new Promise((resolve, reject) => {
+        ffmpeg()
+          .input(input)
+          .ffprobe((err, data) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
+          });
+      });
     }
 
     saveFile(onProgress = () => {}) {

@@ -79,13 +79,13 @@ class OptionNumber extends React.Component {
 
         <BtnIcon
           icon="remove"
-          size="large"
+          size="medium"
           className="optionnumber__btn"
           onClick={e => this.modValue(-1)}/>
 
         <BtnIcon
           icon="add"
-          size="large"
+          size="medium"
           className="optionnumber__btn"
           onClick={e => this.modValue(1)}/>
       </div>

@@ -1,7 +1,33 @@
 @import '../../../css/base';
 
 .btn {
-  @include btn;
+  display: inline-block;
 
-  font-family: inherit;
+  outline: 0;
+
+  width: 100%;
+
+  padding: rem(14px);
+
+  border: rem(1px) solid var(--color-primary);
+  background-color: var(--color-primary);
+
+  color: var(--color-offset);
+
+  &:not(.btn--subtle):hover {
+    background-color: transparent;
+    color: var(--color-primary);
+
+    cursor: pointer;
+  }
+
+  &--invert {
+    background-color: transparent;
+    color: var(--color-primary);
+
+    &:not(.btn--subtle):hover {
+      background-color: var(--color-primary);
+      color: var(--color-offset);
+    }
+  }
 }

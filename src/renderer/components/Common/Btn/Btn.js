@@ -13,18 +13,26 @@ import "./Btn.scss";
 
 class Btn extends React.Component {
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    invert: PropTypes.bool,
+    subtle: PropTypes.bool,
   };
 
   state = {
   }
 
   render() {
-    const { className, children, ...props } = this.props;
+    const { className, children, invert, subtle, ...props } = this.props;
 
     const cls = classNames(
       className,
-      'btn'
+      'btn',
+      {
+        'btn--invert': invert
+      },
+      {
+        'btn--subtle': subtle
+      }
     );
 
     return (

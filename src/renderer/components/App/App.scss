@@ -28,6 +28,8 @@
 
   &__content {
     padding: rem($global-padding);
+
+    overflow: auto;
   }
 
   &__progress {

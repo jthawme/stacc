@@ -6,6 +6,8 @@ import { ipcRenderer, remote, shell } from 'electron';
 import classNames from 'classnames';
 import Events from '../../../modules/Events';
 
+const { app } = remote;
+
 // Redux
 
 // Components
@@ -17,6 +19,8 @@ import OptionRow from '../Options/OptionRow/OptionRow';
 import OptionText from '../Options/OptionText/OptionText';
 import OptionChecked from '../Options/OptionChecked/OptionChecked';
 import OptionNumber from '../Options/OptionNumber/OptionNumber';
+
+import TimeEditor from '../TimeEditor/TimeEditor';
 
 // CSS, Requires
 import "./Home.scss";
@@ -109,9 +113,27 @@ class Home extends React.Component {
   }
 
   onExport = () => {
+    const { options, targetURL } = this.state;
+
     remote.dialog.showSaveDialog({
-        filters: this.state.options.asGif ? FILTERS.GIFS : FILTERS.VIDEOS,
+      defaultPath: this._getDefaultPath(options.asGif, targetURL),
+      filters: options.asGif ? FILTERS.GIFS : FILTERS.VIDEOS,
     }, this.onExportCB);
+  }
+
+  _getDefaultPath = (asGif, targetURL) => {
+    if (targetURL) {
+      const split = targetURL.split('/');
+      const str = targetURL.substring(0, split[-1].length + 1);
+      return [
+        str,
+        asGif ? 'export.gif' : 'export.mp4'
+      ].join('/');
+    }
+    return [
+      app.getPath('desktop'),
+      asGif ? 'export.gif' : 'export.mp4'
+    ].join('/');
   }
 
   onExportCB = (fileName) => {
@@ -144,12 +166,16 @@ class Home extends React.Component {
     this.setState({ options });
   }
 
-  getScaledSize(width, height, scaled) {
+  getScaledSize({ width = 0, height = 0 }, scaled) {
     return `${width / scaled}x${height / scaled}`;
   }
 
-  getScaledFps(fps, scaled) {
+  getScaledFps({ fps = 0 }, scaled) {
     return `${Math.round((fps / scaled) * 10) / 10}fps`;
+  }
+
+  onTimeChange(key, value) {
+    console.log(key, value);
   }
 
   render() {
@@ -172,6 +198,10 @@ class Home extends React.Component {
         </div>
 
         <div className="home__row">
+          <TimeEditor {...fileInfo}/>
+        </div>
+
+        <div className="home__row">
           <div className="home__row__col">
             <span className="home__title">Options</span>
           </div>
@@ -188,7 +218,7 @@ class Home extends React.Component {
         <div className="home__row">
           <OptionRow
             title="Scaled down"
-            subtitle={ fileInfo.width ? this.getScaledSize(fileInfo.width, fileInfo.height, scaledDown) : null }>
+            subtitle={ this.getScaledSize(fileInfo, scaledDown) }>
             <OptionNumber
               name="scaledDown"
               onChange={this.onOptionsChange}
@@ -201,7 +231,7 @@ class Home extends React.Component {
         <div className="home__row">
           <OptionRow
             title="Scaled FPS"
-            subtitle={ fileInfo.fps ? this.getScaledFps(fileInfo.fps, scaledFps) : null }>
+            subtitle={ this.getScaledFps(fileInfo, scaledFps) }>
             <OptionNumber
               name="scaledFps"
               onChange={this.onOptionsChange}

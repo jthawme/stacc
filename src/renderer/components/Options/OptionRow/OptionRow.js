@@ -28,7 +28,7 @@ class OptionRow extends React.Component {
       <div className={cls}>
         <div className="optionrow__title">
           <span>{ title }</span>
-          <span>{ subtitle ? subtitle : '-' }</span>
+          <span>{ subtitle }</span>
         </div>
         <div className="optionrow__content">
           { children }

@@ -15,23 +15,28 @@ import "./BtnIcon.scss";
 
 class BtnIcon extends React.Component {
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    size: PropTypes.oneOf(Object.values(SIZES)),
+    invert: PropTypes.bool
   };
 
   static defaultProps = {
-    onClick: () => {}
+    onClick: () => {},
+    size: SIZES.MEDIUM,
+    invert: true
   };
 
   render() {
-    const { className, icon, size, onClick } = this.props;
+    const { className, icon, size, ...props } = this.props;
 
     const cls = classNames(
       className,
-      'btnicon'
+      'btnicon',
+      `btnicon--${ size }`
     );
 
     return (
-      <Btn className={cls} onClick={onClick}>
+      <Btn className={cls} {...props}>
         <Iconer icon={icon} size={ size }/>
       </Btn>
     );

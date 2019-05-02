@@ -16,14 +16,11 @@
     flex-direction: column;
 
     span {
-      &:nth-child(1) {
-      }
-
       &:nth-child(2) {
         @include font-size-small;
         @include codeFont;
 
-        color: $color-primary-light;
+        color: var(--color-primary-light);
       }
     }
   }
