@@ -60,7 +60,7 @@ class OptionNumber extends React.Component {
   }
 
   render() {
-    const { className, min, max, value, prefix } = this.props;
+    const { className, min, max, value, prefix, disabled } = this.props;
 
     const cls = classNames(
       className,
@@ -78,12 +78,14 @@ class OptionNumber extends React.Component {
           value={ this.addPrefix(value, prefix) }/>
 
         <BtnIcon
+          disabled={disabled}
           icon="remove"
           size="medium"
           className="optionnumber__btn"
           onClick={e => this.modValue(-1)}/>
 
         <BtnIcon
+          disabled={disabled}
           icon="add"
           size="medium"
           className="optionnumber__btn"

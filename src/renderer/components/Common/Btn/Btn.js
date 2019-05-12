@@ -22,7 +22,7 @@ class Btn extends React.Component {
   }
 
   render() {
-    const { className, children, invert, subtle, ...props } = this.props;
+    const { className, children, invert, subtle, disabled, ...props } = this.props;
 
     const cls = classNames(
       className,
@@ -36,7 +36,7 @@ class Btn extends React.Component {
     );
 
     return (
-      <button className={cls} {...props}>{ children }</button>
+      <button className={cls} {...props} disabled={disabled}>{ children }</button>
     );
   }
 }

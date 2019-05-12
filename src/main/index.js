@@ -5,7 +5,7 @@ import * as path from 'path';
 import { format as formatUrl } from 'url';
 
 import Converter from '../modules/Converter';
-import Events from '../modules/Events';
+import { EVENTS } from '../modules/Constants';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -17,7 +17,8 @@ function createMainWindow() {
     width: 720,
     height: 480,
     titleBarStyle: 'hidden',
-    movable: true
+    movable: true,
+    webPreferences: { webSecurity: false }
   });
 
   window.setResizable(false);
@@ -58,28 +59,28 @@ function createMainWindow() {
     asGif: true
   };
 
-  ipcMain.on(Events.CONVERT, (event, data) => {
+  ipcMain.on(EVENTS.CONVERT, (event, data) => {
     converter.convert(
       {
         input: data.input,
         output: data.output,
         options: Object.assign({}, convertDefaults, data.options)
       },
-      (percent) => event.sender.send(Events.PROGRESS, percent),
+      (percent) => event.sender.send(EVENTS.PROGRESS, percent),
     )
       .then(filePath => {
-        event.sender.send(Events.FINISHED, {
+        event.sender.send(EVENTS.FINISHED, {
           filePath,
           directory: path.dirname(filePath)
         });
       })
-      .catch(err => event.sender.send(Events.ERROR, err));
+      .catch(err => event.sender.send(EVENTS.ERROR, err));
   });
 
-  ipcMain.on(Events.INFO_REQUEST, (event, data) => {
+  ipcMain.on(EVENTS.INFO_REQUEST, (event, data) => {
     converter.info(data.input)
       .then(data => {
-        event.sender.send(Events.INFO, data);
+        event.sender.send(EVENTS.INFO, data);
       });
   });
 

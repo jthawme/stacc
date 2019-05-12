@@ -9,28 +9,27 @@ import classNames from 'classnames';
 // Components
 
 // CSS, Requires
-import "./Video.scss";
+import "./Tip.scss";
 
-class Video extends React.Component {
+class Tip extends React.Component {
   static propTypes = {
-    className: PropTypes.string,
-    url: PropTypes.string
+    className: PropTypes.string
   };
 
   render() {
-    const { className, src, width, height } = this.props;
+    const { className } = this.props;
 
     const cls = classNames(
       className,
-      'video'
+      'tip'
     );
 
     return (
       <div className={cls}>
-        <video src={ src }/>
+        Tip
       </div>
     );
   }
 }
 
-export default Video;
+export default Tip;

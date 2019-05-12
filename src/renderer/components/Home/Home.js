@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 // 3rd Party Modules
 import { ipcRenderer, remote, shell } from 'electron';
 import classNames from 'classnames';
-import Events from '../../../modules/Events';
+import { EVENTS, FILTERS} from '../../../modules/Constants';
+import { SlideDown } from 'react-slidedown';
 
 const { app } = remote;
 
@@ -13,7 +14,9 @@ const { app } = remote;
 // Components
 import Btn from '../Common/Btn/Btn';
 import Progress from '../Common/Progress/Progress';
-import VideoEditor from '../VideoEditor/VideoEditor';
+
+import VideoChooser from '../VideoChooser/VideoChooser';
+import Video from '../Video/Video';
 
 import OptionRow from '../Options/OptionRow/OptionRow';
 import OptionText from '../Options/OptionText/OptionText';
@@ -24,16 +27,7 @@ import TimeEditor from '../TimeEditor/TimeEditor';
 
 // CSS, Requires
 import "./Home.scss";
-import Video from '../Video/Video';
-
-const FILTERS = {
-  VIDEOS: [
-    { name: 'Movies', extensions: ['mkv', 'avi', 'mp4', 'mov'] }
-  ],
-  GIFS: [
-    { name: 'Gifs', extensions: ['gif'] }
-  ]
-}
+import "react-slidedown/lib/slidedown.css"
 
 class Home extends React.Component {
   static propTypes = {
@@ -47,7 +41,6 @@ class Home extends React.Component {
     fileURL: false,
     targetURL: false,
     exporting: false,
-    exportPercent: 0,
     options: {
       asGif: true,
       scaledDown: 2,
@@ -61,7 +54,7 @@ class Home extends React.Component {
   }
 
   addEventListeners() {
-    ipcRenderer.on(Events.FINISHED, (event, arg) => {
+    ipcRenderer.on(EVENTS.FINISHED, (event, arg) => {
       let myNotification = new Notification('Export completed', {
         body: 'Click to view'
       });
@@ -72,44 +65,29 @@ class Home extends React.Component {
 
       this.setState({
         fileURL: false,
-        exporting: false,
-        exportPercent: 0
+        exporting: false
       });
 
       this.props.onExporting(false);
     });
 
-    ipcRenderer.on(Events.PROGRESS, (event, arg) => {
-      this.setState({
-        exportPercent: arg + 0.1
-      });
-
+    ipcRenderer.on(EVENTS.PROGRESS, (event, arg) => {
       this.props.onProgress(arg + 0.1);
     });
 
-    ipcRenderer.on(Events.INFO, (event, data) => {
+    ipcRenderer.on(EVENTS.INFO, (event, data) => {
       this.setState({ fileInfo: data });
     });
   }
 
-  onFileChoose = () => {
-    remote.dialog.showOpenDialog({
-        properties: ['openFile'],
-        filters: FILTERS.VIDEOS,
-    }, this.onFileChooseCB);
-  }
+  onFileChoose = (filePath) => {
+    this.setState({
+      fileURL: filePath
+    });
 
-  onFileChooseCB = (filePaths) => {
-    if (filePaths) {
-      this.setState({
-        fileURL: filePaths[0],
-        disabled: true
-      });
-
-      ipcRenderer.send(Events.INFO_REQUEST, {
-        input: filePaths[0]
-      });
-    }
+    ipcRenderer.send(EVENTS.INFO_REQUEST, {
+      input: filePath
+    });
   }
 
   onExport = () => {
@@ -144,7 +122,7 @@ class Home extends React.Component {
         percent: 0
       });
 
-      ipcRenderer.send(Events.CONVERT, {
+      ipcRenderer.send(EVENTS.CONVERT, {
         input: this.state.fileURL,
         output: this.state.targetURL,
         options: this.state.options
@@ -156,6 +134,18 @@ class Home extends React.Component {
   getDisplayUrl(fileUrl) {
     const split = fileUrl.split('/');
     return split[split.length - 1];
+  }
+
+  getFileUrl(fileUrl) {
+    if (!fileUrl) {
+      return false;
+    }
+
+    if (fileUrl.substring(0, 5) !== 'file:') {
+      return `file:${fileUrl}`;
+    }
+
+    return fileUrl;
   }
 
   onOptionsChange = (name, value) => {
@@ -179,22 +169,27 @@ class Home extends React.Component {
   }
 
   render() {
-    const { fileURL, exporting, exportPercent, options, fileInfo } = this.state;
+    const { percent } = this.props;
+    const { fileURL, exporting, options, fileInfo } = this.state;
     const { asGif, scaledDown, scaledFps, sampleColors } = options;
 
     const cls = classNames(
       'home'
     );
 
+    console.log(this.getFileUrl(fileURL));
+
     return (
       <div className={cls}>
         <div className="home__row">
-          <div className="home__row__col">
-            <Btn onClick={this.onFileChoose}>Choose file</Btn>
-          </div>
-          <div className="home__row__col">
-            <span className="home__url">{ fileURL ? this.getDisplayUrl(fileURL) : 'Select file' }</span>
-          </div>
+          <VideoChooser
+            onFileChoose={this.onFileChoose}
+            display={fileURL}>
+            <Video
+              width={fileInfo.width}
+              height={fileInfo.height}
+              src={this.getFileUrl(fileURL)}/>
+          </VideoChooser>
         </div>
 
         <div className="home__row">
@@ -207,8 +202,11 @@ class Home extends React.Component {
           </div>
         </div>
 
+        {/* <div className="home" */}
         <div className="home__row">
-          <OptionRow title="Save as GIF">
+          <OptionRow
+            title="Save as GIF"
+            disabled={!fileURL}>
             <OptionChecked
               name="asGif"
               onChange={this.onOptionsChange}
@@ -218,7 +216,8 @@ class Home extends React.Component {
         <div className="home__row">
           <OptionRow
             title="Scaled down"
-            subtitle={ this.getScaledSize(fileInfo, scaledDown) }>
+            subtitle={ this.getScaledSize(fileInfo, scaledDown) }
+            disabled={!fileURL}>
             <OptionNumber
               name="scaledDown"
               onChange={this.onOptionsChange}
@@ -231,7 +230,8 @@ class Home extends React.Component {
         <div className="home__row">
           <OptionRow
             title="Scaled FPS"
-            subtitle={ this.getScaledFps(fileInfo, scaledFps) }>
+            subtitle={ this.getScaledFps(fileInfo, scaledFps) }
+            disabled={!fileURL}>
             <OptionNumber
               name="scaledFps"
               onChange={this.onOptionsChange}
@@ -242,7 +242,9 @@ class Home extends React.Component {
           </OptionRow>
         </div>
         <div className="home__row">
-          <OptionRow title="Sample colours">
+          <OptionRow
+            title="Sample colours"
+            disabled={ !asGif || !fileURL }>
             <OptionChecked
               name="sampleColors"
               onChange={this.onOptionsChange}
@@ -252,7 +254,7 @@ class Home extends React.Component {
 
         <Btn className={'home__export'} onClick={this.onExport}>Export</Btn>
 
-        { exporting ? <Progress className="home__progress" percent={exportPercent}/> : null }
+        { exporting ? <Progress className="home__progress" percent={percent}/> : null }
       </div>
     );
   }

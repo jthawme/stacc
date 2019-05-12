@@ -27,7 +27,7 @@ class OptionChecked extends React.Component {
   }
 
   render() {
-    const { className, value } = this.props;
+    const { className, value, disabled } = this.props;
 
     const cls = classNames(
       className,
@@ -40,6 +40,7 @@ class OptionChecked extends React.Component {
     return (
       <div className={cls}>
         <BtnIcon
+          disabled={disabled}
           subtle
           invert={!value}
           className="optionchecked__box"

@@ -16,12 +16,23 @@ class OptionRow extends React.Component {
     className: PropTypes.string
   };
 
+  renderChildren(children, disabled) {
+    return React.Children.map(children, (child, index) => {
+      return React.cloneElement(child, {
+        disabled
+      });
+    });
+  }
+
   render() {
-    const { className, children, title, subtitle } = this.props;
+    const { className, children, title, subtitle, disabled } = this.props;
 
     const cls = classNames(
       className,
-      'optionrow'
+      'optionrow',
+      {
+        'optionrow--disabled': disabled
+      }
     );
 
     return (
@@ -31,7 +42,7 @@ class OptionRow extends React.Component {
           <span>{ subtitle }</span>
         </div>
         <div className="optionrow__content">
-          { children }
+          { this.renderChildren(children, disabled) }
         </div>
       </div>
     );

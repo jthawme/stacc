@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Nav from '../Common/Nav/Nav';
 import Switcher from '../Common/Switcher/Switcher';
 import Progress from '../Common/Progress/Progress';
+import Tip from '../Tip/Tip';
 import Home from '../Home/Home';
 
 // CSS, Requires
@@ -44,11 +45,17 @@ class App extends React.Component {
         <div className="app__fake-head"/>
         <div className="app__control">
           <Nav location={currentKey}/>
+
+          <Tip/>
         </div>
 
         <div className="app__content">
           <Switcher location={currentKey}>
-            <Home key="home" onProgress={this.onProgress} onExporting={this.onExporting}/>
+            <Home
+              key="home"
+              onProgress={this.onProgress}
+              onExporting={this.onExporting}
+              percent={percent}/>
           </Switcher>
         </div>
       </div>

@@ -14,20 +14,36 @@
 
   color: var(--color-offset);
 
-  &:not(.btn--subtle):hover {
+  &:not([disabled]):hover {
+    cursor: pointer;
+  }
+
+  &:not(.btn--subtle):not([disabled]):hover {
     background-color: transparent;
     color: var(--color-primary);
-
-    cursor: pointer;
   }
 
   &--invert {
     background-color: transparent;
     color: var(--color-primary);
 
-    &:not(.btn--subtle):hover {
+    &:not(.btn--subtle):not([disabled]):hover {
       background-color: var(--color-primary);
       color: var(--color-offset);
     }
+  }
+
+  &--subtle {
+    &:not([disabled]):hover {
+      background-color: var(--color-primary-transparent-light);
+    }
+
+    &:not([disabled]).btn--invert:hover {
+      background-color: var(--color-primary-transparent-heavy);
+    }
+  }
+
+  &[disabled] {
+    opacity: 0.5;
   }
 }

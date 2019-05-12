@@ -24,4 +24,8 @@
       }
     }
   }
+
+  &--disabled {
+    opacity: 0.1;
+  }
 }
