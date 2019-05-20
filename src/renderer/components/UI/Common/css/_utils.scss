@@ -1,0 +1,12 @@
+@function ui-strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+@function ui-rem($size) {
+  $remSize: ui-strip-unit($size) / 16;
+  @return #{$remSize}rem;
+}

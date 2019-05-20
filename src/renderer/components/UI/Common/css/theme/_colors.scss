@@ -1,0 +1,46 @@
+$colors: (
+  primary: (
+    #111,
+    #333,
+    #666,
+    #bbb,
+    #eee
+  ),
+  accent: (
+    #11f,
+    #33f,
+    #66f,
+    #bbf,
+    #eef
+  ),
+  success: (
+    #59e83f,
+    lighten(#59e83f, 10),
+    lighten(#59e83f, 20),
+    lighten(#59e83f, 30),
+    lighten(#59e83f, 40)
+  ),
+  error: (
+    #f11,
+    #f33,
+    #f66,
+    #fbb,
+    #fee
+  ),
+  warn: (
+    #ff1,
+    #ff3,
+    #ff6,
+    #ffb,
+    #ffe
+  )
+);
+
+@function color($key, $level: 1) {
+  @if map-has-key($colors, $key) {
+    @return nth(map-get($colors, $key), $level);
+  }
+
+  @warn "Unknown `#{$key}` in $colors.";
+  @return null;
+}

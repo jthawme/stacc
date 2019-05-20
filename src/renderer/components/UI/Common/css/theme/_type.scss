@@ -1,0 +1,27 @@
+$type-headline-size-1: 48px;
+$type-headline-size-2: 32px;
+$type-headline-size-3: 28px;
+$type-headline-lh-1: $type-headline-size-1 * 1.2;
+$type-headline-lh-2: $type-headline-size-2 * 1.4;
+$type-headline-lh-3: $type-headline-size-3 * 1.6;
+
+$type-body-size-1: 21px;
+$type-body-size-2: 16px;
+$type-body-size-3: 12px;
+$type-body-lh-1: $type-body-size-1 * 1.2;
+$type-body-lh-2: $type-body-size-2 * 1.4;
+$type-body-lh-3: $type-body-size-3 * 1.6;
+
+$type-family: 
+    // Safari for macOS and iOS (San Francisco)
+    -apple-system,
+    // Chrome < 56 for macOS (San Francisco)
+    BlinkMacSystemFont,
+    // Windows
+    "Segoe UI",
+    // Android
+    "Roboto",
+    // Basic web fallback
+    "Helvetica Neue", Arial, sans-serif,
+    // Emoji fonts
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;

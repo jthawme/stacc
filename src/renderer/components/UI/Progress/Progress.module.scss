@@ -1,0 +1,67 @@
+@import '../Common/css/base';
+
+.track {
+  position: relative;
+
+  background-color: var(--ui-color-primary-5);
+
+  overflow: hidden;
+
+  border-radius: var(--ui-border-radius);
+
+  .small & {
+    height: ui-rem(12px);
+  }
+
+  .medium & {
+    height: ui-rem(18px);
+  }
+
+  .large & {
+    height: ui-rem(28px);
+  }
+
+  .free & {
+    height: 100%;
+  }
+}
+
+.bar {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--ui-color-primary-1);
+
+  transition: {
+    property: transform;
+    timing-function: var(--ui-timing-function);
+  }
+
+  transform-origin: top left;
+
+  .fast & {
+    transition-duration: var(--ui-duration-fast);
+  }
+
+  .normal & {
+    transition-duration: var(--ui-duration-normal);
+  }
+
+  .slow & {
+    transition-duration: var(--ui-duration-slow);
+  }
+}
+
+.unit {
+  margin-top: calc(var(--ui-size-padding) * 0.25);
+
+  text-align: right;
+
+  font-size: var(--ui-type-body-size-3);
+  color: var(--ui-color-primary-4);
+}

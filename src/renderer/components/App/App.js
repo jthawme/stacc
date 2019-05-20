@@ -7,10 +7,13 @@ import classNames from 'classnames';
 // Redux
 
 // Components
+import Section from '../UI/Section/Section';
+import Title from '../UI/Title/Title';
 
 // CSS, Requires
 import AppLogic from './AppLogic';
 import "./App.scss";
+import "../UI/Common/css/defaults.scss";
 
 class App extends React.Component {
   static propTypes = {
@@ -87,6 +90,10 @@ class App extends React.Component {
     return (
       <div className={cls}>
         <div className="app__fake-head"/>
+
+        <Section
+          title={<Title>Video</Title>}
+          />
       </div>
     );
   }

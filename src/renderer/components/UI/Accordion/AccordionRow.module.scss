@@ -1,0 +1,20 @@
+@import '../Common/css/base';
+
+.accordionrow {
+  font-family: inherit;
+}
+
+.heading {
+  display: flex;
+
+  width: 100%;
+
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+
+  &:hover {
+    color: var(--ui-color-primary-3);
+  }
+}

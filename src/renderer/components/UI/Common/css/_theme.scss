@@ -1,0 +1,56 @@
+@import 'base';
+
+@import 'theme/colors';
+@import 'theme/sizes';
+@import 'theme/timings';
+@import 'theme/type';
+
+
+:root {
+    /** COLORS **/
+    $colors: 'primary', 'accent', 'success', 'error', 'warn';
+
+    @each $color in $colors {
+        @for $i from 1 through 5 {
+            --ui-color-#{$color}-#{$i}: #{ color($color, $i) };
+        }
+    }
+
+    /** SIZES **/
+    --ui-border-radius: #{ rem($size-border-radius) };
+    --ui-size-border-width: #{ rem($size-border-width) };
+    --ui-size-padding: #{ rem($size-padding) };
+    --ui-size-gutter: #{ rem($size-gutter) };
+
+    /** TYPE **/
+    --ui-type-headline-size-1: #{ rem($type-headline-size-1) };
+    --ui-type-headline-size-2: #{ rem($type-headline-size-2) };
+    --ui-type-headline-size-3: #{ rem($type-headline-size-3) };
+    --ui-type-headline-lh-1: #{ rem($type-headline-lh-1) };
+    --ui-type-headline-lh-2: #{ rem($type-headline-lh-2) };
+    --ui-type-headline-lh-3: #{ rem($type-headline-lh-3) };
+
+    --ui-type-body-size-1: #{ rem($type-body-size-1) };
+    --ui-type-body-size-2: #{ rem($type-body-size-2) };
+    --ui-type-body-size-3: #{ rem($type-body-size-3) };
+    --ui-type-body-lh-1: #{ rem($type-body-lh-1) };
+    --ui-type-body-lh-2: #{ rem($type-body-lh-2) };
+    --ui-type-body-lh-3: #{ rem($type-body-lh-3) };
+
+    --ui-type-sans-serif: #{ $type-family };
+
+    /** TIMINGS **/
+    --ui-duration-fast: #{ $timing-fast };
+    --ui-duration-normal: #{ $timing-normal };
+    --ui-duration-slow: #{ $timing-slow };
+
+    --ui-timing-function: #{ $timing-function };
+
+    --ui-box-shadow-1: 1px 1px 10px -4px rgba(0, 0, 0, 0.75);
+    --ui-box-shadow-2: 1px 1px 12px -5px rgba(0, 0, 0, 0.55);
+    --ui-box-shadow-3: 1px 1px 12px -5px rgba(0, 0, 0, 0.35);
+}
+
+body {
+    font-family: var(--ui-type-sans-serif);
+}

@@ -5,16 +5,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --color-bg: #{$color-bg};
-    --color-primary: #{$color-primary};
-    --color-primary-light: #{$color-primary-light};
-    --color-primary-transparent-light: #{$color-primary-transparent-light};
-    --color-primary-transparent-heavy: #{$color-primary-transparent-heavy};
-    --color-offset: white;
-    --inactive-opacity: 0.25;
-}
-
 html,
 body {
     @include bodyFont;
@@ -22,8 +12,6 @@ body {
     height: 100%;
 
     line-height: 1.6;
-
-    color: var(--color-primary);
 }
 
 body {
@@ -31,21 +19,6 @@ body {
 
     align-items: center;
     justify-content: center;
-}
-
-h1,
-h2,
-h3 {
-    @include headlineFont;
-}
-
-h1 {
-    @include font-size-x-large;
-}
-
-h2,
-h3 {
-    @include font-size-large;
 }
 
 button,
@@ -65,8 +38,6 @@ textarea {
 #app {
     width: 100%;
     height: 100%;
-
-    background-color: var(--color-bg);
 }
 
 textarea,
@@ -104,19 +75,4 @@ button {
 
     /* Corrects inability to style clickable `input` types in iOS */
     -webkit-appearance: none;
-}
-
-h1,
-h2,
-h3 {
-    @include headlineFont;
-}
-
-h1 {
-    @include font-size-x-large;
-}
-
-h2,
-h3 {
-    @include font-size-large;
 }
