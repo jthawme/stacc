@@ -7,13 +7,9 @@ import classNames from 'classnames';
 // Redux
 
 // Components
-import Nav from '../Common/Nav/Nav';
-import Switcher from '../Common/Switcher/Switcher';
-import Progress from '../Common/Progress/Progress';
-import Tip from '../Tip/Tip';
-import Home from '../Home/Home';
 
 // CSS, Requires
+import AppLogic from './AppLogic';
 import "./App.scss";
 
 class App extends React.Component {
@@ -21,43 +17,76 @@ class App extends React.Component {
     children: PropTypes.node
   };
 
-  state = {
-    currentKey: 'home',
-    percent: 0,
-    exporting: false
-  };
+  constructor(props) {
+    super(props);
 
-  onProgress = percent => this.setState({ percent })
-  onExporting = exporting => this.setState({ exporting })
+    const PROPERTY_DEFAULTS = {
+      asGif: true, // Whether the ouput should be gif or movie
+      scaledDown: 2, // Scaled down to what size
+      scaledFps: 2, // Scaled down FPS by factor
+      sampleColors: true, // Whether to sample colours per frame (GIF only)
+    };
+
+    this.state = {
+      filePath: false,
+
+      exporting: false,
+      exportingProgress: 0,
+
+      properties: PROPERTY_DEFAULTS
+    };
+
+    this.logic = new AppLogic({
+      onFinished: this.onFinished,
+      onProgress: this.onProgress,
+    });
+  }
+
+  chooseFile = () => {
+    this.logic.requestFile()
+      .then(this.onFileSelect);
+  }
+
+  onFileSelect = filePath => {
+    this.logic.requestInfo(filePath);
+    this.setState({ filePath });
+  }
+
+  onRequestExport = () => {
+    const { properties, filePath } = this.state;
+
+    this.logic.getDestination(properties.asGif)
+      .then(destination => this.logic.requestExport(filePath, destination, properties))
+      .then(() => {
+        this.setState({
+          exporting: true,
+          exportingProgress: 0
+        });
+      })
+      .catch(() => {}) // No file chosen
+  }
+
+  onFinished = (args) => {
+    this.setState({
+      exporting: false,
+      exportingProgress: 0
+    });
+  }
+
+  onProgress = (percentage) => {
+    this.setState({
+      exportingProgress: percentage
+    });
+  }
 
   render() {
-    const { currentKey, percent, exporting } = this.state;
-
     const cls = classNames(
       'app'
     );
 
     return (
       <div className={cls}>
-        { exporting ? (
-          <Progress className="app__progress" percent={percent} transparent/>
-        ) : null }
         <div className="app__fake-head"/>
-        <div className="app__control">
-          <Nav location={currentKey}/>
-
-          <Tip/>
-        </div>
-
-        <div className="app__content">
-          <Switcher location={currentKey}>
-            <Home
-              key="home"
-              onProgress={this.onProgress}
-              onExporting={this.onExporting}
-              percent={percent}/>
-          </Switcher>
-        </div>
       </div>
     );
   }
