@@ -9,7 +9,7 @@ import classNames from 'classnames';
 // Components
 
 // CSS, Requires
-import styles from "./GenericInput.module.scss";
+import "./GenericInput.scss";
 
 class GenericInput extends React.Component {
   static propTypes = {
@@ -62,18 +62,18 @@ class GenericInput extends React.Component {
 
     const cls = classNames(
       className,
-      styles.label,
-      styles[type]
+      'ui-input__label',
+      `ui-input__${type}`
     );
 
     return (
       <label className={cls}>
         { label ? (
-          <span className={styles.title}>{ label }</span>
+          <span className={'ui-input__title'}>{ label }</span>
         ) : null }
         { this.renderInput(children) }
         { !noLine ? (
-          <span className={styles.underline}/>
+          <span className={'ui-input__underline'}/>
         ) : null }
       </label>
     );

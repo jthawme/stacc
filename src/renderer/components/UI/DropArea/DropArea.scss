@@ -1,0 +1,71 @@
+@import '../Common/css/base';
+
+.droparea {
+  display: block;
+
+  background-color: var(--ui-color-primary-5);
+
+  transition: {
+    duration: var(--ui-duration-normal);
+    property: background-color;
+    timing-function: var(--ui-timing-function);
+  }
+
+  &__dropping {
+    background-color: var(--ui-color-accent-5);
+
+    color: var(--ui-color-accent-1);
+  }
+
+  &__hiddenInput {
+    display: none;
+  }
+
+  &__content {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--ui-size-padding);
+  }
+
+  &__inner {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__outline {
+    position: absolute;
+
+    z-index: 2;
+
+    top: calc(var(--ui-size-padding) * 0.5);
+    right: calc(var(--ui-size-padding) * 0.5);
+    bottom: calc(var(--ui-size-padding) * 0.5);
+    left: calc(var(--ui-size-padding) * 0.5);
+
+    border: var(--ui-size-border-width) dashed var(--ui-color-accent-1);
+
+    transform: scale(1.05);
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: {
+      duration: var(--ui-duration-normal);
+      property: transform, opacity;
+      timing-function: var(--ui-timing-function);
+    }
+
+    .droparea__dropping & {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

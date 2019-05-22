@@ -17,25 +17,25 @@
     }
 
     /** SIZES **/
-    --ui-border-radius: #{ rem($size-border-radius) };
-    --ui-size-border-width: #{ rem($size-border-width) };
-    --ui-size-padding: #{ rem($size-padding) };
-    --ui-size-gutter: #{ rem($size-gutter) };
+    --ui-border-radius: #{ ui-rem($size-border-radius) };
+    --ui-size-border-width: #{ ui-rem($size-border-width) };
+    --ui-size-padding: #{ ui-rem($size-padding) };
+    --ui-size-gutter: #{ ui-rem($size-gutter) };
 
     /** TYPE **/
-    --ui-type-headline-size-1: #{ rem($type-headline-size-1) };
-    --ui-type-headline-size-2: #{ rem($type-headline-size-2) };
-    --ui-type-headline-size-3: #{ rem($type-headline-size-3) };
-    --ui-type-headline-lh-1: #{ rem($type-headline-lh-1) };
-    --ui-type-headline-lh-2: #{ rem($type-headline-lh-2) };
-    --ui-type-headline-lh-3: #{ rem($type-headline-lh-3) };
+    --ui-type-headline-size-1: #{ ui-rem($type-headline-size-1) };
+    --ui-type-headline-size-2: #{ ui-rem($type-headline-size-2) };
+    --ui-type-headline-size-3: #{ ui-rem($type-headline-size-3) };
+    --ui-type-headline-lh-1: #{ ui-rem($type-headline-lh-1) };
+    --ui-type-headline-lh-2: #{ ui-rem($type-headline-lh-2) };
+    --ui-type-headline-lh-3: #{ ui-rem($type-headline-lh-3) };
 
-    --ui-type-body-size-1: #{ rem($type-body-size-1) };
-    --ui-type-body-size-2: #{ rem($type-body-size-2) };
-    --ui-type-body-size-3: #{ rem($type-body-size-3) };
-    --ui-type-body-lh-1: #{ rem($type-body-lh-1) };
-    --ui-type-body-lh-2: #{ rem($type-body-lh-2) };
-    --ui-type-body-lh-3: #{ rem($type-body-lh-3) };
+    --ui-type-body-size-1: #{ ui-rem($type-body-size-1) };
+    --ui-type-body-size-2: #{ ui-rem($type-body-size-2) };
+    --ui-type-body-size-3: #{ ui-rem($type-body-size-3) };
+    --ui-type-body-lh-1: #{ ui-rem($type-body-lh-1) };
+    --ui-type-body-lh-2: #{ ui-rem($type-body-lh-2) };
+    --ui-type-body-lh-3: #{ ui-rem($type-body-lh-3) };
 
     --ui-type-sans-serif: #{ $type-family };
 

@@ -1,0 +1,9 @@
+@import '../Common/css/base';
+
+.ui-number-input {
+  &__content {
+      display: inline-flex;
+
+      align-items: center;
+  }
+}

@@ -1,0 +1,26 @@
+@import '../Common/css/base';
+
+.ui-toast {
+  display: block;
+
+  &__full {
+    width: 100vw;
+
+    margin: 0;
+  }
+
+  &__content,
+  &__inner {
+    padding: calc(var(--ui-size-padding) * 0.5);
+  }
+
+  &__full .toast__content {
+    padding: 0;
+  }
+
+  &__toast.toast__outlined.toast__full {
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+  }
+}

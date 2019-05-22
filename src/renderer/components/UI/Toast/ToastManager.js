@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import Toast from './Toast';
 
 // CSS, Requires
-import styles from "./ToastManager.module.scss";
+import "./ToastManager.scss";
 
 class ToastManager extends React.Component {
   static propTypes = {
@@ -69,10 +69,10 @@ class ToastManager extends React.Component {
   }
 
   createPortalMount() {
-    this.mount = document.querySelector(`.${ styles.toastmanager }`);
+    this.mount = document.querySelector(`.ui-toastmanager`);
     if (!this.mount) {
       const el = document.createElement('div');
-      el.classList.add(styles.toastmanager);
+      el.classList.add('ui-toastmanager');
       document.body.appendChild(el);
 
       this.mount = el;
@@ -99,7 +99,7 @@ class ToastManager extends React.Component {
 
   render() {
     const { messages } = this.state;
-    
+
     if (!this.mount) {
       return null;
     }

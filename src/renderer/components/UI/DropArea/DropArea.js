@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import Icon from '../Icon/Icon';
 
 // CSS, Requires
-import styles from "./DropArea.module.scss";
+import "./DropArea.scss";
 
 class DropArea extends React.Component {
   static propTypes = {
@@ -143,9 +143,9 @@ class DropArea extends React.Component {
       return children(this.state.files, this.state.dropping);
     } else {
       return (
-        <div className={styles.content}>
-          <div className={styles.outline}/>
-          <div className={styles.inner}>
+        <div className={'droparea__content'}>
+          <div className={'droparea__outline'}/>
+          <div className={'droparea__inner'}>
             <Icon icon="download"/>
             <span>{ this.props.command }</span>
           </div>
@@ -160,9 +160,9 @@ class DropArea extends React.Component {
 
     const cls = classNames(
       className,
-      styles.droparea,
+      'droparea',
       {
-        [styles.dropping]: dropping
+        ['droparea__dropping']: dropping
       }
     );
 
@@ -175,12 +175,12 @@ class DropArea extends React.Component {
         onDragEnd={ this.onDragEnd }
         onDrop={ this.onDrop }>
         <input
-          className={styles.hiddenInput}
+          className={'droparea__hiddenInput'}
           onChange={this.onInputChange}
           type="file"
           multiple={multiple}
           accept={accept}/>
-        
+
         { this.renderChildren(children) }
       </label>
     );

@@ -12,8 +12,8 @@ import Button from '../Button/Button';
 
 // CSS, Requires
 import { TYPES } from '../Common/constants';
-import genericStyles from "./GenericInput.module.scss";
-import styles from "./NumberInput.module.scss";
+import "./GenericInput.scss";
+import "./NumberInput.scss";
 
 class NumberInput extends React.Component {
   static propTypes = {
@@ -57,7 +57,7 @@ class NumberInput extends React.Component {
     const { className, label, placeholder, value, local, type, onUpdate, min, max, step, width } = this.props;
 
     const cls = classNames(
-      genericStyles.input,
+      'ui-input__input'
     );
 
     return (
@@ -77,7 +77,7 @@ class NumberInput extends React.Component {
             };
 
             return (
-              <div className={styles.content}>
+              <div className={'ui-number-input__content'}>
                 <Button
                   onClick={e => this.mod(step * -1, localValue, onChange)}
                   rounded

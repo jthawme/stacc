@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 // CSS, Requires
 import { TYPES } from '../Common/constants';
-import genericStyles from "./GenericInput.module.scss";
+import "./GenericInput.scss";
 import GenericInput from './GenericInput';
 
 class TextInput extends React.Component {
@@ -38,7 +38,7 @@ class TextInput extends React.Component {
     const { className, label, placeholder, value, local, type, onUpdate } = this.props;
 
     const cls = classNames(
-      genericStyles.input,
+      'ui-input__input',
     );
 
     return (

@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 // CSS, Requires
 import { SIZES } from '../Common/constants';
-import styles from "./Icon.module.scss";
+import "./Icon.scss";
 
 const iconReq = require.context('!!svg-inline-loader!./icons', false, /\.svg/);
 
@@ -41,8 +41,8 @@ class Icon extends React.Component {
 
     const cls = classNames(
       className,
-      styles.icon,
-      styles[size]
+      'icon',
+      `icon__${size}`
     );
 
     return (

@@ -1,0 +1,45 @@
+@import '../Common/css/base';
+
+.ui-section {
+  font-family: var(--ui-type-sans-serif);
+
+  border-radius: var(--ui-border-radius);
+
+  margin-bottom: calc(var(--ui-size-padding) * 1);
+
+  .ui-section__inline {
+    display: grid;
+
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: var(--ui-size-gutter);
+
+    .ui-section__content {
+      margin-top: calc(var(--ui-size-padding) * 0.25);
+    }
+  }
+
+  .ui-section__card {
+    padding: var(--ui-size-padding);
+
+    box-shadow: var(--ui-box-shadow-1);
+  }
+
+  .ui-section__heading {
+    margin-bottom: calc(var(--ui-size-padding) * 0.5);
+
+    .ui-section__title {
+      font-size: var(--ui-type-body-size-1);
+      font-weight: bold;
+      color: var(--ui-primary-color-1);
+    }
+
+    .ui-section__card & {
+      margin-top: calc(var(--ui-size-padding) * 0.5);
+    }
+  }
+
+  .ui-section__subtitle {
+    font-size: var(--ui-type-body-size-3);
+    color: var(--ui-primary-color-3);
+  }
+}

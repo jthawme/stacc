@@ -1,0 +1,23 @@
+@import '../Common/css/base';
+
+.ui-slider {
+  &__animation-normal {
+    transition-timing-function: var(--ui-timing-function);
+  }
+
+  &__animation-linear {
+    transition-timing-function: linear;
+  }
+
+  &__fast {
+    transition-duration: var(--ui-duration-fast);
+  }
+
+  &__normal {
+    transition-duration: var(--ui-duration-normal);
+  }
+
+  &__slow {
+    transition-duration: var(--ui-duration-slow);
+  }
+}

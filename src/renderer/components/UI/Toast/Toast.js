@@ -11,8 +11,8 @@ import Slider from '../Slider/Slider';
 
 // CSS, Requires
 import { TYPES } from '../Common/constants';
-import styles from "./Toast.module.scss";
-import buttonStyles from "../Button/Button.module.scss";
+import "./Toast.scss";
+import "../Button/Button.scss";
 
 class Toast extends React.Component {
   static propTypes = {
@@ -57,20 +57,20 @@ class Toast extends React.Component {
 
     const cls = classNames(
       className,
-      styles.toast,
+      'ui-toast',
       {
-        [styles.full]: full
+        'ui-toast__full': full
       }
     );
 
     const innerCls = classNames(
-      styles.inner,
-      buttonStyles[type],
+      'ui-toast__inner',
+      `ui-button__${type}`,
       {
-        [buttonStyles.outlined]: outlined
+        'ui-button__outlined': outlined
       },
       {
-        [styles.outlined]: outlined
+        'ui-toast__outlined': outlined
       },
     );
 
@@ -81,7 +81,7 @@ class Toast extends React.Component {
         closed={closed}
         className={cls}>
         { typeof message === 'string' ? (
-          <div className={styles.content}>
+          <div className={'ui-toast__content'}>
             <div className={innerCls}>{ message }</div>
           </div>
         ) : message }

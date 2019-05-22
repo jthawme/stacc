@@ -1,0 +1,28 @@
+@import '../Common/css/base';
+
+.ui-title {
+  font-family: inherit;
+
+  margin: 0;
+
+  &__small {
+    font-size: var(--ui-type-headline-size-3);
+    line-height: var(--ui-type-headline-lh-3);
+
+    margin-bottom: calc(var(--ui-type-headline-lh-3) * 0.5);
+  }
+
+  &__medium {
+    font-size: var(--ui-type-headline-size-2);
+    line-height: var(--ui-type-headline-lh-2);
+
+    margin-bottom: calc(var(--ui-type-headline-lh-2) * 0.5);
+  }
+
+  &__large {
+    font-size: var(--ui-type-headline-size-1);
+    line-height: var(--ui-type-headline-lh-1);
+
+    margin-bottom: calc(var(--ui-type-headline-lh-1) * 0.5);
+  }
+}

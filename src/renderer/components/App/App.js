@@ -9,6 +9,8 @@ import classNames from 'classnames';
 // Components
 import Section from '../UI/Section/Section';
 import Title from '../UI/Title/Title';
+import Button from '../UI/Button/Button';
+import ToastManager from '../UI/Toast/ToastManager';
 
 // CSS, Requires
 import AppLogic from './AppLogic';
@@ -36,7 +38,9 @@ class App extends React.Component {
       exporting: false,
       exportingProgress: 0,
 
-      properties: PROPERTY_DEFAULTS
+      properties: PROPERTY_DEFAULTS,
+
+      messages: []
     };
 
     this.logic = new AppLogic({
@@ -82,7 +86,20 @@ class App extends React.Component {
     });
   }
 
+  addTestMessage = () => {
+    const messages = this.state.messages.slice();
+
+    messages.push({
+      message: 'test',
+      timeout: 10000
+    });
+
+    this.setState({ messages });
+  }
+
   render() {
+    const { messages } = this.state;
+
     const cls = classNames(
       'app'
     );
@@ -91,9 +108,13 @@ class App extends React.Component {
       <div className={cls}>
         <div className="app__fake-head"/>
 
+        <ToastManager messages={messages} onMessagesUpdate={messages => this.setState({messages})}/>
+
         <Section
           title={<Title>Video</Title>}
-          />
+          >
+          <Button onClick={() => this.addTestMessage()}>Add test</Button>
+        </Section>
       </div>
     );
   }

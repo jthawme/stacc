@@ -1,0 +1,27 @@
+@import '../Common/css/base';
+
+.filepreview {
+  height: ui-rem(100px);
+
+  background-color: var(--ui-color-primary-5);
+
+  &__content {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    background-size: cover;
+    background-position: center;
+
+    color: var(--ui-color-primary-3);
+  }
+
+  &__title {
+    font-size: var(--ui-type-body-size-3);
+  }
+}

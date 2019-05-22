@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import Icon from '../Icon/Icon';
 
 // CSS, Requires
-import styles from "./FilePreview.module.scss";
+import "./FilePreview.scss";
 
 class FilePreview extends React.Component {
   static propTypes = {
@@ -48,22 +48,22 @@ class FilePreview extends React.Component {
     if (this.isImage(type)) {
       if (this.state.preview) {
         return (
-          <div className={styles.content} style={{
+          <div className={'filepreview__content'} style={{
             backgroundImage: `url(${ this.state.preview })`
           }} />
         );
       } else {
         return (
-          <div className={styles.content}>
+          <div className={'filepreview__content'}>
             <Icon icon="image"/>
           </div>
         );
       }
     } else {
       return (
-        <div className={styles.content}>
+        <div className={'filepreview__content'}>
           <Icon icon="document"/>
-          <span className={styles.title}>{ this.clipName(name) }</span>
+          <span className={'filepreview__title'}>{ this.clipName(name) }</span>
         </div>
       )
     }
@@ -78,7 +78,7 @@ class FilePreview extends React.Component {
 
     const cls = classNames(
       className,
-      styles.filepreview
+      'filepreview'
     );
 
     return (

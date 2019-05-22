@@ -11,7 +11,7 @@ import { InView } from 'react-intersection-observer';
 
 // CSS, Requires
 import ImageLoader from './ImageLoader';
-import styles from "./Img.module.scss";
+import "./Img.scss";
 
 class Img extends React.Component {
   static propTypes = {
@@ -84,9 +84,9 @@ class Img extends React.Component {
 
     const cls = classNames(
       className,
-      styles.img,
+      'img',
       {
-        [styles.loaded]: display
+        ['img__loaded']: display
       }
     );
 
@@ -97,8 +97,8 @@ class Img extends React.Component {
         className={cls}
         onChange={this.onViewChange}
         threshold={threshold}>
-        <img className={styles.small} src={small ? small : ''}/>
-        <img className={styles.full} src={loaded ? loaded : ''}/>
+        <img className={'img__small'} src={small ? small : ''}/>
+        <img className={'img__full'} src={loaded ? loaded : ''}/>
       </InView>
     );
   }

@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import AccordionRow from './AccordionRow';
 
 // CSS, Requires
-import styles from "./Accordion.module.scss";
+import "./Accordion.scss";
 
 class Accordion extends React.Component {
   static propTypes = {
@@ -50,7 +50,7 @@ class Accordion extends React.Component {
 
     const cls = classNames(
       className,
-      styles.accordion
+      'accordion'
     );
 
     return (

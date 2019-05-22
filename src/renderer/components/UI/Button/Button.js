@@ -11,7 +11,7 @@ import Icon from '../Icon/Icon';
 
 // CSS, Requires
 import { SIZES, TYPES } from '../Common/constants';
-import styles from "./Button.module.scss";
+import "./Button.scss";
 
 class Button extends React.Component {
   static propTypes = {
@@ -35,7 +35,7 @@ class Button extends React.Component {
       return null;
     }
 
-    return <Icon className={styles.icon} icon={icon} size={size}/>;
+    return <Icon className={'ui-button__icon'} icon={icon} size={size}/>;
   }
 
   render() {
@@ -43,23 +43,23 @@ class Button extends React.Component {
 
     const cls = classNames(
       className,
-      styles.button,
-      styles[size],
-      styles[type],
+      'ui-button',
+      `ui-button__${size}`,
+      `ui-button__${type}`,
       {
-        [styles.hoverable]: !props.disabled
+        'ui-button__hoverable': !props.disabled
       },
       {
-        [styles.noMargin]: noMargin
+        'ui-button__noMargin': noMargin
       },
       {
-        [styles.outlined]: outlined
+        'ui-button__outlined': outlined
       },
       {
-        [styles.noText]: React.Children.count(children) === 0
+        'ui-button__noText': React.Children.count(children) === 0
       },
       {
-        [styles.rounded]: rounded
+        'ui-button__rounded': rounded
       }
     );
 

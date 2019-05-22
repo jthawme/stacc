@@ -9,7 +9,7 @@ import classNames from 'classnames';
 // Components
 
 // CSS, Requires
-import styles from "./Section.module.scss";
+import "./Section.scss";
 
 class Section extends React.Component {
   static propTypes = {
@@ -29,7 +29,7 @@ class Section extends React.Component {
   renderTitle(title) {
     if (typeof title === 'string') {
       return (
-        <div className={styles.title}>
+        <div className={'ui-section__title'}>
           { title }
         </div>
       );
@@ -41,7 +41,7 @@ class Section extends React.Component {
   renderSubtitle(subtitle) {
     if (typeof subtitle === 'string') {
       return (
-        <div className={styles.subtitle}>
+        <div className={'ui-section__subtitle'}>
           { subtitle }
         </div>
       );
@@ -55,22 +55,22 @@ class Section extends React.Component {
 
     const cls = classNames(
       className,
-      styles.section,
+      'ui-section',
       {
-        [styles.card]: card
+        ['ui-section__card']: card
       },
       {
-        [styles.inline]: inline
+        ['ui-section__inline']: inline
       }
     );
 
     return (
       <div className={cls}>
-        <div className={styles.heading}>
+        <div className={'ui-section__heading'}>
           { title ? this.renderTitle(title) : null }
           { subtitle ? this.renderSubtitle(subtitle) : null }
         </div>
-        <div className={styles.content}>
+        <div className={'ui-section__content'}>
           { children }
         </div>
       </div>

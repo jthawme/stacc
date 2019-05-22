@@ -11,7 +11,7 @@ import Slider from '../Slider/Slider';
 import Icon from '../Icon/Icon';
 
 // CSS, Requires
-import styles from "./AccordionRow.module.scss";
+import "./AccordionRow.scss";
 
 class AccordionRow extends React.Component {
   static propTypes = {
@@ -22,7 +22,7 @@ class AccordionRow extends React.Component {
   renderTitle(title) {
     if (typeof title === 'string') {
       return (
-        <span size="small" className={styles.title}>
+        <span size="small" className={'accordionrow__title'}>
           { title }
         </span>
       );
@@ -36,12 +36,12 @@ class AccordionRow extends React.Component {
 
     const cls = classNames(
       className,
-      styles.accordionrow
+      'accordionrow'
     );
 
     return (
       <div className={cls}>
-        <div onClick={onToggle} className={styles.heading}>
+        <div onClick={onToggle} className={'accordionrow__heading'}>
           { this.renderTitle(title) }
 
           { noIcon ? null : (

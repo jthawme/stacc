@@ -10,7 +10,7 @@ import classNames from 'classnames';
 
 // CSS, Requires
 import { SIZES } from '../Common/constants';
-import styles from "./Title.module.scss";
+import "./Title.scss";
 
 class Title extends React.Component {
   static propTypes = {
@@ -29,8 +29,8 @@ class Title extends React.Component {
 
     const cls = classNames(
       className,
-      styles.title,
-      styles[size]
+      'ui-title',
+      `ui-title__${size}`
     );
 
     const ElName = el;

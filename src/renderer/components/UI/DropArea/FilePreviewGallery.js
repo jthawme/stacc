@@ -21,7 +21,7 @@ class FilePreviewGallery extends React.Component {
 
     const cls = classNames(
       className,
-      styles.filepreviewgallery
+      'filepreviewgallery'
     );
 
     return (

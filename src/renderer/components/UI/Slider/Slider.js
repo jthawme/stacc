@@ -12,7 +12,7 @@ import { SlideDown } from 'react-slidedown';
 // CSS, Requires
 import { SPEEDS, ANIMATION } from '../Common/constants';
 import 'react-slidedown/lib/slidedown.css'
-import styles from "./Slider.module.scss";
+import "./Slider.scss";
 
 class Slider extends React.Component {
   static propTypes = {
@@ -56,9 +56,9 @@ class Slider extends React.Component {
 
     const cls = classNames(
       className,
-      styles.slider,
-      styles[speed],
-      styles[`animation-${animation}`]
+      'ui-slider',
+      `ui-slider__${speed}`,
+      `ui-slider__animation-${animation}`
     );
 
     return (

@@ -10,11 +10,11 @@ import classNames from 'classnames';
 
 // CSS, Requires
 import { SIZES, SPEEDS } from '../Common/constants'
-import styles from "./Progress.module.scss";
+import "./Progress.scss";
 
 class Progress extends React.Component {
   static propTypes = {
-    className: PropTypes.string, 
+    className: PropTypes.string,
 
     /** Float 0-1 */
     percent: PropTypes.number,
@@ -46,9 +46,9 @@ class Progress extends React.Component {
 
     const cls = classNames(
       className,
-      styles.progress,
-      styles[size],
-      styles[speed],
+      'ui-progress',
+      `ui-progress__${size}`,
+      `ui-progress__${speed}`,
     );
 
     const style = {
@@ -57,11 +57,11 @@ class Progress extends React.Component {
 
     return (
       <div className={cls}>
-        <div className={styles.track}>
-          <div className={styles.bar} style={style}/>
+        <div className={'ui-progress__track'}>
+          <div className={'ui-progress__bar'} style={style}/>
         </div>
         { displayUnit ? (
-          <div className={styles.unit}>{ this.renderPercent(percent, displayFunc) }</div>
+          <div className={'ui-progress__unit'}>{ this.renderPercent(percent, displayFunc) }</div>
         ) : null }
       </div>
     );

@@ -1,6 +1,6 @@
 @import '../Common/css/base';
 
-.button {
+.ui-button {
   display: inline-flex;
 
   align-items: center;
@@ -22,165 +22,165 @@
   }
 }
 
-.outlined {
+.ui-button__outlined {
   border-style: solid;
   border-width: var(--ui-size-border-width);
 }
 
-.normal {
+.ui-button__normal {
   background-color: var(--ui-color-accent-1);
   color: white;
 
-  &.hoverable:hover,
-  &.hoverable:focus {
+  &.ui-button__hoverable:hover,
+  &.ui-button__hoverable:focus {
     background-color: var(--ui-color-accent-3);
   }
 
-  &.outlined {
+  &.ui-button__outlined {
     background-color: var(--ui-color-accent-5);
     color: var(--ui-color-accent-1);
 
     border-color: var(--ui-color-accent-1);
-  
-    &.hoverable:hover,
-    &.hoverable:focus {
+
+    &.ui-button__hoverable:hover,
+    &.ui-button__hoverable:focus {
       background-color: var(--ui-color-accent-4);
     }
   }
 }
 
-.success {
+.ui-button__success {
   background-color: var(--ui-color-success-1);
   color: white;
 
-  &.hoverable:hover,
-  &.hoverable:focus {
+  &.ui-button__hoverable:hover,
+  &.ui-button__hoverable:focus {
     background-color: var(--ui-color-success-3);
   }
 
-  &.outlined {
+  &.ui-button__outlined {
     background-color: var(--ui-color-success-5);
     color: var(--ui-color-success-1);
 
     border-color: var(--ui-color-success-1);
-  
-    &.hoverable:hover,
-    &.hoverable:focus {
+
+    &.ui-button__hoverable:hover,
+    &.ui-button__hoverable:focus {
       background-color: var(--ui-color-success-4);
     }
   }
 }
 
-.error {
+.ui-button__error {
   background-color: var(--ui-color-error-1);
   color: white;
 
-  &.hoverable:hover,
-  &.hoverable:focus {
+  &.ui-button__hoverable:hover,
+  &.ui-button__hoverable:focus {
     background-color: var(--ui-color-error-3);
   }
 
-  &.outlined {
+  &.ui-button__outlined {
     background-color: var(--ui-color-error-5);
     color: var(--ui-color-error-1);
 
     border-color: var(--ui-color-error-1);
-  
-    &.hoverable:hover,
-    &.hoverable:focus {
+
+    &.ui-button__hoverable:hover,
+    &.ui-button__hoverable:focus {
       background-color: var(--ui-color-error-4);
     }
   }
 }
 
-.warn {
+.ui-button__warn {
   background-color: var(--ui-color-warn-1);
   color: white;
 
-  &.hoverable:hover,
-  &.hoverable:focus {
+  &.ui-button__hoverable:hover,
+  &.ui-button__hoverable:focus {
     background-color: var(--ui-color-warn-3);
   }
 
-  &.outlined {
+  &.ui-button__outlined {
     background-color: var(--ui-color-warn-5);
     color: var(--ui-color-warn-1);
 
     border-color: var(--ui-color-warn-1);
-  
-    &.hoverable:hover,
-    &.hoverable:focus {
+
+    &.ui-button__hoverable:hover,
+    &.ui-button__hoverable:focus {
       background-color: var(--ui-color-warn-4);
     }
   }
 }
 
-.minimal {
+.ui-button__minimal {
   color: var(--ui-color-primary-1);
 
-  &.hoverable:hover,
-  &.hoverable:focus {
+  &.ui-button__hoverable:hover,
+  &.ui-button__hoverable:focus {
     color: var(--ui-color-primary-3);
   }
 }
 
-.small {
+.ui-button__small {
   font-size: var(--ui-type-body-size-3);
   line-height: var(--ui-type-body-lh-3);
 
   padding: calc(var(--ui-size-padding) * 0.25) calc(var(--ui-size-padding) * 0.5);
 
-  &.rounded {
+  &.ui-button__rounded {
     padding: calc(var(--ui-size-padding) * 0.25);
   }
 
-  &:not(.rounded).outlined {
+  &:not(.ui-button__rounded).ui-button__outlined {
     padding: calc((var(--ui-size-padding) * 0.25) - var(--ui-size-border-width)) calc((var(--ui-size-padding) * 0.5) - var(--ui-size-border-width)) ;
   }
 }
 
-.medium {
+.ui-button__medium {
   font-size: var(--ui-type-body-size-2);
   line-height: var(--ui-type-body-lh-2);
 
   padding: calc(var(--ui-size-padding) * 0.45) calc(var(--ui-size-padding) * 0.85);
 
-  &.rounded {
+  &.ui-button__rounded {
     padding: calc(var(--ui-size-padding) * 0.45);
   }
 
-  &:not(.rounded).outlined {
+  &:not(.ui-button__rounded).ui-button__outlined {
     padding: calc((var(--ui-size-padding) * 0.45) - var(--ui-size-border-width)) calc((var(--ui-size-padding) * 0.85) - var(--ui-size-border-width)) ;
   }
 }
 
-.large {
+.ui-button__large {
   font-size: var(--ui-type-body-size-1);
   line-height: var(--ui-type-body-lh-1);
 
   padding: calc(var(--ui-size-padding) * 0.55) calc(var(--ui-size-padding) * 1);
 
-  &.rounded {
+  &.ui-button__rounded {
     padding: calc(var(--ui-size-padding) * 0.55);
   }
 
-  &:not(.rounded).outlined {
+  &:not(.ui-button__rounded).ui-button__outlined {
     padding: calc((var(--ui-size-padding) * 0.55) - var(--ui-size-border-width)) calc((var(--ui-size-padding) * 1) - var(--ui-size-border-width)) ;
   }
 }
 
-.noMargin {
+.ui-button__noMargin {
   margin: 0;
 }
 
-.icon {
-  margin-right: calc(var(--ui-size-padding) * 0.2);
-
-  .noText & {
-    margin-right: 0;
-  }
+.ui-button__rounded {
+  border-radius: 50%;
 }
 
-.rounded {
-  border-radius: 50%;
+.ui-button__icon {
+  margin-right: calc(var(--ui-size-padding) * 0.2);
+
+  .ui-button__noText & {
+    margin-right: 0;
+  }
 }
