@@ -12,6 +12,10 @@ import Icon from '../Icon/Icon';
 // CSS, Requires
 import "./DropArea.scss";
 
+function substringFromEnd(str, len) {
+  return str.substring(str.length - len, str.length);
+}
+
 class DropArea extends React.Component {
   static propTypes = {
     className: PropTypes.string,
@@ -21,13 +25,16 @@ class DropArea extends React.Component {
     accept: PropTypes.array,
 
     command: PropTypes.string,
+
+    clickable: PropTypes.bool
   };
 
   static defaultProps = {
     accept: ['*'],
     command: 'Drop files',
     multiple: false,
-    maxFiles: 5
+    maxFiles: 5,
+    clickable: true
   };
 
   state = {
@@ -115,7 +122,7 @@ class DropArea extends React.Component {
       accept.forEach(a => {
         if (!valid) {
           if (a.substring(0, 1) === '.') {
-            if (f.name.substring((a.length) * -1) === a) {
+            if (substringFromEnd(f.name, a.length) === a) {
               valid = true;
             }
           } else {
@@ -155,7 +162,7 @@ class DropArea extends React.Component {
   }
 
   render() {
-    const { className, multiple, accept, children } = this.props;
+    const { className, multiple, accept, children, clickable } = this.props;
     const { dropping } = this.state;
 
     const cls = classNames(
@@ -166,8 +173,9 @@ class DropArea extends React.Component {
       }
     );
 
+    const ElName = clickable ? 'label' : 'div';
     return (
-      <label
+      <ElName
         className={ cls }
         onDragOver={ this.onDragOver }
         onDragEnter={ this.onDragEnter }
@@ -182,7 +190,7 @@ class DropArea extends React.Component {
           accept={accept}/>
 
         { this.renderChildren(children) }
-      </label>
+      </ElName>
     );
   }
 }

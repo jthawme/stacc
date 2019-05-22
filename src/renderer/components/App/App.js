@@ -10,9 +10,11 @@ import classNames from 'classnames';
 import Section from '../UI/Section/Section';
 import Title from '../UI/Title/Title';
 import Button from '../UI/Button/Button';
+import DropArea from '../UI/DropArea/DropArea';
 import ToastManager from '../UI/Toast/ToastManager';
 
 // CSS, Requires
+import { FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
 import AppLogic from './AppLogic';
 import "./App.scss";
 import "../UI/Common/css/defaults.scss";
@@ -86,14 +88,9 @@ class App extends React.Component {
     });
   }
 
-  addTestMessage = () => {
+  addMessage = (message, type = 'normal') => {
     const messages = this.state.messages.slice();
-
-    messages.push({
-      message: 'test',
-      timeout: 10000
-    });
-
+    messages.push({ message, type });
     this.setState({ messages });
   }
 
@@ -113,7 +110,9 @@ class App extends React.Component {
         <Section
           title={<Title>Video</Title>}
           >
-          <Button onClick={() => this.addTestMessage()}>Add test</Button>
+          <DropArea
+            onInvalid={() => this.addMessage('Invalid file', 'error')}
+            accept={createAcceptsFromFilter(FILTERS.VIDEOS)}/>
         </Section>
       </div>
     );

@@ -16,3 +16,7 @@ export const FILTERS = {
     { name: 'Gifs', extensions: ['gif'] }
   ]
 }
+
+export const createAcceptsFromFilter = (filter) => {
+  return filter.map(f => f.extensions.map(ext => `.${ext}`)).flat();
+}
