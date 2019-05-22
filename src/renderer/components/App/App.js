@@ -10,11 +10,16 @@ import classNames from 'classnames';
 import Section from '../UI/Section/Section';
 import Title from '../UI/Title/Title';
 import Button from '../UI/Button/Button';
+
+import NumberInput from '../UI/Inputs/NumberInput';
+import CheckedInput from '../UI/Inputs/CheckedInput';
+
 import DropArea from '../UI/DropArea/DropArea';
 import ToastManager from '../UI/Toast/ToastManager';
+import Progress from '../UI/Progress/Progress';
 
 // CSS, Requires
-import { FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
+import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
 import AppLogic from './AppLogic';
 import "./App.scss";
 import "../UI/Common/css/defaults.scss";
@@ -28,14 +33,16 @@ class App extends React.Component {
     super(props);
 
     const PROPERTY_DEFAULTS = {
-      asGif: true, // Whether the ouput should be gif or movie
+      exportType: EXPORTS.GIF, // Whether the ouput should be gif or movie
       scaledDown: 2, // Scaled down to what size
       scaledFps: 2, // Scaled down FPS by factor
       sampleColors: true, // Whether to sample colours per frame (GIF only)
     };
 
     this.state = {
-      filePath: false,
+      file: false,
+
+      videoInfo: false,
 
       exporting: false,
       exportingProgress: 0,
@@ -48,6 +55,15 @@ class App extends React.Component {
     this.logic = new AppLogic({
       onFinished: this.onFinished,
       onProgress: this.onProgress,
+      onInfo: this.onInfo,
+    });
+  }
+
+  onFiles = files => {
+    this.onFileSelect(files[0].path);
+
+    this.setState({
+      file: files[0]
     });
   }
 
@@ -58,28 +74,32 @@ class App extends React.Component {
 
   onFileSelect = filePath => {
     this.logic.requestInfo(filePath);
-    this.setState({ filePath });
   }
 
   onRequestExport = () => {
-    const { properties, filePath } = this.state;
+    const { properties, file } = this.state;
 
-    this.logic.getDestination(properties.asGif)
-      .then(destination => this.logic.requestExport(filePath, destination, properties))
-      .then(() => {
-        this.setState({
-          exporting: true,
-          exportingProgress: 0
-        });
-      })
+    this.setState({
+      exporting: true,
+      exportingProgress: 0
+    });
+
+    this.logic.getDestination(properties.exportType)
+      .then(destination => this.logic.requestExport(file.path, destination, properties))
       .catch(() => {}) // No file chosen
   }
 
   onFinished = (args) => {
     this.setState({
-      exporting: false,
-      exportingProgress: 0
+      exportingProgress: 1
     });
+
+    setTimeout(() => {
+      this.setState({
+        exporting: false,
+        exportingProgress: 0
+      });
+    }, 500);
   }
 
   onProgress = (percentage) => {
@@ -88,14 +108,33 @@ class App extends React.Component {
     });
   }
 
+  onInfo = info => {
+    this.setState({ videoInfo: info });
+  }
+
+  /**
+   * A method to display a toast
+   *
+   * @param {String} message
+   * @param {String} type
+   */
   addMessage = (message, type = 'normal') => {
     const messages = this.state.messages.slice();
     messages.push({ message, type });
     this.setState({ messages });
   }
 
+  onPropertyUpdate = (value, name) => {
+    const properties = {
+      ...this.state.properties,
+      [name]: value
+    };
+
+    this.setState({ properties });
+  }
+
   render() {
-    const { messages } = this.state;
+    const { messages, videoInfo, properties, exporting, exportingProgress } = this.state;
 
     const cls = classNames(
       'app'
@@ -107,13 +146,54 @@ class App extends React.Component {
 
         <ToastManager messages={messages} onMessagesUpdate={messages => this.setState({messages})}/>
 
-        <Section
-          title={<Title>Video</Title>}
-          >
+        <Section>
           <DropArea
             onInvalid={() => this.addMessage('Invalid file', 'error')}
-            accept={createAcceptsFromFilter(FILTERS.VIDEOS)}/>
+            onFiles={this.onFiles}
+            accept={createAcceptsFromFilter(FILTERS.VIDEO)}/>
         </Section>
+
+        { videoInfo ? (
+          <Section
+            inline
+            title={<Title el="h2" size="small">Properties</Title>}>
+            <Section>
+              <NumberInput
+                min={1}
+                max={4}
+                name="scaledDown"
+                label="Scaled down"
+                onUpdate={this.onPropertyUpdate}
+                value={properties.scaledDown}/>
+            </Section>
+            <Section>
+              <NumberInput
+                min={1}
+                max={4}
+                name="scaledFps"
+                label="Scaled FPS"
+                onUpdate={this.onPropertyUpdate}
+                value={properties.scaledFps}/>
+            </Section>
+            { properties.exportType === EXPORTS.GIF ? (
+              <Section>
+                <CheckedInput
+                  name="sampleColors"
+                  label="Sample colours"
+                  onUpdate={this.onPropertyUpdate}
+                  value={properties.sampleColors}/>
+              </Section>
+            ) : null }
+            <Section>
+              <Button
+                onClick={this.onRequestExport}>
+                Export
+              </Button>
+            </Section>
+
+            { exporting ? <Progress percent={exportingProgress}/> : null }
+          </Section>
+        ) : null }
       </div>
     );
   }

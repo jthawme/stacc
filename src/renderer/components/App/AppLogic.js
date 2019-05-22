@@ -1,12 +1,15 @@
 import { shell, ipcRenderer, remote } from 'electron';
-import { EVENTS, FILTERS } from '../../../modules/Constants';
+import { EVENTS, FILTERS, EXPORTS } from '../../../modules/Constants';
 
 class AppLogic {
-  constructor({ onFinished = () => {}, onProgress = () => {} }) {
+  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {} }) {
     this.events = {
       onFinished,
       onProgress,
+      onInfo
     };
+
+    this.addEventListeners();
   }
 
   addEventListeners() {
@@ -20,7 +23,7 @@ class AppLogic {
     return new Promise((resolve, reject) => {
       remote.dialog.showOpenDialog({
         properties: ['openFile'],
-        filters: FILTERS.VIDEOS,
+        filters: FILTERS.VIDEO,
       }, (filePaths) => {
         if (filePaths) {
           resolve(filePaths[0]);
@@ -37,7 +40,7 @@ class AppLogic {
    * @param {String} filePath
    */
   requestInfo(filePath) {
-    ipcRenderer.send(EVENTS.INFO_REQUEST, { input: filePath });
+    ipcRenderer.send(EVENTS.INFO_REQUEST, filePath);
   }
 
 
@@ -80,14 +83,28 @@ class AppLogic {
     notification.onclick = onClick;
   }
 
+  /**
+   * Gets file extensions associated to extension
+   *
+   * @param {String} exportType
+   */
+  getExportExtension(exportType) {
+    switch(exportType) {
+      case EXPORTS.VIDEO:
+        return '.mp4';
+      case EXPORTS.GIF:
+      default:
+        return '.gif';
+    }
+  }
 
   /**
    * Gets a default target directory
    */
-  getDefaultTarget = (asGif = true) => {
+  getDefaultTarget = (exportType) => {
     return [
       remote.app.getPath('desktop'),
-      asGif ? 'export.gif' : 'export.mp4'
+      `export${ this.getExportExtension(exportType) }`
     ].join('/');
   }
 
@@ -95,11 +112,11 @@ class AppLogic {
   /**
    * Opens a save dialog
    */
-  getDestination = (asGif = true) => {
+  getDestination = (exportType) => {
     return new Promise((resolve, reject) => {
       remote.dialog.showSaveDialog({
-        defaultPath: this._getDefaultPath(asGif),
-        filters: asGif ? FILTERS.GIFS : FILTERS.VIDEOS,
+        defaultPath: this.getDefaultTarget(exportType),
+        filters: FILTERS[exportType],
       }, (filename) => {
         if (filename) {
           resolve(filename);
@@ -110,8 +127,9 @@ class AppLogic {
     });
   }
 
-  requestExport = (filePath, destination, properties) => {
-    ipcRenderer.send(EVENTS.CONVERT, { filePath, destination, properties });
+  requestExport = (file, destination, properties) => {
+    console.log({ file, destination, properties });
+    ipcRenderer.send(EVENTS.CONVERT, { file, destination, properties });
     return destination;
   }
 };

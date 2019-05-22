@@ -17,6 +17,7 @@ class GenericInput extends React.Component {
     label: PropTypes.string,
     local: PropTypes.bool,
     children: PropTypes.func,
+    name: PropTypes.string
   };
 
   static defaultProps = {
@@ -35,7 +36,7 @@ class GenericInput extends React.Component {
     if (this.props.local) {
       this.setState({ value });
     } else {
-      this.props.onUpdate(value);
+      this.update(value);
     }
   }
 
@@ -45,8 +46,12 @@ class GenericInput extends React.Component {
     }
 
     if (this.props.local) {
-      this.props.onUpdate(this.state.value);
+      this.update(this.state.value);
     }
+  }
+
+  update(value) {
+    this.props.onUpdate(value, this.props.name);
   }
 
   renderInput(child) {

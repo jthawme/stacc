@@ -9,12 +9,17 @@ export const EVENTS = {
 };
 
 export const FILTERS = {
-  VIDEOS: [
+  VIDEO: [
     { name: 'Movies', extensions: ['mkv', 'avi', 'mp4', 'mov'] }
   ],
-  GIFS: [
+  GIF: [
     { name: 'Gifs', extensions: ['gif'] }
   ]
+}
+
+export const EXPORTS = {
+  VIDEO: 'VIDEO',
+  GIF: 'GIF',
 }
 
 export const createAcceptsFromFilter = (filter) => {

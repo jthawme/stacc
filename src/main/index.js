@@ -59,13 +59,9 @@ function createMainWindow() {
     asGif: true
   };
 
-  ipcMain.on(EVENTS.CONVERT, (event, data) => {
+  ipcMain.on(EVENTS.CONVERT, (event, { file, destination, properties}) => {
     converter.convert(
-      {
-        input: data.input,
-        output: data.output,
-        options: Object.assign({}, convertDefaults, data.options)
-      },
+      { file, destination, properties: {...convertDefaults, properties} },
       (percent) => event.sender.send(EVENTS.PROGRESS, percent),
     )
       .then(filePath => {
@@ -77,8 +73,8 @@ function createMainWindow() {
       .catch(err => event.sender.send(EVENTS.ERROR, err));
   });
 
-  ipcMain.on(EVENTS.INFO_REQUEST, (event, data) => {
-    converter.info(data.input)
+  ipcMain.on(EVENTS.INFO_REQUEST, (event, file) => {
+    converter.info(file)
       .then(data => {
         event.sender.send(EVENTS.INFO, data);
       });

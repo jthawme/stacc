@@ -22,12 +22,14 @@ class Button extends React.Component {
     noMargin: PropTypes.bool,
     outlined: PropTypes.bool,
     icon: PropTypes.string,
-    rounded: PropTypes.bool
+    rounded: PropTypes.bool,
+    el: PropTypes.string,
   };
 
   static defaultProps = {
     size: SIZES.MEDIUM,
-    type: TYPES.NORMAL
+    type: TYPES.NORMAL,
+    el: 'button'
   };
 
   renderIcon(icon, size) {
@@ -39,7 +41,7 @@ class Button extends React.Component {
   }
 
   render() {
-    const { className, children, size, noMargin, outlined, type, icon, rounded, ...props } = this.props;
+    const { className, children, size, noMargin, outlined, type, icon, rounded, el, ...props } = this.props;
 
     const cls = classNames(
       className,
@@ -63,7 +65,8 @@ class Button extends React.Component {
       }
     );
 
-    return <button className={cls} {...props}>{ this.renderIcon(icon, size) }{ children }</button>;
+    const ElName = el ? el : 'button';
+    return <ElName className={cls} {...props}>{ this.renderIcon(icon, size) }{ children }</ElName>;
   }
 }
 

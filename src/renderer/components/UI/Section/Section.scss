@@ -7,7 +7,7 @@
 
   margin-bottom: calc(var(--ui-size-padding) * 1);
 
-  .ui-section__inline {
+  &__inline {
     display: grid;
 
     grid-template-columns: 1fr 2fr;
@@ -18,13 +18,13 @@
     }
   }
 
-  .ui-section__card {
+  &__card {
     padding: var(--ui-size-padding);
 
     box-shadow: var(--ui-box-shadow-1);
   }
 
-  .ui-section__heading {
+  &__heading {
     margin-bottom: calc(var(--ui-size-padding) * 0.5);
 
     .ui-section__title {
@@ -38,7 +38,7 @@
     }
   }
 
-  .ui-section__subtitle {
+  &__subtitle {
     font-size: var(--ui-type-body-size-3);
     color: var(--ui-primary-color-3);
   }

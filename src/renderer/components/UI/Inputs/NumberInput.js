@@ -22,6 +22,7 @@ class NumberInput extends React.Component {
     placeholder: PropTypes.string,
     local: PropTypes.bool,
     type: PropTypes.string,
+    name: PropTypes.string,
 
     onChange: PropTypes.func,
   };
@@ -54,7 +55,7 @@ class NumberInput extends React.Component {
   }
 
   render() {
-    const { className, label, placeholder, value, local, type, onUpdate, min, max, step, width } = this.props;
+    const { className, label, placeholder, value, local, type, onUpdate, min, max, step, width, name } = this.props;
 
     const cls = classNames(
       'ui-input__input'
@@ -68,6 +69,7 @@ class NumberInput extends React.Component {
         type={type}
         onUpdate={onUpdate}
         value={value}
+        name={name}
         noLine>
         {
           ({ onChange, onBlur, localValue }) => {
@@ -84,6 +86,7 @@ class NumberInput extends React.Component {
                   type="minimal"
                   icon="remove"/>
                 <input
+                  name={name}
                   style={inputStyle}
                   className={cls}
                   min={min}
