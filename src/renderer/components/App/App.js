@@ -13,6 +13,7 @@ import Button from '../UI/Button/Button';
 
 import NumberInput from '../UI/Inputs/NumberInput';
 import CheckedInput from '../UI/Inputs/CheckedInput';
+import SelectInput from '../UI/Inputs/SelectInput';
 
 import DropArea from '../UI/DropArea/DropArea';
 import ToastManager from '../UI/Toast/ToastManager';
@@ -33,6 +34,8 @@ class App extends React.Component {
     super(props);
 
     const PROPERTY_DEFAULTS = {
+      start: 0,
+      duration: 0,
       exportType: EXPORTS.GIF, // Whether the ouput should be gif or movie
       scaledDown: 2, // Scaled down to what size
       scaledFps: 2, // Scaled down FPS by factor
@@ -109,7 +112,12 @@ class App extends React.Component {
   }
 
   onInfo = info => {
-    this.setState({ videoInfo: info });
+    const properties = {
+      ...this.state.properties,
+      start: info.start / 1000,
+      duration: Math.floor(info.duration / 1000)
+    };
+    this.setState({ videoInfo: info, properties });
   }
 
   /**
@@ -157,6 +165,37 @@ class App extends React.Component {
           <Section
             inline
             title={<Title el="h2" size="small">Properties</Title>}>
+            <Section>
+              <NumberInput
+                min={0}
+                max={Math.floor(videoInfo.duration / 1000)}
+                name="start"
+                label="Start"
+                onUpdate={this.onPropertyUpdate}
+                value={properties.start}/>
+            </Section>
+            <Section>
+              <NumberInput
+                min={0}
+                max={Math.floor(videoInfo.duration / 1000)}
+                name="duration"
+                label="Duration"
+                onUpdate={this.onPropertyUpdate}
+                value={properties.duration}/>
+            </Section>
+            <Section>
+              <SelectInput
+                name="exportType"
+                label="Export as"
+                value={properties.exportType}
+                options={Object.keys(EXPORTS).map(e => {
+                  return {
+                    value: EXPORTS[e],
+                    label: EXPORTS[e]
+                  }
+                })}
+                onUpdate={this.onPropertyUpdate}/>
+            </Section>
             <Section>
               <NumberInput
                 min={1}

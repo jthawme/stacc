@@ -128,7 +128,6 @@ class AppLogic {
   }
 
   requestExport = (file, destination, properties) => {
-    console.log({ file, destination, properties });
     ipcRenderer.send(EVENTS.CONVERT, { file, destination, properties });
     return destination;
   }

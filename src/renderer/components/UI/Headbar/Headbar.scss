@@ -1,0 +1,37 @@
+@import '../Common/css/base';
+
+.ui-headbar {
+  position: fixed;
+
+  width: 100%;
+
+  z-index: 10;
+
+  &__local {
+    position: relative;
+  }
+
+  &__content {
+    position: absolute;
+
+    top: 0;
+
+    width: 100%;
+
+    transform: translate3d(0, -100%, 0);
+
+    transition: {
+      duration: var(--ui-duration-normal);
+      timing-function: var(--ui-timing-function);
+      property: transform;
+    };
+  }
+
+  &__pinned {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &__show {
+    transform: translate3d(0, 0, 0);
+  }
+}

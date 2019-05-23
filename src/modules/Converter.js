@@ -8,6 +8,8 @@ const ffprobeStatic = require('ffprobe-static');
 ffmpeg.setFfmpegPath(ffmpegStatic.path);
 ffmpeg.setFfprobePath(ffprobeStatic.path);
 
+const { EXPORTS } = require('../modules/Constants.js');
+
 class Converter {
   constructor() {
       this.defaults = {
@@ -16,7 +18,7 @@ class Converter {
           scaledDown: 1,
           scaledFps: 1,
           sampleColors: true,
-          asGif: true
+          exportType: EXPORTS.GIF
       };
 
       this.extensions = {
@@ -158,12 +160,12 @@ class Converter {
       }).reduce((prev, curr) => prev + curr, 0);
   }
 
-  convert({ file: input, destination: output, properties: options }, onProgress) {
+  convert({ file: input, destination: output, properties }, onProgress) {
     this.info = { input, output };
 
     this.metadata = {};
 
-    this.options = Object.assign({}, this.defaults, options);
+    this.options = Object.assign({}, this.defaults, properties);
 
     return this.getInfo(this.info.input)
       .then(data => this._gatherData(data))

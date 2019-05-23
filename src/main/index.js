@@ -50,18 +50,10 @@ function createMainWindow() {
   })
 
   const converter = new Converter();
-  const convertDefaults = {
-    start: 50,
-    duration: 10,
-    scaledDown: 2,
-    scaledFps: 2,
-    sampleColors: true,
-    asGif: true
-  };
 
   ipcMain.on(EVENTS.CONVERT, (event, { file, destination, properties}) => {
     converter.convert(
-      { file, destination, properties: {...convertDefaults, properties} },
+      { file, destination, properties },
       (percent) => event.sender.send(EVENTS.PROGRESS, percent),
     )
       .then(filePath => {
