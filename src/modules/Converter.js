@@ -65,15 +65,15 @@ class Converter {
     return new Promise((resolve, reject) => {
       const { input, output } = this.info;
       const { width, height, fps } = this.metadata;
-      const { start, duration, scaledFps, scaledDown, sampleColors, asGif } = this.options;
+      const { start, duration, scaledFps, scaledDown, sampleColors, exportType } = this.options;
 
-      const outputPath = this._getOutputName(output, asGif);
+      const outputPath = this._getOutputName(output, exportType);
 
       this.command = ffmpeg()
         .input(input)
         .setStartTime(start)
         .duration(duration)
-        .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, asGif), 'output');
+        .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output');
 
       this.command.on('progress', progress => this.reportProgress(progress, onProgress))
         .on('error', reject)
@@ -82,17 +82,17 @@ class Converter {
     });
   }
 
-  _getOutputName(output, asGif) {
+  _getOutputName(output, exportType) {
       const ext = path.extname(output);
       const extLess = output.slice(0, (ext.length) * -1);
 
       return [
           extLess,
-          asGif ? this.extensions.gif : this.extensions.video
+          this.extensions[exportType.toLowerCase()]
       ].join('.');
   }
 
-  _getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors = true, asGif = true) {
+  _getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors = true, exportType) {
       const fpsFilter = {
           inputs: '0:v',
           filter: 'fps',
@@ -103,7 +103,7 @@ class Converter {
           inputs: '0',
           filter: 'scale',
           options: this._getSize(width, height, scaledDown),
-          outputs: asGif ? '1' : 'output'
+          outputs: exportType === EXPORTS.GIF ? '1' : 'output'
       };
       const splitFilter = { inputs: '1', filter: 'split', outputs: ['a', 'b'] };
       const palettegenFilter = { inputs: 'a', filter: 'palettegen', outputs: 'p' };
@@ -114,7 +114,7 @@ class Converter {
           scaleFilter
       ];
 
-      if (asGif) {
+      if (exportType === EXPORTS.GIF) {
           if (sampleColors) {
               palettegenFilter.options = 'stats_mode=single';
               paletteuseFilter.options = 'new=1';
@@ -173,6 +173,9 @@ class Converter {
       .then(path => {
         this.command = null;
         return path;
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
