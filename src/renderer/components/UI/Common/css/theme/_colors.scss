@@ -7,11 +7,11 @@ $colors: (
     #eee
   ),
   accent: (
-    #11f,
-    #33f,
-    #66f,
-    #bbf,
-    #eef
+    #ff402f,
+    lighten(#ff402f, 10),
+    lighten(#ff402f, 20),
+    lighten(#ff402f, 30),
+    lighten(#ff402f, 40),
   ),
   success: (
     #59e83f,

@@ -1,0 +1,61 @@
+@import '../../css/base';
+
+.dropdisplay {
+  position: absolute;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: var(--ui-type-headline-size-3);
+  line-height: var(--ui-type-headline-lh-3);
+  font-weight: bold;
+
+  color: var(--ui-color-accent-1);
+
+  text-transform: uppercase;
+
+  transition: {
+    duration: var(--ui-duration-normal);
+    property: opacity;
+    timing-function: var(--ui-timing-function);
+  }
+
+  &__content {
+    width: rem(200px);
+
+    text-align: center;
+
+    span {
+      display: inline-block;
+
+      will-change: transform;
+
+      min-width: rem(8px);
+
+      transition: {
+        duration: var(--ui-duration-normal);
+        property: transform;
+        timing-function: var(--ui-timing-function);
+      }
+
+      .dropdisplay--dropping & {
+        transform: translate3d(var(--x-transform), var(--y-transform), 0);
+      }
+    }
+  }
+
+  &--hidden {
+    opacity: 0;
+  }
+}

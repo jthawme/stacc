@@ -63,15 +63,19 @@ class DropArea extends React.Component {
   };
 
   startDrop() {
-    this.setState({
-      dropping: true
-    });
+    if (!this.state.dropping) {
+      this.setState({
+        dropping: true
+      });
+    }
   }
 
   endDrop() {
-    this.setState({
-      dropping: false
-    });
+    if (this.state.dropping) {
+      this.setState({
+        dropping: false
+      });
+    }
   }
 
   onDrop = e => {
@@ -103,7 +107,13 @@ class DropArea extends React.Component {
     if (files.length === 0) {
       this.props.onInvalid();
     } else {
-      let newFiles = this.state.files.concat(files);
+      let newFiles;
+      if (this.props.multiple) {
+        newFiles = this.state.files.concat(files);
+      } else {
+        newFiles = files;
+      }
+
       this.setState({ files: newFiles });
 
       if (this.props.onFiles) {
@@ -169,7 +179,7 @@ class DropArea extends React.Component {
       className,
       'droparea',
       {
-        ['droparea__dropping']: dropping
+        ['droparea__dropping']: dropping && !children
       }
     );
 

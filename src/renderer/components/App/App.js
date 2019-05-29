@@ -19,6 +19,9 @@ import DropArea from '../UI/DropArea/DropArea';
 import ToastManager from '../UI/Toast/ToastManager';
 import Progress from '../UI/Progress/Progress';
 
+import VideoPreview from '../VideoPreview/VideoPreview';
+import DropDisplay from '../DropDisplay/DropDisplay';
+
 // CSS, Requires
 import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
 import AppLogic from './AppLogic';
@@ -154,14 +157,34 @@ class App extends React.Component {
 
         <ToastManager messages={messages} onMessagesUpdate={messages => this.setState({messages})}/>
 
-        <Section>
-          <DropArea
-            onInvalid={() => this.addMessage('Invalid file', 'error')}
-            onFiles={this.onFiles}
-            accept={createAcceptsFromFilter(FILTERS.VIDEO)}/>
-        </Section>
+        <DropArea
+          clickable={false}
+          className="app__drop-wrapper"
+          onInvalid={() => this.addMessage('Invalid file', 'error')}
+          onFiles={this.onFiles}
+          accept={createAcceptsFromFilter(FILTERS.VIDEO)}>
+          { (files, dropping) => {
+            const dropCls = classNames(
+              'app__drop',
+              {
+                'app__drop--dropping': dropping
+              }
+            );
 
-        { videoInfo ? (
+            console.log(files);
+
+            return (
+              <div className={ dropCls }>
+                <DropDisplay
+                  dropping={dropping}
+                  hasFiles={files.length}/>
+                <VideoPreview />
+              </div>
+            );
+          }}
+        </DropArea>
+
+        {/* { videoInfo ? (
           <Section
             inline
             title={<Title el="h2" size="small">Properties</Title>}>
@@ -232,7 +255,7 @@ class App extends React.Component {
 
             { exporting ? <Progress percent={exportingProgress}/> : null }
           </Section>
-        ) : null }
+        ) : null } */}
       </div>
     );
   }
