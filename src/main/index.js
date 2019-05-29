@@ -18,7 +18,10 @@ function createMainWindow() {
     height: 480,
     titleBarStyle: 'hidden',
     movable: true,
-    webPreferences: { webSecurity: false }
+    webPreferences: {
+      webSecurity: false,
+      nodeIntegration: true
+    }
   });
 
   window.setResizable(false);

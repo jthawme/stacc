@@ -1,5 +1,17 @@
 @import '../../css/base';
 
 .videopreview {
-  font-family: inherit;
+  transform: scale(0.9);
+  opacity: 0;
+
+  transition: {
+    duration: var(--ui-duration-normal);
+    property: transform, opacity;
+    timing-function: var(--ui-timing-function);
+  }
+
+  &--show {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

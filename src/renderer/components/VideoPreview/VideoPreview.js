@@ -16,19 +16,44 @@ class VideoPreview extends React.Component {
     className: PropTypes.string
   };
 
+  static defaultProps = {
+    time: 0
+  };
+
+  componentDidUpdate(oldProps) {
+    if (oldProps.time !== this.props.time) {
+      this.video.currentTime = this.props.time;
+    }
+  }
+
+  displayFile(file) {
+    if (!file) {
+      return '';
+    }
+
+    return file.path.substring(0, 5) !== 'file:' ? `file:${file.path}` : file.path;
+  }
+
+  setRef = ref => {
+    this.video = ref;
+
+    if (ref) {
+      ref.currentTime = this.props.time;
+    }
+  }
+
   render() {
-    const { className } = this.props;
+    const { className, file } = this.props;
 
     const cls = classNames(
       className,
-      'videopreview'
+      'videopreview',
+      {
+        'videopreview--show': file
+      }
     );
 
-    return (
-      <div className={cls}>
-        VideoPreview
-      </div>
-    );
+    return <video ref={this.setRef} className={cls} src={this.displayFile(file)}/>;
   }
 }
 

@@ -28,4 +28,19 @@
 
     background-color: transparent;
   }
+
+  &__drop {
+    &__video {
+      position: absolute;
+
+      top: calc(var(--ui-size-padding) * 1.5);
+      left: calc(var(--ui-size-padding) * 1.5);
+
+      width: calc(100% - ((var(--ui-size-padding) * 1.5) * 2));
+      height: calc(100% - ((var(--ui-size-padding) * 1.5) * 2));
+
+      object-fit: contain;
+      background-color: var(--ui-color-primary-1);
+    }
+  }
 }

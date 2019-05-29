@@ -171,14 +171,14 @@ class App extends React.Component {
               }
             );
 
-            console.log(files);
-
             return (
               <div className={ dropCls }>
                 <DropDisplay
                   dropping={dropping}
                   hasFiles={files.length}/>
-                <VideoPreview />
+                <VideoPreview
+                  className="app__drop__video"
+                  file={files.length ? files[0] : false}/>
               </div>
             );
           }}
