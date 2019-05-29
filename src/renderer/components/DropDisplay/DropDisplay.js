@@ -31,8 +31,8 @@ class DropDisplay extends React.Component {
   }
 
   getCharacters(text) {
-    let min = 200;
-    let max = 800;
+    let min = 300;
+    let max = 900;
     return text.split('').map((c, index) => {
       if (index < 4) {
         return {

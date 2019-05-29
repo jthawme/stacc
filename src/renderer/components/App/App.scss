@@ -8,6 +8,8 @@
 
   padding: 0;
 
+  overflow: hidden;
+
   &__fake-head {
     position: fixed;
 
@@ -41,6 +43,31 @@
 
       object-fit: contain;
       background-color: var(--ui-color-primary-1);
+    }
+  }
+
+  &__controls {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    background-color: var(--ui-color-accent-1);
+    color: var(--ui-color-primary-5);
+
+    width: 100%;
+
+    transform: translate3d(0, 100%, 0);
+
+    transition: {
+      duration: var(--ui-duration-normal);
+      property: transform;
+      timing-function: var(--ui-timing-function);
+      delay: 0.5s;
+    }
+
+    .app--has-file & {
+      transform: translate3d(0, 0, 0);
     }
   }
 }

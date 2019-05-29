@@ -21,6 +21,7 @@ import Progress from '../UI/Progress/Progress';
 
 import VideoPreview from '../VideoPreview/VideoPreview';
 import DropDisplay from '../DropDisplay/DropDisplay';
+import Controls from '../Controls/Controls';
 
 // CSS, Requires
 import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
@@ -40,8 +41,8 @@ class App extends React.Component {
       start: 0,
       duration: 0,
       exportType: EXPORTS.GIF, // Whether the ouput should be gif or movie
-      scaledDown: 2, // Scaled down to what size
-      scaledFps: 2, // Scaled down FPS by factor
+      scaledDown: 1, // Scaled down to what size
+      scaledFps: 1, // Scaled down FPS by factor
       sampleColors: true, // Whether to sample colours per frame (GIF only)
     };
 
@@ -118,7 +119,7 @@ class App extends React.Component {
     const properties = {
       ...this.state.properties,
       start: info.start / 1000,
-      duration: Math.floor(info.duration / 1000)
+      duration: 5//Math.floor(info.duration / 1000)
     };
     this.setState({ videoInfo: info, properties });
   }
@@ -145,10 +146,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { messages, videoInfo, properties, exporting, exportingProgress } = this.state;
+    const { messages, videoInfo, properties, exporting, exportingProgress, file } = this.state;
 
     const cls = classNames(
-      'app'
+      'app',
+      {
+        'app--has-file': file
+      }
     );
 
     return (
@@ -178,11 +182,19 @@ class App extends React.Component {
                   hasFiles={files.length}/>
                 <VideoPreview
                   className="app__drop__video"
-                  file={files.length ? files[0] : false}/>
+                  file={file}/>
               </div>
             );
           }}
         </DropArea>
+
+        <Controls
+          className="app__controls"
+          videoInfo={videoInfo}
+          properties={properties}
+          disabled={exporting}
+          onPropertyUpdate={this.onPropertyUpdate}
+          onExport={this.onRequestExport}/>
 
         {/* { videoInfo ? (
           <Section

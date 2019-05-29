@@ -15,7 +15,7 @@ class Converter {
       this.defaults = {
           start: 0,
           duration: 1,
-          scaledDown: 1,
+          scaledDown: 2,
           scaledFps: 1,
           sampleColors: true,
           exportType: EXPORTS.GIF
@@ -73,11 +73,13 @@ class Converter {
         .input(input)
         .setStartTime(start)
         .duration(duration)
-        .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output');
-
-      this.command.on('progress', progress => this.reportProgress(progress, onProgress))
-        .on('error', reject)
+        .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output')
+        .on('progress', progress => this.reportProgress(progress, onProgress))
         .on('end', () => resolve(outputPath))
+        .on('error', err => {
+          console.log('error');
+          reject(err);
+        })
         .save(outputPath);
     });
   }

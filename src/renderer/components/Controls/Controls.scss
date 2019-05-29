@@ -1,0 +1,78 @@
+@import '../../css/base';
+
+.controls {
+  font-family: inherit;
+
+  &__main {
+    display: flex;
+
+    align-items: center;
+
+    font-size: var(--ui-type-body-size-1);
+
+    &__left {
+      display: flex;
+
+      align-items: center;
+      flex: 1 1 auto;
+    }
+
+    &__right {
+      flex: 0 0 rem(100px);
+
+      text-align: right;
+    }
+  }
+}
+
+.controls-pad {
+  padding: var(--ui-size-padding) calc(var(--ui-size-padding) * 1.5);
+}
+
+.export-type {
+  width: rem(100px);
+
+  padding: 0;
+  margin: 0;
+
+  font-weight: bold;
+
+  &__content {
+
+  }
+
+  &__options {
+    top: auto;
+    bottom: 100%;
+
+    width: 100%;
+  }
+
+  &__trigger {
+    display: block;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--ui-color-accent-3);
+    }
+
+    &--open {
+      color: var(--ui-color-accent-3);
+    }
+  }
+
+  &__option {
+    display: block;
+
+    cursor: pointer;
+    color: var(--ui-color-primary-5);
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    &:hover {
+      color: var(--ui-color-accent-4);
+    }
+  }
+}

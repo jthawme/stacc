@@ -130,7 +130,7 @@ class SelectInput extends React.Component {
     if (triggerItem) {
       return (
         <span onClick={this.toggleOptions}>
-          { triggerItem(label) }
+          { triggerItem(label, this.state.optionsOpen) }
         </span>
       );
     }
