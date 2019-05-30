@@ -71,8 +71,8 @@ class Converter {
 
       this.command = ffmpeg()
         .input(input)
-        .setStartTime(start)
-        .duration(duration)
+        .setStartTime(start / 1000)
+        .duration(duration / 1000)
         .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output')
         .on('progress', progress => this.reportProgress(progress, onProgress))
         .on('end', () => resolve(outputPath))

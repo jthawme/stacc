@@ -56,7 +56,9 @@ class App extends React.Component {
 
       properties: PROPERTY_DEFAULTS,
 
-      messages: []
+      messages: [],
+
+      activeTime: 0
     };
 
     this.logic = new AppLogic({
@@ -118,10 +120,10 @@ class App extends React.Component {
   onInfo = info => {
     const properties = {
       ...this.state.properties,
-      start: info.start / 1000,
-      duration: 5//Math.floor(info.duration / 1000)
+      start: info.start,
+      duration: 5000
     };
-    this.setState({ videoInfo: info, properties });
+    this.setState({ videoInfo: info, properties, activeTime: 0 });
   }
 
   /**
@@ -137,16 +139,30 @@ class App extends React.Component {
   }
 
   onPropertyUpdate = (value, name) => {
-    const properties = {
-      ...this.state.properties,
-      [name]: value
+    const state = {
+      properties: {
+        ...this.state.properties,
+        [name]: value
+      }
     };
 
-    this.setState({ properties });
+    if (name === 'start') {
+      state.activeTime = value;
+    }
+
+    if (name === 'duration') {
+      let endTime = this.state.properties.start + value;
+
+      // TODO Cut down over length
+
+      state.activeTime = endTime;
+    }
+
+    this.setState(state);
   }
 
   render() {
-    const { messages, videoInfo, properties, exporting, exportingProgress, file } = this.state;
+    const { messages, videoInfo, properties, exporting, exportingProgress, file, activeTime } = this.state;
 
     const cls = classNames(
       'app',
@@ -181,6 +197,7 @@ class App extends React.Component {
                   dropping={dropping}
                   hasFiles={files.length}/>
                 <VideoPreview
+                  time={activeTime}
                   className="app__drop__video"
                   file={file}/>
               </div>
