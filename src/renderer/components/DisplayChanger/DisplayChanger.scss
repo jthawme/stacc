@@ -1,0 +1,18 @@
+@import '../../css/base';
+
+.displaychanger {
+  font-family: inherit;
+
+  opacity: 0;
+  transform: scaleX(0);
+
+  transition: {
+    property: opacity, transform;
+    duration: 0.25s;
+  }
+
+  &--display {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}

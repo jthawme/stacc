@@ -14,7 +14,7 @@ import "./GenericInput.scss";
 class GenericInput extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     local: PropTypes.bool,
     children: PropTypes.func,
     name: PropTypes.string
@@ -62,6 +62,14 @@ class GenericInput extends React.Component {
     })
   }
 
+  renderLabel(label) {
+    if (typeof label === 'object') {
+      return label;
+    }
+
+    return <span className={'ui-input__title'}>{ label }</span>
+  }
+
   render() {
     const { className, label, children, type, noLine } = this.props;
 
@@ -73,9 +81,7 @@ class GenericInput extends React.Component {
 
     return (
       <label className={cls}>
-        { label ? (
-          <span className={'ui-input__title'}>{ label }</span>
-        ) : null }
+        { label ? this.renderLabel(label) : null }
         { this.renderInput(children) }
         { !noLine ? (
           <span className={'ui-input__underline'}/>

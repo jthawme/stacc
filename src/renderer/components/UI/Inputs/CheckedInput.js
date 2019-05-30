@@ -17,7 +17,7 @@ import Button from '../Button/Button';
 class CheckedInput extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     local: PropTypes.bool,
     type: PropTypes.string,
     name: PropTypes.string,

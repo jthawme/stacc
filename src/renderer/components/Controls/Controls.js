@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import Button from '../UI/Button/Button';
 import SelectInput from '../UI/Inputs/SelectInput';
 import NumberInput from '../UI/Inputs/NumberInput';
+import CheckedInput from '../UI/Inputs/CheckedInput';
 import Slider from '../UI/Slider/Slider';
 
 import TimeInput from './TimeInput';
@@ -18,6 +19,7 @@ import TimeInput from './TimeInput';
 import { EXPORTS } from '../../../modules/Constants';
 import "./Controls.scss";
 import Progress from '../UI/Progress/Progress';
+import Incrementer from '../Incrementer/Incrementer';
 
 class Controls extends React.Component {
   static propTypes = {
@@ -68,9 +70,9 @@ class Controls extends React.Component {
 
                 <SelectInput
                   disabled={disabled}
-                  className="export-type"
                   contentClassName="export-type__content"
                   optionsClassName="export-type__options"
+                  className="export-type controls-button"
                   name="exportType"
                   triggerItem={(label, open) => (
                     <span className={`export-type__trigger controls-pad ${open ? 'export-type__trigger--open' : ''}`}>
@@ -93,8 +95,9 @@ class Controls extends React.Component {
 
                 <Button
                   disabled={disabled}
-                  type="minimal"
+                  type="none"
                   size="medium"
+                  className="controls-button"
                   noMargin
                   onClick={this.toggleOptions}>
                   Options +
@@ -103,9 +106,9 @@ class Controls extends React.Component {
               <div className="controls__main__right">
                 <Button
                   disabled={disabled}
-                  type="minimal"
+                  type="none"
                   size="large"
-                  className="controls-pad"
+                  className="controls-button"
                   noMargin
                   onClick={onExport}>
                   Save
@@ -114,7 +117,41 @@ class Controls extends React.Component {
             </div>
             <Slider
               closed={!options}>
-              <span>Options</span>
+              <div className="controls__sub">
+                <div className="controls__sub-column">
+                  <Incrementer
+                    name="scaledDown"
+                    label={<span className="controls__sub-input__title">Scale</span>}
+                    className="controls__sub-input"
+                    onUpdate={onPropertyUpdate}
+                    value={properties.scaledDown}
+                    min={1}
+                    max={4}/>
+                </div>
+                <div className="controls__sub-column">
+                  <Incrementer
+                    name="scaledFps"
+                    label={<span className="controls__sub-input__title">FPS</span>}
+                    className="controls__sub-input"
+                    onUpdate={onPropertyUpdate}
+                    value={properties.scaledFps}
+                    min={1}
+                    max={4}/>
+                </div>
+                <div className="controls__sub-column">
+                  <Slider
+                    closed={properties.exportType !== EXPORTS.GIF}>
+                    <CheckedInput
+                      name="sampleColors"
+                      label={<span className="controls__sub-input__title">Sample Colors</span>}
+                      className="controls__sub-input"
+                      checkedEl={<span>Yes</span>}
+                      uncheckedEl={<span>No</span>}
+                      onUpdate={onPropertyUpdate}
+                      value={properties.sampleColors}/>
+                  </Slider>
+                </div>
+              </div>
             </Slider>
           </>
         ) : null }

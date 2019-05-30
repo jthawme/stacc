@@ -28,6 +28,7 @@ import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Cons
 import AppLogic from './AppLogic';
 import "./App.scss";
 import "../UI/Common/css/defaults.scss";
+import DisplayChanger from '../DisplayChanger/DisplayChanger';
 
 class App extends React.Component {
   static propTypes = {
@@ -205,6 +206,10 @@ class App extends React.Component {
           }}
         </DropArea>
 
+        <DisplayChanger
+          type={ properties.exportType }
+          className="app__display-changer"/>
+
         <Controls
           className="app__controls"
           progress={exportingProgress}
@@ -213,79 +218,6 @@ class App extends React.Component {
           disabled={exporting}
           onPropertyUpdate={this.onPropertyUpdate}
           onExport={this.onRequestExport}/>
-
-        {/* { videoInfo ? (
-          <Section
-            inline
-            title={<Title el="h2" size="small">Properties</Title>}>
-            <Section>
-              <NumberInput
-                min={0}
-                max={Math.floor(videoInfo.duration / 1000)}
-                name="start"
-                label="Start"
-                onUpdate={this.onPropertyUpdate}
-                value={properties.start}/>
-            </Section>
-            <Section>
-              <NumberInput
-                min={0}
-                max={Math.floor(videoInfo.duration / 1000)}
-                name="duration"
-                label="Duration"
-                onUpdate={this.onPropertyUpdate}
-                value={properties.duration}/>
-            </Section>
-            <Section>
-              <SelectInput
-                name="exportType"
-                label="Export as"
-                value={properties.exportType}
-                options={Object.keys(EXPORTS).map(e => {
-                  return {
-                    value: EXPORTS[e],
-                    label: EXPORTS[e]
-                  }
-                })}
-                onUpdate={this.onPropertyUpdate}/>
-            </Section>
-            <Section>
-              <NumberInput
-                min={1}
-                max={4}
-                name="scaledDown"
-                label="Scaled down"
-                onUpdate={this.onPropertyUpdate}
-                value={properties.scaledDown}/>
-            </Section>
-            <Section>
-              <NumberInput
-                min={1}
-                max={4}
-                name="scaledFps"
-                label="Scaled FPS"
-                onUpdate={this.onPropertyUpdate}
-                value={properties.scaledFps}/>
-            </Section>
-            { properties.exportType === EXPORTS.GIF ? (
-              <Section>
-                <CheckedInput
-                  name="sampleColors"
-                  label="Sample colours"
-                  onUpdate={this.onPropertyUpdate}
-                  value={properties.sampleColors}/>
-              </Section>
-            ) : null }
-            <Section>
-              <Button
-                onClick={this.onRequestExport}>
-                Export
-              </Button>
-            </Section>
-
-            { exporting ? <Progress percent={exportingProgress}/> : null }
-          </Section>
-        ) : null } */}
       </div>
     );
   }

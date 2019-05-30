@@ -15,6 +15,10 @@ function padTime(value) {
 	return value.toString().padStart(2, '0');
 }
 
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
 class TimeInput extends React.Component {
   static propTypes = {
     className: PropTypes.string
@@ -94,8 +98,27 @@ class TimeInput extends React.Component {
     this.props.onUpdate(this.toNumber(this.state.parts.join(':')), this.props.name);
   }
 
+  onFocus = e => {
+    e.target.select();
+  }
+
+  onKeyDown = e => {
+    const key = parseInt(e.target.name);
+    const parts = this.state.parts.slice();
+
+    if (e.keyCode === 38) { // UP
+      parts[key] = clamp(padTime(parseInt(parts[key]) + 1), 0, 100);
+      this.setState({ parts });
+    }
+
+    if (e.keyCode === 40) { // DOWN
+      parts[key] = clamp(padTime(parseInt(parts[key]) - 1), 0, 100);
+      this.setState({ parts });
+    }
+  }
+
   render() {
-    const { className } = this.props;
+    const { className, disabled } = this.props;
     const { parts } = this.state;
 
     const cls = classNames(
@@ -110,6 +133,9 @@ class TimeInput extends React.Component {
             return (
               <Fragment key={index}>
                 <input
+                  disabled={disabled}
+                  onFocus={this.onFocus}
+                  onKeyDown={this.onKeyDown}
                   className="timeinput__input"
                   type="text"
                   name={index}

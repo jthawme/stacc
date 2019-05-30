@@ -1,6 +1,9 @@
 @import '../Common/css/base';
 
 .ui-button {
+  --ui-button-disabled-color: var(--ui-color-primary-3);
+  --ui-button-disabled-bg-color: var(--ui-color-primary-4);
+
   display: inline-flex;
 
   align-items: center;
@@ -19,7 +22,8 @@
   &[disabled] {
     cursor: not-allowed;
 
-    background-color: var(--ui-color-primary-4);
+    color: var(--ui-button-disabled-color);
+    background-color: var(--ui-button-disabled-bg-color);
   }
 }
 

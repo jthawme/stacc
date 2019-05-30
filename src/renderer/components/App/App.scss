@@ -70,4 +70,31 @@
       transform: translate3d(0, 0, 0);
     }
   }
+
+  &__display-changer {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: rem(220px);
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: rem(2px) var(--ui-color-primary-1);
+
+    pointer-events: none;
+
+    mix-blend-mode: difference;
+  }
 }

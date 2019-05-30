@@ -57,7 +57,9 @@ class SelectInput extends React.Component {
   }
 
   toggleOptions = () => {
-    this.setOptionsState(!this.state.optionsOpen);
+    if (!this.props.disabled) {
+      this.setOptionsState(!this.state.optionsOpen);
+    }
   }
 
   setOptionsState = state => {
@@ -143,7 +145,7 @@ class SelectInput extends React.Component {
   }
 
   render() {
-    const { className, label, options, value, type, onUpdate, name, contentClassName, optionsClassName } = this.props;
+    const { className, disabled, label, options, value, type, onUpdate, name, contentClassName, optionsClassName } = this.props;
     const { optionsOpen } = this.state;
 
     const contentCls = classNames(
@@ -175,6 +177,7 @@ class SelectInput extends React.Component {
               </Slider>
               { this.renderTrigger() }
               <select
+                disabled={disabled}
                 name={name}
                 className={'ui-select__select'}
                 onChange={e => this.onChange(e, onChange)}

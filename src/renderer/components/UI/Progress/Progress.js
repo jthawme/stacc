@@ -51,8 +51,6 @@ class Progress extends React.Component {
       `ui-progress__${speed}`,
     );
 
-    console.log(percent);
-
     const style = {
       transform: `scaleX(${ percent })`
     };

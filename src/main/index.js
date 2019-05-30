@@ -18,6 +18,8 @@ function createMainWindow() {
     height: 480,
     titleBarStyle: 'hidden',
     movable: true,
+    maximizable: false,
+    minimizable: false,
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true

@@ -46,6 +46,43 @@
     --ui-progress-track-color: transparent;
     --ui-progress-bar-color: var(--ui-color-accent-2);
   }
+
+  &__sub {
+    display: flex;
+
+    padding: var(--ui-size-padding);
+
+    background-color: var(--ui-color-accent-2);
+  }
+}
+
+.controls-button {
+  --ui-button-disabled-color: var(--ui-color-accent-2);
+  --ui-button-disabled-bg-color: transparent;
+
+  &:hover {
+    color: var(--ui-color-accent-3);
+  }
+}
+
+.controls__sub-input {
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 0;
+  margin: 0 var(--ui-size-padding) 0 0;
+
+  font-size: var(--ui-type-headline-size-2);
+  font-weight: bold;
+
+  line-height: 1.1;
+
+  user-select: none;
+
+  &__title {
+    font-size: var(--ui-type-body-size-2);
+  }
 }
 
 .export-type {

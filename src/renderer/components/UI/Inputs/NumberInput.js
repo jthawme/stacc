@@ -18,11 +18,12 @@ import "./NumberInput.scss";
 class NumberInput extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     placeholder: PropTypes.string,
     local: PropTypes.bool,
     type: PropTypes.string,
     name: PropTypes.string,
+    buttons: PropTypes.bool,
 
     onChange: PropTypes.func,
   };
@@ -31,6 +32,8 @@ class NumberInput extends React.Component {
     local: false,
     type: TYPES.NORMAL,
     onUpdate: () => {},
+
+    buttons: true,
 
     min: 0,
     max: 1000000,
@@ -55,10 +58,10 @@ class NumberInput extends React.Component {
   }
 
   render() {
-    const { className, label, placeholder, value, local, type, onUpdate, min, max, step, width, name } = this.props;
+    const { className, label, placeholder, value, local, type, onUpdate, min, max, step, width, name, buttons } = this.props;
 
     const cls = classNames(
-      'ui-input__input'
+      'ui-number-input__input'
     );
 
     return (
@@ -80,11 +83,13 @@ class NumberInput extends React.Component {
 
             return (
               <div className={'ui-number-input__content'}>
-                <Button
-                  onClick={e => this.mod(step * -1, localValue, onChange)}
-                  rounded
-                  type="minimal"
-                  icon="remove"/>
+                { buttons ? (
+                  <Button
+                    onClick={e => this.mod(step * -1, localValue, onChange)}
+                    rounded
+                    type="minimal"
+                    icon="remove"/>
+                ) : null }
                 <input
                   name={name}
                   style={inputStyle}
@@ -97,11 +102,13 @@ class NumberInput extends React.Component {
                   onChange={e => this.onChange(e, onChange)}
                   onBlur={onBlur}
                   value={_val}/>
-                <Button
-                  onClick={e => this.mod(step, localValue, onChange)}
-                  rounded
-                  type="minimal"
-                  icon="add"/>
+                { buttons ? (
+                  <Button
+                    onClick={e => this.mod(step, localValue, onChange)}
+                    rounded
+                    type="minimal"
+                    icon="add"/>
+                ) : null }
               </div>
             )
           }

@@ -6,4 +6,16 @@
 
       align-items: center;
   }
+
+  &__input {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+
+    padding: 0;
+
+    outline: 0;
+
+    -webkit-appearance: none;
+  }
 }

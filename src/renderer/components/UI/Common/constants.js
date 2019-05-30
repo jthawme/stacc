@@ -17,6 +17,7 @@ export const TYPES = {
   SUCCESS: 'success',
   WARN: 'warn',
   MINIMAL: 'minimal',
+  NONE: 'none',
 };
 
 export const ANIMATION = {
