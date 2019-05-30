@@ -22,7 +22,7 @@ class VideoPreview extends React.Component {
 
   componentDidUpdate(oldProps) {
     if (oldProps.time !== this.props.time || oldProps.file !== this.props.file) {
-      this.video.currentTime = this.props.time;
+      this.video.currentTime = this.props.time / 1000;
     }
   }
 

@@ -1,30 +1,31 @@
 @import '../Common/css/base';
 
 .ui-progress {
+  --ui-progress-track-color: var(--ui-color-primary-5);
+  --ui-progress-bar-color: var(--ui-color-primary-5);
+
+  &__small {
+    height: ui-rem(12px);
+  }
+
+  &__medium {
+    height: ui-rem(18px);
+  }
+
+  &__large {
+    height: ui-rem(28px);
+  }
+
   &__track {
     position: relative;
 
-    background-color: var(--ui-color-primary-5);
+    height: 100%;
+
+    background-color: var(--ui-progress-track-color);
 
     overflow: hidden;
 
     border-radius: var(--ui-border-radius);
-
-    .ui-progress__small & {
-      height: ui-rem(12px);
-    }
-
-    .ui-progress__medium & {
-      height: ui-rem(18px);
-    }
-
-    .ui-progress__large & {
-      height: ui-rem(28px);
-    }
-
-    .ui-progress__free & {
-      height: 100%;
-    }
   }
 
   &__bar {
@@ -36,7 +37,7 @@
     width: 100%;
     height: 100%;
 
-    background-color: var(--ui-color-primary-1);
+    background-color: var(--ui-progress-bar-color);
 
     transition: {
       property: transform;

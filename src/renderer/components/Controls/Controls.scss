@@ -1,6 +1,7 @@
 @import '../../css/base';
 
 .controls {
+  position: relative;
   font-family: inherit;
 
   &__main {
@@ -9,7 +10,7 @@
     align-items: center;
 
     font-size: var(--ui-type-body-size-1);
-    padding: var(--ui-size-padding);
+    padding: calc(var(--ui-size-padding) / 2);
 
     &__left {
       display: flex;
@@ -27,6 +28,23 @@
 
       text-align: right;
     }
+  }
+
+  &__progress {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    mix-blend-mode: exclusion;
+
+    pointer-events: none;
+
+    --ui-progress-track-color: transparent;
+    --ui-progress-bar-color: var(--ui-color-accent-2);
   }
 }
 

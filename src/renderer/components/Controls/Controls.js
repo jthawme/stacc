@@ -17,6 +17,7 @@ import TimeInput from './TimeInput';
 // CSS, Requires
 import { EXPORTS } from '../../../modules/Constants';
 import "./Controls.scss";
+import Progress from '../UI/Progress/Progress';
 
 class Controls extends React.Component {
   static propTypes = {
@@ -36,7 +37,7 @@ class Controls extends React.Component {
   }
 
   render() {
-    const { className, onExport, properties, videoInfo, onPropertyUpdate, disabled } = this.props;
+    const { className, onExport, properties, videoInfo, onPropertyUpdate, disabled, progress } = this.props;
     const { options } = this.state;
 
     const cls = classNames(
@@ -48,19 +49,25 @@ class Controls extends React.Component {
       <div className={cls}>
         { videoInfo ? (
           <>
+            <Progress
+              className="controls__progress"
+              percent={progress}/>
             <div className="controls__main">
               <div className="controls__main__left">
                 <TimeInput
+                  disabled={disabled}
                   name="start"
                   onUpdate={onPropertyUpdate}
                   value={properties.start}/>
 
                 <TimeInput
+                  disabled={disabled}
                   name="duration"
                   onUpdate={onPropertyUpdate}
                   value={properties.duration}/>
 
                 <SelectInput
+                  disabled={disabled}
                   className="export-type"
                   contentClassName="export-type__content"
                   optionsClassName="export-type__options"
@@ -85,6 +92,7 @@ class Controls extends React.Component {
                   onUpdate={onPropertyUpdate}/>
 
                 <Button
+                  disabled={disabled}
                   type="minimal"
                   size="medium"
                   noMargin
@@ -94,6 +102,7 @@ class Controls extends React.Component {
               </div>
               <div className="controls__main__right">
                 <Button
+                  disabled={disabled}
                   type="minimal"
                   size="large"
                   className="controls-pad"

@@ -207,6 +207,7 @@ class App extends React.Component {
 
         <Controls
           className="app__controls"
+          progress={exportingProgress}
           videoInfo={videoInfo}
           properties={properties}
           disabled={exporting}

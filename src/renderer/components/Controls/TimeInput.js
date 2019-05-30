@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 // 3rd Party Modules
@@ -108,14 +108,18 @@ class TimeInput extends React.Component {
         {
           parts.map((t, index) => {
             return (
-              <input
-                key={index}
-                className="timeinput__input"
-                type="text"
-                name={index}
-                value={t}
-                onChange={this.onChange}
-                onBlur={this.onCommit}/>
+              <Fragment key={index}>
+                <input
+                  className="timeinput__input"
+                  type="text"
+                  name={index}
+                  value={t}
+                  onChange={this.onChange}
+                  onBlur={this.onCommit}/>
+                { index < parts.length - 1 ? (
+                  <span className="timeinput__seperator">:</span>
+                ) : null }
+              </Fragment>
             )
           })
         }

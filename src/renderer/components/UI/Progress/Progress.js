@@ -35,7 +35,7 @@ class Progress extends React.Component {
 
   renderPercent(percent, displayFunc) {
     if (!displayFunc || typeof displayFunc !== 'function') {
-      return percent;
+      return <div className={'ui-progress__unit'}>percent</div>;
     }
 
     return displayFunc(percent);
@@ -51,6 +51,8 @@ class Progress extends React.Component {
       `ui-progress__${speed}`,
     );
 
+    console.log(percent);
+
     const style = {
       transform: `scaleX(${ percent })`
     };
@@ -60,9 +62,7 @@ class Progress extends React.Component {
         <div className={'ui-progress__track'}>
           <div className={'ui-progress__bar'} style={style}/>
         </div>
-        { displayUnit ? (
-          <div className={'ui-progress__unit'}>{ this.renderPercent(percent, displayFunc) }</div>
-        ) : null }
+        { displayUnit ? this.renderPercent(percent, displayFunc) : null }
       </div>
     );
   }

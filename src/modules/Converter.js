@@ -71,8 +71,8 @@ class Converter {
 
       this.command = ffmpeg()
         .input(input)
-        .setStartTime(start / 1000)
-        .duration(duration / 1000)
+        .setStartTime(start)
+        .duration(duration)
         .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output')
         .on('progress', progress => this.reportProgress(progress, onProgress))
         .on('end', () => resolve(outputPath))
@@ -168,6 +168,9 @@ class Converter {
     this.metadata = {};
 
     this.options = Object.assign({}, this.defaults, properties);
+
+    this.options.start = this.options.start / 1000;
+    this.options.duration = this.options.duration / 1000;
 
     return this.getInfo(this.info.input)
       .then(data => this._gatherData(data))
