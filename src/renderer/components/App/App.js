@@ -29,6 +29,8 @@ import AppLogic from './AppLogic';
 import "./App.scss";
 import "../UI/Common/css/defaults.scss";
 import DisplayChanger from '../DisplayChanger/DisplayChanger';
+import Logo from '../Logo/Logo';
+import Splash from '../Splash/Splash';
 
 class App extends React.Component {
   static propTypes = {
@@ -177,6 +179,8 @@ class App extends React.Component {
         <div className="app__fake-head"/>
 
         <ToastManager messages={messages} onMessagesUpdate={messages => this.setState({messages})}/>
+
+        <Splash/>
 
         <DropArea
           clickable={false}

@@ -72,8 +72,10 @@ class Converter {
       this.command = ffmpeg()
         .input(input)
         .setStartTime(start)
-        .duration(duration)
-        .complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output')
+        .duration(duration);
+
+      this.command.complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output')
+        .on('start', console.log)
         .on('progress', progress => this.reportProgress(progress, onProgress))
         .on('end', () => resolve(outputPath))
         .on('error', err => {
@@ -95,39 +97,51 @@ class Converter {
   }
 
   _getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors = true, exportType) {
-      const fpsFilter = {
-          inputs: '0:v',
-          filter: 'fps',
-          options: this._getFps(fps, scaledFps),
-          outputs: '0'
-      };
-      const scaleFilter = {
-          inputs: '0',
-          filter: 'scale',
-          options: this._getSize(width, height, scaledDown),
-          outputs: exportType === EXPORTS.GIF ? '1' : 'output'
-      };
-      const splitFilter = { inputs: '1', filter: 'split', outputs: ['a', 'b'] };
+    const filter = [];
+    let idx = 0;
+
+    const fpsFilter = {
+        inputs: '0:v',
+        filter: 'fps',
+        options: this._getFps(fps, scaledFps),
+        outputs: '0'
+    };
+
+    const scaleFilter = {
+        inputs: '0',
+        filter: 'scale',
+        options: this._getSize(width, height, scaledDown),
+        outputs: exportType === EXPORTS.GIF ? '1' : 'output'
+    };
+
+    if (scaledDown != 1) {
+      filter.push(scaleFilter);
+      idx++;
+    } else {
+      fpsFilter.outputs = '1';
+    }
+
+    if (scaledFps != 1) {
+      idx++;
+      filter.unshift(fpsFilter);
+    }
+
+    if (exportType === EXPORTS.GIF) {
+      const splitFilter = { inputs: idx > 0 ? '1' : '0', filter: 'split', outputs: ['a', 'b'] };
       const palettegenFilter = { inputs: 'a', filter: 'palettegen', outputs: 'p' };
       const paletteuseFilter = { inputs: ['b', 'p'], filter: 'paletteuse', outputs: 'output' };
 
-      const filter = [
-          fpsFilter,
-          scaleFilter
-      ];
-
-      if (exportType === EXPORTS.GIF) {
-          if (sampleColors) {
-              palettegenFilter.options = 'stats_mode=single';
-              paletteuseFilter.options = 'new=1';
-          }
-
-          filter.push(splitFilter);
-          filter.push(palettegenFilter);
-          filter.push(paletteuseFilter);
+      if (sampleColors) {
+          palettegenFilter.options = 'stats_mode=single';
+          paletteuseFilter.options = 'new=1';
       }
 
-      return filter;
+      filter.push(splitFilter);
+      filter.push(palettegenFilter);
+      filter.push(paletteuseFilter);
+    }
+
+    return filter;
   }
 
   _getFps(fps, scaledFps) {
@@ -138,10 +152,11 @@ class Converter {
       return `${width / scaledDown}:${height / scaledDown}`;
   }
 
-  reportProgress({ timemark }, onProgress) {
-      const currentDelta = this._convertTimeToSeconds(timemark) / this.options.duration;
+  reportProgress(properties, onProgress) {
+    console.log('debug progress', properties);
+    const currentDelta = this._convertTimeToSeconds(properties.timemark) / this.options.duration;
 
-      onProgress(currentDelta);
+    onProgress(currentDelta);
   }
 
 

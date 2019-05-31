@@ -97,4 +97,17 @@
 
     mix-blend-mode: difference;
   }
+
+  &__logo {
+    position: absolute;
+
+    z-index: 10;
+
+    top: 25%;
+    left: 100px;
+
+    color: var(--ui-color-accent-1);
+
+    --logo-square-size: 50px;
+  }
 }

@@ -28,7 +28,7 @@
   text-transform: uppercase;
 
   transition: {
-    duration: var(--ui-duration-normal);
+    duration: var(--ui-duration-low);
     property: opacity;
     timing-function: var(--ui-timing-function);
   }

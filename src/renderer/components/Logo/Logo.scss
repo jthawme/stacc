@@ -1,0 +1,81 @@
+@import '../../css/base';
+
+:root {
+  --logo-square-size: #{rem(80px)};
+  --logo-border-width: #{rem(2px)};
+}
+
+.logo {
+  position: relative;
+
+  width: calc(var(--logo-square-size) * 1.875);
+  height: var(--logo-square-size);
+
+  &__square {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: var(--logo-square-size);
+    height: var(--logo-square-size);
+
+    border-style: solid;
+    border-width: var(--logo-border-width);
+
+    will-change: left;
+
+    &--one {
+    }
+
+    &--two {
+    }
+
+    &--three {
+    }
+
+    &--four {
+      background-color: currentColor;
+    }
+  }
+}
+
+.logo--default {
+  .logo__square{
+    animation: {
+      duration: 1s;
+      iteration-count: 1;
+      fill-mode: forwards;
+    }
+
+    &--one {
+      animation-name: APPEARONE;
+    }
+    &--two {
+      animation-name: APPEARTWO;
+    }
+    &--three {
+      animation-name: APPEARTHREE;
+    }
+    &--four {
+      animation-name: APPEARFOUR;
+    }
+  }
+}
+
+@keyframes APPEARONE {
+  0% { transform: translate3d(0, 0, 0) }
+  100% { transform: translate3d(0, 0, 0) }
+}
+@keyframes APPEARTWO {
+  0% { transform: translate3d(0, 0, 0) }
+  100% { transform: translate3d(50%, 0, 0); }
+}
+@keyframes APPEARTHREE {
+  0% { transform: translate3d(0, 0, 0) }
+  100% { transform: translate3d(69.5%, 0, 0); }
+}
+@keyframes APPEARFOUR {
+  0% { transform: translate3d(0, 0, 0) }
+  100% { transform: translate3d(88%, 0, 0); }
+}
