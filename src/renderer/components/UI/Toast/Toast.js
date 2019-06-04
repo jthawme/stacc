@@ -58,20 +58,20 @@ class Toast extends React.Component {
     const cls = classNames(
       className,
       'ui-toast',
+      `ui-button__${type}`,
       {
         'ui-toast__full': full
-      }
-    );
-
-    const innerCls = classNames(
-      'ui-toast__inner',
-      `ui-button__${type}`,
+      },
       {
         'ui-button__outlined': outlined
       },
       {
         'ui-toast__outlined': outlined
-      },
+      }
+    );
+
+    const innerCls = classNames(
+      'ui-toast__inner',
     );
 
     return (

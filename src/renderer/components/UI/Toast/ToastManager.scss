@@ -1,12 +1,24 @@
 @import '../Common/css/base';
 
+:root {
+  --ui-toast-top: auto;
+  --ui-toast-right: auto;
+  --ui-toast-bottom: 0;
+  --ui-toast-left: 0;
+
+  --ui-toast-direction: column;
+  --ui-toast-align: flex-start;
+}
+
 .ui-toastmanager {
   position: fixed;
 
-  bottom: 0;
-  left: 0;
+  top: var(--ui-toast-top);
+  right: var(--ui-toast-right);
+  bottom: var(--ui-toast-bottom);
+  left: var(--ui-toast-left);
 
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: var(--ui-toast-direction);
+  align-items: var(--ui-toast-align);
 }

@@ -110,4 +110,11 @@
 
     --logo-square-size: 50px;
   }
+
+  &__toast-manager {
+    --ui-toast-top: 0;
+    --ui-toast-right: 0;
+    --ui-toast-bottom: auto;
+    --ui-toast-left: auto;
+  }
 }

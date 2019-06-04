@@ -91,13 +91,15 @@ class App extends React.Component {
   onRequestExport = () => {
     const { properties, file } = this.state;
 
-    this.setState({
-      exporting: true,
-      exportingProgress: 0
-    });
-
     this.logic.getDestination(properties.exportType)
-      .then(destination => this.logic.requestExport(file.path, destination, properties))
+      .then(destination => {
+        this.setState({
+          exporting: true,
+          exportingProgress: 0
+        });
+
+        this.logic.requestExport(file.path, destination, properties)
+      })
       .catch(() => {}) // No file chosen
   }
 
@@ -137,7 +139,7 @@ class App extends React.Component {
    */
   addMessage = (message, type = 'normal') => {
     const messages = this.state.messages.slice();
-    messages.push({ message, type });
+    messages.push({ message, type, full: true });
     this.setState({ messages });
   }
 
@@ -178,7 +180,10 @@ class App extends React.Component {
       <div className={cls}>
         <div className="app__fake-head"/>
 
-        <ToastManager messages={messages} onMessagesUpdate={messages => this.setState({messages})}/>
+        <ToastManager
+          className="app__toast-manager"
+          messages={messages}
+          onMessagesUpdate={messages => this.setState({messages})}/>
 
         <Splash/>
 

@@ -60,8 +60,15 @@
   --ui-button-disabled-color: var(--ui-color-accent-2);
   --ui-button-disabled-bg-color: transparent;
 
-  &:hover {
+  &:not([disabled]):hover {
     color: var(--ui-color-accent-3);
+  }
+}
+
+.controls__sub-column {
+  &--last {
+    flex-basis: auto;
+    flex-grow: 1;
   }
 }
 
@@ -81,7 +88,28 @@
   user-select: none;
 
   &__title {
+    display: flex;
+
+    align-items: center;
+
     font-size: var(--ui-type-body-size-2);
+
+    .icon {
+      position: relative;
+
+      top: rem(1px);
+
+      margin-left: rem(2px);
+
+      color: var(--ui-color-primary-2);
+      opacity: 0.5;
+
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 }
 
@@ -109,12 +137,16 @@
 
     cursor: pointer;
 
-    &:hover {
+    &:not([disabled]):hover {
       color: var(--ui-color-accent-3);
     }
 
     &--open {
       color: var(--ui-color-accent-3);
+    }
+
+    &--disabled {
+      color: var(--ui-color-accent-2);
     }
   }
 
@@ -124,7 +156,7 @@
     cursor: pointer;
     color: var(--ui-color-primary-5);
 
-    &:hover {
+    &:not([disabled]):hover {
       color: var(--ui-color-accent-4);
     }
   }

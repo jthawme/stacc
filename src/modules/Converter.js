@@ -47,7 +47,7 @@ class Converter {
       return parts[0] / parts[1];
   }
 
-  getInfo(input) {
+  probeInfo(input) {
     return new Promise((resolve, reject) => {
       ffmpeg()
         .input(input)
@@ -187,7 +187,7 @@ class Converter {
     this.options.start = this.options.start / 1000;
     this.options.duration = this.options.duration / 1000;
 
-    return this.getInfo(this.info.input)
+    return this.probeInfo(this.info.input)
       .then(data => this._gatherData(data))
       .then(gifData => this.saveFile(onProgress))
       .then(path => {
@@ -205,8 +205,8 @@ class Converter {
     }
   }
 
-  info(input) {
-    return this.getInfo(input)
+  getInfo(input) {
+    return this.probeInfo(input)
       .then(data => this._gatherData(data));
   }
 

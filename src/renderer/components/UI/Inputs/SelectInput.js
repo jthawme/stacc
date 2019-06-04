@@ -126,19 +126,19 @@ class SelectInput extends React.Component {
   }
 
   renderTrigger = () => {
-    const { value, options, placeholder, triggerItem } = this.props;
+    const { value, options, placeholder, triggerItem, disabled } = this.props;
     const label = this.getLabelFromValue(value, options, placeholder);
 
     if (triggerItem) {
       return (
-        <span onClick={this.toggleOptions}>
-          { triggerItem(label, this.state.optionsOpen) }
+        <span onClick={this.toggleOptions} disabled={disabled}>
+          { triggerItem(label, this.state.optionsOpen, disabled) }
         </span>
       );
     }
 
     return (
-      <span onClick={this.toggleOptions}>
+      <span onClick={this.toggleOptions} disabled={disabled}>
         { label }
       </span>
     );
@@ -150,6 +150,9 @@ class SelectInput extends React.Component {
 
     const contentCls = classNames(
       'ui-select__content',
+      {
+        'ui-select__content--disabled': disabled
+      },
       contentClassName
     );
 

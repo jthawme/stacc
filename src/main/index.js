@@ -7,7 +7,10 @@ import { format as formatUrl } from 'url';
 import Converter from '../modules/Converter';
 import { EVENTS } from '../modules/Constants';
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+
+const converter = new Converter();
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow
@@ -20,13 +23,14 @@ function createMainWindow() {
     movable: true,
     maximizable: false,
     minimizable: false,
+    resizable: false,
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true
     }
   });
 
-  window.setResizable(false);
+  // window.setResizable(false);
 
   if (isDevelopment) {
     window.webContents.openDevTools()
@@ -44,6 +48,7 @@ function createMainWindow() {
   }
 
   window.on('closed', () => {
+    converter.kill();
     mainWindow = null
   })
 
@@ -53,8 +58,6 @@ function createMainWindow() {
       window.focus()
     })
   })
-
-  const converter = new Converter();
 
   ipcMain.on(EVENTS.CONVERT, (event, { file, destination, properties}) => {
     converter.convert(
@@ -71,7 +74,7 @@ function createMainWindow() {
   });
 
   ipcMain.on(EVENTS.INFO_REQUEST, (event, file) => {
-    converter.info(file)
+    converter.getInfo(file)
       .then(data => {
         event.sender.send(EVENTS.INFO, data);
       });
@@ -82,10 +85,11 @@ function createMainWindow() {
 
 // quit application when all windows are closed
 app.on('window-all-closed', () => {
+  converter.kill();
+
   // on macOS it is common for applications to stay open until the user explicitly quits
   if (process.platform !== 'darwin') {
     app.quit()
-    converter.kill();
   }
 })
 

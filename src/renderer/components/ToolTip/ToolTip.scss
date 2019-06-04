@@ -1,0 +1,39 @@
+@import '../../css/base';
+
+.tooltip {
+  position: relative;
+
+  &__tip {
+    position: absolute;
+
+    bottom: 100%;
+    left: 0;
+
+    max-width: rem(150px);
+    width: max-content;
+
+    background-color: var(--ui-color-primary-1);
+    border-radius: rem(2px);
+
+    padding: rem(10px);
+    font-size: rem(12px);
+    color: white;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, #{rem(10px)}, 0);
+
+    pointer-events: none;
+
+    transition: {
+      property: opacity, visibility, transform;
+      duration: 0.15s;
+    }
+
+    .tooltip--display & {
+      opacity: 1;
+      visibility: visible;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

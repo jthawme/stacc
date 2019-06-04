@@ -20,6 +20,9 @@ import { EXPORTS } from '../../../modules/Constants';
 import "./Controls.scss";
 import Progress from '../UI/Progress/Progress';
 import Incrementer from '../Incrementer/Incrementer';
+import ToolTip from '../ToolTip/ToolTip';
+import Icon from '../UI/Icon/Icon';
+import FileFeatures from '../FileFeatures/FileFeatures';
 
 class Controls extends React.Component {
   static propTypes = {
@@ -28,6 +31,12 @@ class Controls extends React.Component {
 
   state = {
     options: false
+  }
+
+  componentDidUpdate(oldProps) {
+    if (this.props.disabled && !oldProps.disabled) {
+      this.setOptions(false);
+    }
   }
 
   toggleOptions = () => {
@@ -74,8 +83,8 @@ class Controls extends React.Component {
                   optionsClassName="export-type__options"
                   className="export-type controls-button"
                   name="exportType"
-                  triggerItem={(label, open) => (
-                    <span className={`export-type__trigger controls-pad ${open ? 'export-type__trigger--open' : ''}`}>
+                  triggerItem={(label, open, disabled) => (
+                    <span className={`export-type__trigger controls-pad ${open ? 'export-type__trigger--open' : ''} ${disabled ? 'export-type__trigger--disabled' : ''}`}>
                       {label}
                     </span>
                   )}
@@ -121,7 +130,15 @@ class Controls extends React.Component {
                 <div className="controls__sub-column">
                   <Incrementer
                     name="scaledDown"
-                    label={<span className="controls__sub-input__title">Scale</span>}
+                    label={(
+                      <span className="controls__sub-input__title">
+                        Scale
+                        <ToolTip
+                          tip="Scales the resolution down">
+                          <Icon icon="help-circle" size="small"/>
+                        </ToolTip>
+                      </span>
+                    )}
                     className="controls__sub-input"
                     onUpdate={onPropertyUpdate}
                     value={properties.scaledDown}
@@ -131,25 +148,46 @@ class Controls extends React.Component {
                 <div className="controls__sub-column">
                   <Incrementer
                     name="scaledFps"
-                    label={<span className="controls__sub-input__title">FPS</span>}
+                    label={(
+                      <span className="controls__sub-input__title">
+                        FPS
+                        <ToolTip
+                          tip="Reduces the frames per second by a factor">
+                          <Icon icon="help-circle" size="small"/>
+                        </ToolTip>
+                      </span>
+                    )}
                     className="controls__sub-input"
                     onUpdate={onPropertyUpdate}
                     value={properties.scaledFps}
                     min={1}
                     max={4}/>
                 </div>
-                <div className="controls__sub-column">
-                  <Slider
-                    closed={properties.exportType !== EXPORTS.GIF}>
-                    <CheckedInput
-                      name="sampleColors"
-                      label={<span className="controls__sub-input__title">Sample Colors</span>}
-                      className="controls__sub-input"
-                      checkedEl={<span>Yes</span>}
-                      uncheckedEl={<span>No</span>}
-                      onUpdate={onPropertyUpdate}
-                      value={properties.sampleColors}/>
-                  </Slider>
+                {
+                  properties.exportType === EXPORTS.GIF ? (
+                    <div className="controls__sub-column">
+                      <CheckedInput
+                        name="sampleColors"
+                        label={(
+                          <span className="controls__sub-input__title">
+                            Sample colors
+                            <ToolTip
+                              tip="Resamples colour for every frame">
+                              <Icon icon="help-circle" size="small"/>
+                            </ToolTip>
+                          </span>
+                        )}
+                        className="controls__sub-input"
+                        checkedEl={<span>Yes</span>}
+                        uncheckedEl={<span>No</span>}
+                        onUpdate={onPropertyUpdate}
+                        value={properties.sampleColors}/>
+                    </div>
+                  ) : null }
+                <div className="controls__sub-column controls__sub-column--last">
+                  <FileFeatures
+                    videoInfo={videoInfo}
+                    properties={properties}/>
                 </div>
               </div>
             </Slider>

@@ -72,7 +72,7 @@ class ToastManager extends React.Component {
     this.mount = document.querySelector(`.ui-toastmanager`);
     if (!this.mount) {
       const el = document.createElement('div');
-      el.classList.add('ui-toastmanager');
+      el.classList.add(`ui-toastmanager`, `${this.props.className}`);
       document.body.appendChild(el);
 
       this.mount = el;
@@ -98,6 +98,7 @@ class ToastManager extends React.Component {
   }
 
   render() {
+    const { className } = this.props;
     const { messages } = this.state;
 
     if (!this.mount) {

@@ -23,5 +23,10 @@
     font-weight: bold;
 
     text-align: center;
+
+    &[disabled] {
+      opacity: 0.5;
+      user-select: none;
+    }
   }
 }

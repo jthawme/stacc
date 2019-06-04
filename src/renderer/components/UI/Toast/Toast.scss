@@ -9,9 +9,10 @@
     margin: 0;
   }
 
-  &__content,
   &__inner {
-    padding: calc(var(--ui-size-padding) * 0.5);
+    padding: calc(var(--ui-size-padding) * 0.5) calc(var(--ui-size-padding) * 3.5);
+
+    text-align: center;
   }
 
   &__full .toast__content {
