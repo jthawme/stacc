@@ -146,7 +146,7 @@ const template = [
     ]
   },
   {
-    label: 'Help',
+    label: 'About',
     submenu: [
       {
         label: 'Learn More',
