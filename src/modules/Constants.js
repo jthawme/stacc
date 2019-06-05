@@ -5,7 +5,8 @@ export const EVENTS = {
     ERROR: 'error',
     THUMBNAIL: 'thumbnail',
     INFO_REQUEST: 'info_request',
-    INFO: 'info'
+    INFO: 'info',
+    EXTERNAL_FILE: 'external_file',
 };
 
 export const FILTERS = {

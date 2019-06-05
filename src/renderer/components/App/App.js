@@ -68,10 +68,12 @@ class App extends React.Component {
       onFinished: this.onFinished,
       onProgress: this.onProgress,
       onInfo: this.onInfo,
+      onExternalFile: this.onFiles
     });
   }
 
   onFiles = files => {
+    console.log(files);
     this.onFileSelect(files[0].path);
 
     this.setState({
@@ -205,7 +207,7 @@ class App extends React.Component {
               <div className={ dropCls }>
                 <DropDisplay
                   dropping={dropping}
-                  hasFiles={files.length}/>
+                  hasFiles={file}/>
                 <VideoPreview
                   time={activeTime}
                   className="app__drop__video"

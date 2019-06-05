@@ -6,11 +6,16 @@
   flex-direction: column;
 
   align-items: flex-end;
+  text-align: right;
 
   span {
     font-family: monospace;
     font-weight: bold;
 
     color: var(--ui-color-primary-2);
+
+    &:last-of-type {
+      opacity: 0.25;
+    }
   }
 }

@@ -162,7 +162,7 @@ class Converter {
 
   _convertTimeToSeconds(time) {
       return time.split(':').map((v, index) => {
-          let _v = parseInt(v, 10);
+          let _v = parseFloat(v);
 
           switch(index) {
               case 0:
@@ -171,8 +171,6 @@ class Converter {
                   return _v * 60;
               case 2:
                   return _v;
-              case 3:
-                  return _v / 100;
           }
       }).reduce((prev, curr) => prev + curr, 0);
   }

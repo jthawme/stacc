@@ -2,11 +2,12 @@ import { shell, ipcRenderer, remote } from 'electron';
 import { EVENTS, FILTERS, EXPORTS } from '../../../modules/Constants';
 
 class AppLogic {
-  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {} }) {
+  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {}, onExternalFile = () => {} }) {
     this.events = {
       onFinished,
       onProgress,
-      onInfo
+      onInfo,
+      onExternalFile
     };
 
     this.addEventListeners();
@@ -16,6 +17,7 @@ class AppLogic {
     ipcRenderer.on(EVENTS.FINISHED, this.onFinished);
     ipcRenderer.on(EVENTS.PROGRESS, this.onProgress);
     ipcRenderer.on(EVENTS.INFO, this.onInfo);
+    ipcRenderer.on(EVENTS.EXTERNAL_FILE, this.onExternalFile);
   }
 
 
@@ -50,6 +52,15 @@ class AppLogic {
    */
   onInfo = (event, data) => {
     this.events.onInfo(data);
+  }
+
+
+  /**
+   * Callback from main file, if Electron supplies a
+   * file in a different way
+   */
+  onExternalFile = (event, data) => {
+    this.events.onExternalFile(data);
   }
 
 

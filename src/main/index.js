@@ -1,11 +1,11 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain, nativeImage } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeImage, dialog, Menu } from 'electron';
 import * as path from 'path';
 import { format as formatUrl } from 'url';
 
 import Converter from '../modules/Converter';
-import { EVENTS } from '../modules/Constants';
+import { EVENTS, FILTERS } from '../modules/Constants';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -106,3 +106,58 @@ app.on('ready', () => {
 });
 
 app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024.png`)));
+
+
+const template = [
+  // { role: 'appMenu' }
+  ...(process.platform === 'darwin' ? [{
+    label: app.name,
+    submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'Open',
+        click: async () => {
+          dialog.showOpenDialog({
+            properties: ['openFile'],
+            filters: FILTERS.VIDEO,
+          }, (filePaths) => {
+            if (filePaths) {
+              mainWindow.webContents.send(EVENTS.EXTERNAL_FILE, filePaths.map(f => {
+                return {
+                  path: f
+                }
+              }));
+            }
+          });
+        }
+      },
+      { role: 'close' }
+    ]
+  },
+  {
+    label: 'Help',
+    submenu: [
+      {
+        label: 'Learn More',
+        click: async () => {
+          const { shell } = require('electron');
+          await shell.openExternal('https://stacc.jthaw.me/')
+        }
+      }
+    ]
+  }
+]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
