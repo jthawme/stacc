@@ -1,12 +1,13 @@
 const path = require('path');
+const log = require('electron-log');
 
 const ffmpeg = require('fluent-ffmpeg');
 
 const ffmpegStatic = require('ffmpeg-static');
 const ffprobeStatic = require('ffprobe-static');
 
-ffmpeg.setFfmpegPath(ffmpegStatic.path);
-ffmpeg.setFfprobePath(ffprobeStatic.path);
+ffmpeg.setFfmpegPath(ffmpegStatic.path.replace('app.asar', 'app.asar.unpacked'));
+ffmpeg.setFfprobePath(ffprobeStatic.path.replace('app.asar', 'app.asar.unpacked'));
 
 const { EXPORTS } = require('../modules/Constants.js');
 

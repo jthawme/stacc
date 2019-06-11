@@ -117,4 +117,13 @@
     --ui-toast-bottom: auto;
     --ui-toast-left: auto;
   }
+
+  &__update {
+    position: fixed;
+
+    z-index: 50;
+
+    bottom: var(--ui-size-padding);
+    left: var(--ui-size-padding);
+  }
 }

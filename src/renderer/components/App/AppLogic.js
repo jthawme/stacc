@@ -2,13 +2,16 @@ import { shell, ipcRenderer, remote } from 'electron';
 import { EVENTS, FILTERS, EXPORTS } from '../../../modules/Constants';
 
 class AppLogic {
-  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {}, onExternalFile = () => {} }) {
+  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {}, onExternalFile = () => {}, onUpdate = () => {} }) {
     this.events = {
       onFinished,
       onProgress,
       onInfo,
-      onExternalFile
+      onExternalFile,
+      onUpdate
     };
+
+    this.releaseURL = 'https://api.github.com/repos/jthawme/stacc/releases/latest';
 
     this.addEventListeners();
   }
@@ -18,6 +21,7 @@ class AppLogic {
     ipcRenderer.on(EVENTS.PROGRESS, this.onProgress);
     ipcRenderer.on(EVENTS.INFO, this.onInfo);
     ipcRenderer.on(EVENTS.EXTERNAL_FILE, this.onExternalFile);
+    ipcRenderer.on(EVENTS.UPDATE, this.onUpdate);
   }
 
 
@@ -61,6 +65,15 @@ class AppLogic {
    */
   onExternalFile = (event, data) => {
     this.events.onExternalFile(data);
+  }
+
+
+  /**
+   * Callback from main file, if its determined
+   * that there is a newer version
+   */
+  onUpdate = (event) => {
+    this.events.onUpdate();
   }
 
 
@@ -141,6 +154,18 @@ class AppLogic {
   requestExport = (file, destination, properties) => {
     ipcRenderer.send(EVENTS.CONVERT, { file, destination, properties });
     return destination;
+  }
+
+  checkForUpdates = () => {
+    fetch(this.releaseURL)
+      .then(resp => resp.json())
+      .then(json => {
+        ipcRenderer.send(EVENTS.VERSION_CHECK, json.tag_name)
+      });
+  }
+
+  openUpdate() {
+    shell.openExternal('https://stacc.netlify.com');
   }
 };
 

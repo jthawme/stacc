@@ -1,6 +1,7 @@
 {
-  "name": "electron-webpack-quick-start",
-  "version": "0.0.0",
+  "name": "stacc",
+  "description": "An application to help effectively convert videos into Gifs",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
@@ -12,6 +13,7 @@
   "dependencies": {
     "babel-loader": "^8.0.5",
     "classnames": "^2.2.6",
+    "electron-log": "^3.0.6",
     "ffmpeg-static": "^2.4.0",
     "ffprobe-static": "^3.0.0",
     "fluent-ffmpeg": "^2.1.2",
@@ -36,5 +38,25 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "webpack": "4.28.4"
+  },
+  "build": {
+    "appId": "com.jthaw.stacc",
+    "productName": "Stacc",
+    "copyright": "Copyright © 2019 jthaw.me",
+    "mac": {
+      "category": "Utilities",
+      "target": "dmg",
+      "icon": "build/icon.icns",
+      "files": [
+        "!node_modules/ffmpeg-static/bin/win${/*}",
+        "!node_modules/ffmpeg-static/bin/linux${/*}",
+        "!node_modules/ffprobe-static/bin/win${/*}",
+        "!node_modules/ffprobe-static/bin/linux${/*}"
+      ]
+    },
+    "dmg": {
+      "icon": "build/icon.icns",
+      "title": "Stacc 0.1.0"
+    }
   }
 }

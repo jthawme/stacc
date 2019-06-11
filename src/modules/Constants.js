@@ -7,6 +7,8 @@ export const EVENTS = {
     INFO_REQUEST: 'info_request',
     INFO: 'info',
     EXTERNAL_FILE: 'external_file',
+    VERSION_CHECK: 'version_check',
+    UPDATE: 'update'
 };
 
 export const FILTERS = {

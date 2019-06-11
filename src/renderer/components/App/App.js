@@ -7,30 +7,23 @@ import classNames from 'classnames';
 // Redux
 
 // Components
-import Section from '../UI/Section/Section';
-import Title from '../UI/Title/Title';
-import Button from '../UI/Button/Button';
-
-import NumberInput from '../UI/Inputs/NumberInput';
-import CheckedInput from '../UI/Inputs/CheckedInput';
-import SelectInput from '../UI/Inputs/SelectInput';
-
 import DropArea from '../UI/DropArea/DropArea';
 import ToastManager from '../UI/Toast/ToastManager';
-import Progress from '../UI/Progress/Progress';
 
 import VideoPreview from '../VideoPreview/VideoPreview';
 import DropDisplay from '../DropDisplay/DropDisplay';
 import Controls from '../Controls/Controls';
+
+import DisplayChanger from '../DisplayChanger/DisplayChanger';
+import Splash from '../Splash/Splash';
+
+import Button from '../UI/Button/Button';
 
 // CSS, Requires
 import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
 import AppLogic from './AppLogic';
 import "./App.scss";
 import "../UI/Common/css/defaults.scss";
-import DisplayChanger from '../DisplayChanger/DisplayChanger';
-import Logo from '../Logo/Logo';
-import Splash from '../Splash/Splash';
 
 class App extends React.Component {
   static propTypes = {
@@ -44,7 +37,7 @@ class App extends React.Component {
       start: 0,
       duration: 0,
       exportType: EXPORTS.GIF, // Whether the ouput should be gif or movie
-      scaledDown: 1, // Scaled down to what size
+      scaledDown: 2, // Scaled down to what size
       scaledFps: 1, // Scaled down FPS by factor
       sampleColors: true, // Whether to sample colours per frame (GIF only)
     };
@@ -61,19 +54,25 @@ class App extends React.Component {
 
       messages: [],
 
-      activeTime: 0
+      activeTime: 0,
+
+      update: false
     };
 
     this.logic = new AppLogic({
       onFinished: this.onFinished,
       onProgress: this.onProgress,
       onInfo: this.onInfo,
-      onExternalFile: this.onFiles
+      onExternalFile: this.onFiles,
+      onUpdate: this.onUpdate
     });
   }
 
+  componentDidMount() {
+    this.logic.checkForUpdates();
+  }
+
   onFiles = files => {
-    console.log(files);
     this.onFileSelect(files[0].path);
 
     this.setState({
@@ -133,6 +132,12 @@ class App extends React.Component {
     this.setState({ videoInfo: info, properties, activeTime: 0 });
   }
 
+  onUpdate = () => {
+    this.setState({
+      update: true
+    });
+  }
+
   /**
    * A method to display a toast
    *
@@ -168,8 +173,12 @@ class App extends React.Component {
     this.setState(state);
   }
 
+  openUpdate = () => {
+    this.logic.openUpdate();
+  }
+
   render() {
-    const { messages, videoInfo, properties, exporting, exportingProgress, file, activeTime } = this.state;
+    const { messages, videoInfo, properties, exporting, exportingProgress, file, activeTime, update } = this.state;
 
     const cls = classNames(
       'app',
@@ -229,6 +238,16 @@ class App extends React.Component {
           disabled={exporting}
           onPropertyUpdate={this.onPropertyUpdate}
           onExport={this.onRequestExport}/>
+
+        {
+          update ? (
+            <div className="app__update">
+              <Button onClick={this.openUpdate}>
+                Update required
+              </Button>
+            </div>
+          ) : null
+        }
       </div>
     );
   }
