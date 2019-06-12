@@ -1,9 +1,11 @@
 @import '../Common/css/base';
 
-.ui-progress {
+:root {
   --ui-progress-track-color: var(--ui-color-primary-5);
   --ui-progress-bar-color: var(--ui-color-primary-5);
+}
 
+.ui-progress {
   &__small {
     height: ui-rem(12px);
   }

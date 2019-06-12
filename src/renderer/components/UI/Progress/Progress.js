@@ -19,7 +19,7 @@ class Progress extends React.Component {
     /** Float 0-1 */
     percent: PropTypes.number,
 
-    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    size: PropTypes.oneOf(['small', 'medium', 'large', 'free']),
 
     displayUnit: PropTypes.bool,
     displayFunc: PropTypes.func,
@@ -45,10 +45,10 @@ class Progress extends React.Component {
     const { className, percent, size, speed, displayFunc, displayUnit } = this.props;
 
     const cls = classNames(
-      className,
       'ui-progress',
       `ui-progress__${size}`,
       `ui-progress__${speed}`,
+      className,
     );
 
     const style = {

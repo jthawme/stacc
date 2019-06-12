@@ -1,6 +1,6 @@
 {
-  "name": "electron-webpack-quick-start",
-  "version": "0.0.0",
+  "name": "stacc",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
@@ -36,5 +36,13 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "webpack": "4.28.4"
+  },
+  "build": {
+    "appId": "com.stacc.jthaw",
+    "productName": "Stacc",
+    "copyright": "Copyright © 2019 Jonny Thaw",
+    "mac": {
+      "icon": "src/main/assets/256x256.png"
+    }
   }
 }

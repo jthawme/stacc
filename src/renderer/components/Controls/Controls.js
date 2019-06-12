@@ -61,6 +61,7 @@ class Controls extends React.Component {
         { videoInfo ? (
           <>
             <Progress
+              size="free"
               className="controls__progress"
               percent={progress}/>
             <div className="controls__main">

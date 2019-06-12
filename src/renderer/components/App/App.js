@@ -7,21 +7,14 @@ import classNames from 'classnames';
 // Redux
 
 // Components
-import Section from '../UI/Section/Section';
-import Title from '../UI/Title/Title';
-import Button from '../UI/Button/Button';
-
-import NumberInput from '../UI/Inputs/NumberInput';
-import CheckedInput from '../UI/Inputs/CheckedInput';
-import SelectInput from '../UI/Inputs/SelectInput';
-
 import DropArea from '../UI/DropArea/DropArea';
 import ToastManager from '../UI/Toast/ToastManager';
-import Progress from '../UI/Progress/Progress';
 
 import VideoPreview from '../VideoPreview/VideoPreview';
 import DropDisplay from '../DropDisplay/DropDisplay';
 import Controls from '../Controls/Controls';
+
+import ExportingDisplay from '../ExportingDisplay/ExportingDisplay';
 
 // CSS, Requires
 import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
@@ -73,7 +66,6 @@ class App extends React.Component {
   }
 
   onFiles = files => {
-    console.log(files);
     this.onFileSelect(files[0].path);
 
     this.setState({
@@ -100,12 +92,16 @@ class App extends React.Component {
           exportingProgress: 0
         });
 
+        this.setExportingTimer();
+
         this.logic.requestExport(file.path, destination, properties)
       })
       .catch(() => {}) // No file chosen
   }
 
   onFinished = (args) => {
+    clearTimeout(this.timer);
+
     this.setState({
       exportingProgress: 1
     });
@@ -143,6 +139,13 @@ class App extends React.Component {
     const messages = this.state.messages.slice();
     messages.push({ message, type, full: true });
     this.setState({ messages });
+  }
+
+  setExportingTimer() {
+    this.timer = setTimeout(() => {
+      this.addMessage('Still exporting, hang in there!');
+      this.setExportingTimer();
+    }, 30000);
   }
 
   onPropertyUpdate = (value, name) => {
@@ -188,6 +191,11 @@ class App extends React.Component {
           onMessagesUpdate={messages => this.setState({messages})}/>
 
         <Splash/>
+
+        { exporting ? (
+          <ExportingDisplay
+            className="app__exporting-display"/>
+        ) : null }
 
         <DropArea
           clickable={false}

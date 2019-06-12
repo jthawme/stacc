@@ -116,5 +116,18 @@
     --ui-toast-right: 0;
     --ui-toast-bottom: auto;
     --ui-toast-left: auto;
+
+    z-index: 100;
+  }
+
+  &__exporting-display {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 10;
   }
 }
