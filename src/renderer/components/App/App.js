@@ -15,15 +15,16 @@ import DropDisplay from '../DropDisplay/DropDisplay';
 import Controls from '../Controls/Controls';
 
 import ExportingDisplay from '../ExportingDisplay/ExportingDisplay';
+import DisplayChanger from '../DisplayChanger/DisplayChanger';
+import Splash from '../Splash/Splash';
+
+import Button from '../UI/Button/Button';
 
 // CSS, Requires
 import { EXPORTS, FILTERS, createAcceptsFromFilter } from '../../../modules/Constants';
 import AppLogic from './AppLogic';
 import "./App.scss";
 import "../UI/Common/css/defaults.scss";
-import DisplayChanger from '../DisplayChanger/DisplayChanger';
-import Logo from '../Logo/Logo';
-import Splash from '../Splash/Splash';
 
 class App extends React.Component {
   static propTypes = {
@@ -37,7 +38,7 @@ class App extends React.Component {
       start: 0,
       duration: 0,
       exportType: EXPORTS.GIF, // Whether the ouput should be gif or movie
-      scaledDown: 1, // Scaled down to what size
+      scaledDown: 2, // Scaled down to what size
       scaledFps: 1, // Scaled down FPS by factor
       sampleColors: true, // Whether to sample colours per frame (GIF only)
     };
@@ -54,15 +55,22 @@ class App extends React.Component {
 
       messages: [],
 
-      activeTime: 0
+      activeTime: 0,
+
+      update: false
     };
 
     this.logic = new AppLogic({
       onFinished: this.onFinished,
       onProgress: this.onProgress,
       onInfo: this.onInfo,
-      onExternalFile: this.onFiles
+      onExternalFile: this.onFiles,
+      onUpdate: this.onUpdate
     });
+  }
+
+  componentDidMount() {
+    this.logic.checkForUpdates();
   }
 
   onFiles = files => {
@@ -129,6 +137,12 @@ class App extends React.Component {
     this.setState({ videoInfo: info, properties, activeTime: 0 });
   }
 
+  onUpdate = () => {
+    this.setState({
+      update: true
+    });
+  }
+
   /**
    * A method to display a toast
    *
@@ -171,8 +185,12 @@ class App extends React.Component {
     this.setState(state);
   }
 
+  openUpdate = () => {
+    this.logic.openUpdate();
+  }
+
   render() {
-    const { messages, videoInfo, properties, exporting, exportingProgress, file, activeTime } = this.state;
+    const { messages, videoInfo, properties, exporting, exportingProgress, file, activeTime, update } = this.state;
 
     const cls = classNames(
       'app',
@@ -237,6 +255,16 @@ class App extends React.Component {
           disabled={exporting}
           onPropertyUpdate={this.onPropertyUpdate}
           onExport={this.onRequestExport}/>
+
+        {
+          update ? (
+            <div className="app__update">
+              <Button onClick={this.openUpdate}>
+                Update required
+              </Button>
+            </div>
+          ) : null
+        }
       </div>
     );
   }
