@@ -43,6 +43,7 @@
     "appId": "com.jthaw.stacc",
     "productName": "Stacc",
     "copyright": "Copyright © 2019 jthaw.me",
+    "asar": false,
     "mac": {
       "category": "Utilities",
       "target": "dmg",
