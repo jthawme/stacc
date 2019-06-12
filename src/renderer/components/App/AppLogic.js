@@ -105,6 +105,8 @@ class AppLogic {
   createNotification(title, opts = {}, onClick = () => {}) {
     const notification = new Notification(title, opts);
     notification.onclick = onClick;
+
+    console.log(notification);
   }
 
   /**
