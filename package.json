@@ -1,7 +1,7 @@
 {
   "name": "stacc",
   "description": "An application to help effectively convert videos into Gifs",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
@@ -13,7 +13,8 @@
   "dependencies": {
     "ffmpeg-static": "^2.4.0",
     "ffprobe-static": "^3.0.0",
-    "fluent-ffmpeg": "^2.1.2"
+    "fluent-ffmpeg": "^2.1.2",
+    "source-map-support": "^0.5.10"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -32,7 +33,6 @@
     "react-dom": "^16.8.6",
     "react-slidedown": "^2.0.9",
     "replace": "^1.1.0",
-    "source-map-support": "^0.5.10",
     "svg-inline-loader": "^0.8.0",
     "webfontloader": "^1.6.28",
     "babel-loader": "^8.0.5",
