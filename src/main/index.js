@@ -81,7 +81,7 @@ function createMainWindow() {
       .then(data => {
         event.sender.send(EVENTS.INFO, data);
       })
-      .catch(err => log.warn(err));
+      .catch(err => log.error(err));
   });
 
   ipcMain.on(EVENTS.VERSION_CHECK, (event, version) => {

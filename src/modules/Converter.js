@@ -49,13 +49,16 @@ class Converter {
   }
 
   probeInfo(input) {
+    log.info("Probe info", input);
     return new Promise((resolve, reject) => {
       ffmpeg()
         .input(input)
         .ffprobe((err, data) => {
           if (err) {
+            log.error("Probe info error", err);
             reject(err);
           } else {
+            log.error("Probe info success", data);
             resolve(data);
           }
         });
@@ -76,11 +79,11 @@ class Converter {
         .duration(duration);
 
       this.command.complexFilter(this._getComplexFilter(fps, scaledFps, width, height, scaledDown, sampleColors, exportType), 'output')
-        .on('start', console.log)
+        .on('start', () => log.info('Save file start', { options: this.options, metadata: this.metadata, info: this.info }))
         .on('progress', progress => this.reportProgress(progress, onProgress))
         .on('end', () => resolve(outputPath))
         .on('error', err => {
-          console.log('error');
+          log.error("Save file error", err);
           reject(err);
         })
         .save(outputPath);
@@ -154,7 +157,6 @@ class Converter {
   }
 
   reportProgress(properties, onProgress) {
-    console.log('debug progress', properties);
     const currentDelta = this._convertTimeToSeconds(properties.timemark) / this.options.duration;
 
     onProgress(currentDelta);
