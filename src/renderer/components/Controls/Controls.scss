@@ -156,6 +156,8 @@
     cursor: pointer;
     color: var(--ui-color-primary-5);
 
+    text-shadow: 1px 1px 1px var(--ui-color-accent-1);
+
     &:not([disabled]):hover {
       color: var(--ui-color-accent-4);
     }

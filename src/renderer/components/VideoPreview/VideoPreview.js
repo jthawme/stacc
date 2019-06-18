@@ -21,7 +21,7 @@ class VideoPreview extends React.Component {
   };
 
   componentDidUpdate(oldProps) {
-    if (oldProps.time !== this.props.time || oldProps.file !== this.props.file) {
+    if ((oldProps.time !== this.props.time || oldProps.file !== this.props.file) && this.video) {
       this.video.currentTime = this.props.time / 1000;
     }
   }
@@ -42,6 +42,17 @@ class VideoPreview extends React.Component {
     }
   }
 
+  isValidPreviewable(file) {
+    if (!file) {
+      return false;
+    }
+
+    const extname = file.path.split('.').pop();
+    const valid = ['mp4', 'mov', 'webm'];
+
+    return valid.includes(extname);
+  }
+
   render() {
     const { className, file } = this.props;
 
@@ -50,10 +61,22 @@ class VideoPreview extends React.Component {
       'videopreview',
       {
         'videopreview--show': file
+      },
+      {
+        'videopreview--no-preview': !this.isValidPreviewable(file)
       }
     );
 
-    return <video ref={this.setRef} className={cls} src={this.displayFile(file)}/>;
+    return (
+      <div className={cls}>
+        <div className={`videopreview__no-preview`}>
+          <h3>Oh no!</h3>
+          <p>No preview available for this file type</p>
+        </div>
+        <video ref={this.setRef} className="videopreview__video" src={this.displayFile(file)}/>
+      </div>
+    );
+
   }
 }
 

@@ -31,11 +31,17 @@ class Converter {
   _gatherData(data) {
     let stream = data.streams[0];
 
+    let start = parseInt(data.format.start_time);
+
+    if (isNaN(start)) {
+      start = 0;
+    }
+
     this.metadata = {
       fps: this._parseFramerate(stream['r_frame_rate']),
       width: stream.width,
       height: stream.height,
-      start: data.format.start_time,
+      start,
       duration: data.format.duration * 1000
     };
 
@@ -58,7 +64,7 @@ class Converter {
             log.error("Probe info error", err);
             reject(err);
           } else {
-            log.error("Probe info success", data);
+            log.info("Probe info success", data);
             resolve(data);
           }
         });
