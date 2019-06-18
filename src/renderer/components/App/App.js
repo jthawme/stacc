@@ -65,7 +65,8 @@ class App extends React.Component {
       onProgress: this.onProgress,
       onInfo: this.onInfo,
       onExternalFile: this.onFiles,
-      onUpdate: this.onUpdate
+      onUpdate: this.onUpdate,
+      onSettings: this.onSettings,
     });
   }
 
@@ -143,6 +144,10 @@ class App extends React.Component {
     });
   }
 
+  onSettings = (settings) => {
+    console.log(settings);
+  }
+
   /**
    * A method to display a toast
    *
@@ -187,6 +192,10 @@ class App extends React.Component {
 
   openUpdate = () => {
     this.logic.openUpdate();
+  }
+
+  onOptions = () => {
+    this.logic.requestSettings(this.state.properties);
   }
 
   render() {
@@ -254,13 +263,14 @@ class App extends React.Component {
           properties={properties}
           disabled={exporting}
           onPropertyUpdate={this.onPropertyUpdate}
-          onExport={this.onRequestExport}/>
+          onExport={this.onRequestExport}
+          onOptions={this.onOptions}/>
 
         {
           update ? (
             <div className="app__update">
               <Button onClick={this.openUpdate}>
-                Update required
+                Update required {global.location.search}
               </Button>
             </div>
           ) : null

@@ -14,9 +14,10 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 const converter = new Converter();
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
-let mainWindow
+let mainWindow;
 
 function createMainWindow() {
+  let settingsWindow;
   const window = new BrowserWindow({
     width: 720,
     height: 480,
@@ -91,7 +92,48 @@ function createMainWindow() {
     }
   });
 
+  ipcMain.on(EVENTS.SETTINGS_REQUEST, (event, { properties, videoInfo }) => {
+    settingsWindow = createSettingsWindow(window, properties, videoInfo);
+  });
+
+  ipcMain.on(EVENTS.SETTINGS, (event, settings) => {
+    window.webContents.send(EVENTS.SETTINGS, settings);
+  });
+
   return window
+}
+
+function createSettingsWindow(top, properties, videoInfo) {
+  const child = new BrowserWindow({
+    parent: top,
+    modal: true,
+    show: false,
+    width: 540,
+    height: 540,
+  });
+
+  if (isDevelopment) {
+    child.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}?settings=true`)
+  }
+  else {
+    child.loadURL(formatUrl({
+      pathname: path.join(__dirname, 'index.html?settings=true'),
+      protocol: 'file',
+      slashes: true
+    }))
+  }
+
+  if (isDevelopment) {
+    child.webContents.openDevTools()
+  }
+
+  child.once('ready-to-show', () => {
+    child.show();
+
+    child.webContents.send(EVENTS.SETTINGS_INITIAL, { properties, videoInfo });
+  });
+
+  return child;
 }
 
 // quit application when all windows are closed

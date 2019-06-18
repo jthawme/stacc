@@ -8,7 +8,10 @@ export const EVENTS = {
     INFO: 'info',
     EXTERNAL_FILE: 'external_file',
     VERSION_CHECK: 'version_check',
-    UPDATE: 'update'
+    UPDATE: 'update',
+    SETTINGS_REQUEST: 'settings_request',
+    SETTINGS: 'settings',
+    SETTINGS_INITIAL: 'settings_initial',
 };
 
 export const FILTERS = {

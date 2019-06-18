@@ -40,7 +40,8 @@ class Controls extends React.Component {
   }
 
   toggleOptions = () => {
-    this.setOptions(!this.state.options);
+    this.props.onOptions();
+    // this.setOptions(!this.state.options);
   }
 
   setOptions(options) {

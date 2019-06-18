@@ -2,13 +2,14 @@ import { shell, ipcRenderer, remote } from 'electron';
 import { EVENTS, FILTERS, EXPORTS } from '../../../modules/Constants';
 
 class AppLogic {
-  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {}, onExternalFile = () => {}, onUpdate = () => {} }) {
+  constructor({ onFinished = () => {}, onProgress = () => {}, onInfo = () => {}, onExternalFile = () => {}, onUpdate = () => {}, onSettings = () => {} }) {
     this.events = {
       onFinished,
       onProgress,
       onInfo,
       onExternalFile,
-      onUpdate
+      onUpdate,
+      onSettings
     };
 
     this.releaseURL = 'https://api.github.com/repos/jthawme/stacc/releases/latest';
@@ -22,6 +23,7 @@ class AppLogic {
     ipcRenderer.on(EVENTS.INFO, this.onInfo);
     ipcRenderer.on(EVENTS.EXTERNAL_FILE, this.onExternalFile);
     ipcRenderer.on(EVENTS.UPDATE, this.onUpdate);
+    ipcRenderer.on(EVENTS.SETTINGS, this.onSettings);
   }
 
 
@@ -47,6 +49,16 @@ class AppLogic {
    */
   requestInfo(filePath) {
     ipcRenderer.send(EVENTS.INFO_REQUEST, filePath);
+  }
+
+  /**
+   * Requests the opening of a modal window for settings
+   */
+  requestSettings(properties, videoInfo) {
+    ipcRenderer.send(EVENTS.SETTINGS_REQUEST, {
+      properties,
+      videoInfo
+    });
   }
 
 
@@ -96,6 +108,15 @@ class AppLogic {
    */
   onProgress = (event, percentage) => {
     this.events.onProgress(percentage);
+  }
+
+
+  /**
+   * Callback from main file of the progress of a file
+   * export
+   */
+  onSettings = (event, settings) => {
+    this.events.onSettings(settings);
   }
 
 
