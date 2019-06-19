@@ -34,9 +34,9 @@ function createMainWindow() {
 
   // window.setResizable(false);
 
-  // if (isDevelopment) {
-  //   window.webContents.openDevTools()
-  // }
+  if (isDevelopment) {
+    window.webContents.openDevTools()
+  }
 
   if (isDevelopment) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
@@ -123,9 +123,9 @@ function createSettingsWindow(top, properties, videoInfo) {
     }))
   }
 
-  // if (isDevelopment) {
-  //   child.webContents.openDevTools()
-  // }
+  if (isDevelopment) {
+    child.webContents.openDevTools()
+  }
 
   child.once('ready-to-show', () => {
     child.show();

@@ -269,9 +269,9 @@ class App extends React.Component {
         {
           update ? (
             <div className="app__update">
-              {/* <Button onClick={this.openUpdate}>
+              <Button onClick={this.openUpdate}>
                 Update required {global.location.search}
-              </Button> */}
+              </Button>
             </div>
           ) : null
         }
