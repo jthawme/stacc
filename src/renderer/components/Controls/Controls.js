@@ -111,7 +111,7 @@ class Controls extends React.Component {
                   className="controls-button"
                   noMargin
                   onClick={this.toggleOptions}>
-                  Options +
+                  Settings
                 </Button>
               </div>
               <div className="controls__main__right">
@@ -126,73 +126,6 @@ class Controls extends React.Component {
                 </Button>
               </div>
             </div>
-            <Slider
-              closed={!options}>
-              <div className="controls__sub">
-                <div className="controls__sub-column">
-                  <Incrementer
-                    name="scaledDown"
-                    label={(
-                      <span className="controls__sub-input__title">
-                        Scale
-                        <ToolTip
-                          tip="Scales the resolution down">
-                          <Icon icon="help-circle" size="small"/>
-                        </ToolTip>
-                      </span>
-                    )}
-                    className="controls__sub-input"
-                    onUpdate={onPropertyUpdate}
-                    value={properties.scaledDown}
-                    min={1}
-                    max={4}/>
-                </div>
-                <div className="controls__sub-column">
-                  <Incrementer
-                    name="scaledFps"
-                    label={(
-                      <span className="controls__sub-input__title">
-                        FPS
-                        <ToolTip
-                          tip="Reduces the frames per second by a factor">
-                          <Icon icon="help-circle" size="small"/>
-                        </ToolTip>
-                      </span>
-                    )}
-                    className="controls__sub-input"
-                    onUpdate={onPropertyUpdate}
-                    value={properties.scaledFps}
-                    min={1}
-                    max={4}/>
-                </div>
-                {
-                  properties.exportType === EXPORTS.GIF ? (
-                    <div className="controls__sub-column">
-                      <CheckedInput
-                        name="sampleColors"
-                        label={(
-                          <span className="controls__sub-input__title">
-                            Sample colors
-                            <ToolTip
-                              tip="Resamples colour for every frame">
-                              <Icon icon="help-circle" size="small"/>
-                            </ToolTip>
-                          </span>
-                        )}
-                        className="controls__sub-input"
-                        checkedEl={<span>Yes</span>}
-                        uncheckedEl={<span>No</span>}
-                        onUpdate={onPropertyUpdate}
-                        value={properties.sampleColors}/>
-                    </div>
-                  ) : null }
-                <div className="controls__sub-column controls__sub-column--last">
-                  <FileFeatures
-                    videoInfo={videoInfo}
-                    properties={properties}/>
-                </div>
-              </div>
-            </Slider>
           </>
         ) : null }
       </div>

@@ -26,8 +26,18 @@
     margin: 0;
   }
 
+  &__row {
+    grid-template-columns: 1.5fr 2fr;
+
+    .ui-section__content {
+      text-align: right;
+    }
+  }
+
   &__subtitle {
     font-size: var(--ui-type-body-size-3);
     line-height: var(--ui-type-body-lh-3);
+
+    padding-right: var(--ui-size-padding);
   }
 }

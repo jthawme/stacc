@@ -145,7 +145,7 @@ class App extends React.Component {
   }
 
   onSettings = (settings) => {
-    console.log(settings);
+    this.setState({ properties: settings });
   }
 
   /**
@@ -195,7 +195,7 @@ class App extends React.Component {
   }
 
   onOptions = () => {
-    this.logic.requestSettings(this.state.properties);
+    this.logic.requestSettings(this.state.properties, this.state.videoInfo);
   }
 
   render() {
@@ -269,9 +269,9 @@ class App extends React.Component {
         {
           update ? (
             <div className="app__update">
-              <Button onClick={this.openUpdate}>
+              {/* <Button onClick={this.openUpdate}>
                 Update required {global.location.search}
-              </Button>
+              </Button> */}
             </div>
           ) : null
         }

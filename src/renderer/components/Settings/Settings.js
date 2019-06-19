@@ -12,6 +12,9 @@ import classNames from 'classnames';
 import Section from '../UI/Section/Section';
 import Title from '../UI/Title/Title';
 
+import SizeChanger from './SizeChanger/SizeChanger';
+import FrameRateChanger from './FrameRateChanger/FrameRateChanger';
+
 // CSS, Requires
 import "./Settings.scss";
 import Button from '../UI/Button/Button';
@@ -51,12 +54,12 @@ class Settings extends React.Component {
     }, 150);
   }
 
-  onChange = e => {
+  onPropertyChange = (name, value) => {
     const properties = this.state.properties;
 
     this.setState({
       properties: Object.assign({}, properties, {
-        [e.target.name]: e.target.value
+        [name]: value
       })
     });
   }
@@ -73,42 +76,52 @@ class Settings extends React.Component {
     return (
       <main className={cls}>
         <Button
+          type="minimal"
           rounded
           noMargin
           className="settings__close"
           icon={"close"}
           onClick={this.closeWindow}/>
 
-        <Section
-          title={<Title>Settings</Title>}
-          className="settings__content">
-
+        { properties ? (
           <Section
-            title="Size"
-            subtitle={<p className="settings__subtitle">Making your gif smaller, saves a lot of file&nbsp;size.</p>}
-            className="settings__row"
-            inline>
-            SIZE CHANGER
-          </Section>
+            title={<Title>Settings</Title>}
+            className="settings__content">
 
-          <Section
-            title="Frame Rate"
-            subtitle={<p className="settings__subtitle">The less frames per second, the smaller the&nbsp;file.</p>}
-            className="settings__row"
-            inline>
-            FRAME RATE CHANGER
-          </Section>
+            <Section
+              title="Size"
+              subtitle={<p className="settings__subtitle">Making your gif smaller, saves a lot of file&nbsp;size.</p>}
+              className="settings__row"
+              inline>
+              <SizeChanger
+                width={videoInfo.width}
+                height={videoInfo.height}
+                scaledDown={properties.scaledDown}
+                onChange={this.onPropertyChange}/>
+            </Section>
 
-          <Section
-            className="settings__row"
-            inline>
-            <Button
-              onClick={this.closeWindow}
-              noMargin>
-              Save
-            </Button>
+            <Section
+              title="Frame Rate"
+              subtitle={<p className="settings__subtitle">The less frames per second, the smaller the&nbsp;file.</p>}
+              className="settings__row"
+              inline>
+              <FrameRateChanger
+                fps={videoInfo.fps}
+                scaledFps={properties.scaledFps}
+                onChange={this.onPropertyChange}/>
+            </Section>
+
+            <Section
+              className="settings__row"
+              inline>
+              <Button
+                onClick={this.closeWindow}
+                noMargin>
+                Save
+              </Button>
+            </Section>
           </Section>
-        </Section>
+        ) : null }
       </main>
     );
   }

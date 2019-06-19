@@ -120,7 +120,7 @@ class Converter {
     const scaleFilter = {
         inputs: '0',
         filter: 'scale',
-        options: this._getSize(width, height, scaledDown),
+        options: `${this._getSize(width, height, scaledDown)}:flags=lanczos`,
         outputs: exportType === EXPORTS.GIF ? '1' : 'output'
     };
 
