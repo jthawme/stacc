@@ -9,9 +9,12 @@ import classNames from 'classnames';
 // Redux
 
 // Components
+import Section from '../UI/Section/Section';
+import Title from '../UI/Title/Title';
 
 // CSS, Requires
 import "./Settings.scss";
+import Button from '../UI/Button/Button';
 
 class Settings extends React.Component {
   static propTypes = {
@@ -41,18 +44,26 @@ class Settings extends React.Component {
   }
 
   closeWindow = () => {
-    remote.getCurrentWindow().close();
+    ipcRenderer.send(EVENTS.SETTINGS, this.state.properties);
+
+    setTimeout(() => {
+      remote.getCurrentWindow().close();
+    }, 150);
   }
 
   onChange = e => {
-    ipcRenderer.send(EVENTS.SETTINGS, {
-      [e.target.name]: e.target.value
+    const properties = this.state.properties;
+
+    this.setState({
+      properties: Object.assign({}, properties, {
+        [e.target.name]: e.target.value
+      })
     });
   }
 
   render() {
     const { className } = this.props;
-    const { settings } = this.state;
+    const { properties, videoInfo } = this.state;
 
     const cls = classNames(
       className,
@@ -60,15 +71,45 @@ class Settings extends React.Component {
     );
 
     return (
-      <div className={cls}>
-        Settings
+      <main className={cls}>
+        <Button
+          rounded
+          noMargin
+          className="settings__close"
+          icon={"close"}
+          onClick={this.closeWindow}/>
 
-        { settings }
+        <Section
+          title={<Title>Settings</Title>}
+          className="settings__content">
 
-        <input type="text" name="test" onChange={this.onChange}/>
+          <Section
+            title="Size"
+            subtitle={<p className="settings__subtitle">Making your gif smaller, saves a lot of file&nbsp;size.</p>}
+            className="settings__row"
+            inline>
+            SIZE CHANGER
+          </Section>
 
-        <button onClick={this.closeWindow}>Close</button>
-      </div>
+          <Section
+            title="Frame Rate"
+            subtitle={<p className="settings__subtitle">The less frames per second, the smaller the&nbsp;file.</p>}
+            className="settings__row"
+            inline>
+            FRAME RATE CHANGER
+          </Section>
+
+          <Section
+            className="settings__row"
+            inline>
+            <Button
+              onClick={this.closeWindow}
+              noMargin>
+              Save
+            </Button>
+          </Section>
+        </Section>
+      </main>
     );
   }
 }

@@ -123,9 +123,9 @@ function createSettingsWindow(top, properties, videoInfo) {
     }))
   }
 
-  if (isDevelopment) {
-    child.webContents.openDevTools()
-  }
+  // if (isDevelopment) {
+  //   child.webContents.openDevTools()
+  // }
 
   child.once('ready-to-show', () => {
     child.show();

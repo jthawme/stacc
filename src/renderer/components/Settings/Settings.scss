@@ -1,5 +1,33 @@
 @import '../../css/base';
 
 .settings {
-  font-family: inherit;
+  position: relative;
+
+  height: 100%;
+
+  // background-color: var(--ui-color-accent-1);
+  background-color: var(--ui-color-primary-5);
+
+  &__close {
+    position: fixed;
+
+    top: calc(var(--ui-size-padding) / 2);
+    right: calc(var(--ui-size-padding) / 2);
+  }
+
+  &__content {
+    height: 100%;
+    overflow: auto;
+
+    color: var(--ui-color-primary-5);
+    color: var(--ui-color-accent-1);
+
+    padding: calc(var(--ui-size-padding) * 2) var(--ui-size-padding) var(--ui-size-padding);
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: var(--ui-type-body-size-3);
+    line-height: var(--ui-type-body-lh-3);
+  }
 }
