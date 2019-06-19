@@ -110,6 +110,11 @@ function createSettingsWindow(top, properties, videoInfo) {
     show: false,
     width: 540,
     height: 540,
+    resizable: false,
+    webPreferences: {
+      webSecurity: false,
+      nodeIntegration: true
+    }
   });
 
   if (isDevelopment) {
@@ -117,9 +122,12 @@ function createSettingsWindow(top, properties, videoInfo) {
   }
   else {
     child.loadURL(formatUrl({
-      pathname: path.join(__dirname, 'index.html?settings=true'),
+      pathname: path.join(__dirname, 'index.html'),
       protocol: 'file',
-      slashes: true
+      slashes: true,
+      query: {
+        settings: 'true'
+      }
     }))
   }
 
