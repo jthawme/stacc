@@ -58,4 +58,38 @@
       transform: translate3d(-50%, -50%, 0);
     }
   }
+
+  &__controls {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    pointer-events: none;
+
+    mix-blend-mode: difference;
+
+    transform: scale(0.9);
+    opacity: 0;
+
+    transition: {
+      duration: var(--ui-duration-normal);
+      property: transform, opacity;
+      timing-function: var(--ui-timing-function);
+    }
+
+    .videopreview--show:not(.videopreview--no-preview):hover & {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }

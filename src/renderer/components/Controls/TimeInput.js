@@ -12,7 +12,7 @@ import classNames from 'classnames';
 import "./TimeInput.scss";
 
 function padTime(value) {
-	return value.toString().padStart(2, '0');
+	return Math.floor(value).toString().padStart(2, '0');
 }
 
 function clamp(value, min, max) {

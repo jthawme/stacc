@@ -176,11 +176,25 @@ class App extends React.Component {
     };
 
     if (name === 'start') {
+      let endTime = value + this.state.properties.duration;
+
+      if (endTime > this.state.videoInfo.duration) {
+        state.properties[name] = this.state.videoInfo.duration - this.state.properties.duration;
+      }
+
       state.activeTime = value;
     }
 
     if (name === 'duration') {
       let endTime = this.state.properties.start + value;
+
+      if (value > 5000) {
+        this.addMessage("Over 5s will produce large file size", "error");
+      }
+
+      if (endTime > this.state.videoInfo.duration) {
+        state.properties[name] = this.state.videoInfo.duration - this.state.properties.start;
+      }
 
       // TODO Cut down over length
 
@@ -245,6 +259,8 @@ class App extends React.Component {
                   hasFiles={file}/>
                 <VideoPreview
                   time={activeTime}
+                  start={properties.start}
+                  duration={properties.duration}
                   className="app__drop__video"
                   file={file}/>
               </div>
