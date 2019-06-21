@@ -58,9 +58,19 @@ class Settings extends React.Component {
     const properties = this.state.properties;
 
     this.setState({
-      properties: Object.assign({}, properties, {
+      properties: {
+        ...properties,
         [name]: value
-      })
+      }
+    });
+  }
+
+  setBulk(obj) {
+    this.setState({
+      properties: {
+        ...this.state.properties,
+        ...obj
+      }
     });
   }
 
@@ -89,7 +99,29 @@ class Settings extends React.Component {
             className="settings__content">
 
             <Section
-              title="Size"
+              title="Presets"
+              className="settings__row"
+              inline>
+              <Button
+                className="settings__btn"
+                type="minimal"
+                size="small"
+                onClick={() => this.setBulk({ scaledDown: 1.5, scaledFps: 1.5 })}
+                noMargin>
+                Higher Quality
+              </Button>
+              <Button
+                className="settings__btn"
+                type="minimal"
+                size="small"
+                onClick={() => this.setBulk({ scaledDown: 2.5, scaledFps: 2 })}
+                noMargin>
+                Lower filesize
+              </Button>
+            </Section>
+
+            <Section
+              title="Width x Height"
               subtitle={<p className="settings__subtitle">Making your gif smaller, saves a lot of file&nbsp;size.</p>}
               className="settings__row"
               inline>
@@ -102,7 +134,7 @@ class Settings extends React.Component {
 
             <Section
               title="Frame Rate"
-              subtitle={<p className="settings__subtitle">The less frames per second, the smaller the&nbsp;file.</p>}
+              subtitle={<p className="settings__subtitle">The less frames per second, the smaller the&nbsp;file. Gifs on average are around 15fps</p>}
               className="settings__row"
               inline>
               <FrameRateChanger

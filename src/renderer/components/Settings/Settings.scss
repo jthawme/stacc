@@ -40,4 +40,10 @@
 
     padding-right: var(--ui-size-padding);
   }
+
+  &__btn {
+    padding: 0;
+
+    margin-left: var(--ui-size-padding);
+  }
 }

@@ -40,7 +40,7 @@ class FrameRateChanger extends React.Component {
 
   calculateFps(fps, scale) {
     this.setState({
-      fps: fps / scale
+      fps: this.round(fps / scale, 2)
     });
   }
 

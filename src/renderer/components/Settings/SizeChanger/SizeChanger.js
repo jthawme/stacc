@@ -71,8 +71,8 @@ class SizeChanger extends React.Component {
 
   calculateSizes(width, height, scale) {
     this.setState({
-      width: width / scale,
-      height: height / scale
+      width: this.round(width / scale, 2),
+      height: this.round(height / scale, 2)
     });
   }
 
