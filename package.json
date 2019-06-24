@@ -1,7 +1,7 @@
 {
   "name": "stacc",
   "description": "An application to help effectively convert videos into Gifs",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
@@ -59,7 +59,7 @@
     },
     "dmg": {
       "icon": "build/icon.icns",
-      "title": "Stacc 0.3.3"
+      "title": "Stacc 0.3.4"
     }
   }
 }

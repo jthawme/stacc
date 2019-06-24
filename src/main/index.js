@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain, nativeImage, dialog, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeImage, dialog, Menu, MenuItem, shell } from 'electron';
 import log from 'electron-log';
 import * as path from 'path';
 import { format as formatUrl } from 'url';
@@ -88,7 +88,10 @@ function createMainWindow() {
   ipcMain.on(EVENTS.VERSION_CHECK, (event, version) => {
     log.info(app.getVersion());
     if (version !== `v${app.getVersion()}`) {
-      event.sender.send(EVENTS.UPDATE);
+      event.sender.send(EVENTS.UPDATE, {
+        current: `v${ app.getVersion() }`,
+        latest: version
+      });
     }
   });
 
@@ -211,8 +214,13 @@ const template = [
       {
         label: 'Learn More',
         click: async () => {
-          const { shell } = require('electron');
-          await shell.openExternal('https://stacc.netlify.com/')
+          await shell.openExternal('https://stacc.netlify.com/#about')
+        }
+      },
+      {
+        label: 'Check for updates',
+        click: async () => {
+          await shell.openExternal(`https://stacc.netlify.com/?updates=${app.getVersion()}`)
         }
       }
     ]

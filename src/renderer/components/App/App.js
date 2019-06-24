@@ -138,14 +138,21 @@ class App extends React.Component {
     this.setState({ videoInfo: info, properties, activeTime: 0 });
   }
 
-  onUpdate = () => {
+  onUpdate = (data) => {
     this.setState({
-      update: true
+      update: this.isImportantUpdate(data.current, data.latest)
     });
   }
 
   onSettings = (settings) => {
     this.setState({ properties: settings });
+  }
+
+  isImportantUpdate(current, latest) {
+    let curr = current.substring(1).split('.').map(v => parseInt(v));
+    let late = latest.substring(1).split('.').map(v => parseInt(v));
+
+    return (late[0] > curr[0] || late[1] > curr[1]);
   }
 
   /**

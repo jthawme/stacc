@@ -84,8 +84,8 @@ class AppLogic {
    * Callback from main file, if its determined
    * that there is a newer version
    */
-  onUpdate = (event) => {
-    this.events.onUpdate();
+  onUpdate = (event, data) => {
+    this.events.onUpdate(data);
   }
 
 

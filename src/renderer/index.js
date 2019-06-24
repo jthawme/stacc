@@ -7,8 +7,6 @@ import ReactDOM from 'react-dom';
 import App from './components/App/App';
 import Settings from './components/Settings/Settings';
 
-console.log(global.location);
-
 if (global.location.search.includes('settings')) {
   ReactDOM.render(<Settings/>, document.getElementById('app'));
 } else {
