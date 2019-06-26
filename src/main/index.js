@@ -169,7 +169,10 @@ app.on('ready', () => {
   mainWindow = createMainWindow()
 });
 
-app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024.png`)));
+// Set dock icon on macOS
+if (process.platform == 'darwin') {
+  app.dock.setIcon(nativeImage.createFromDataURL(require(`./assets/icons/1024x1024.png`)));
+}
 
 const template = [
   // { role: 'appMenu' }
