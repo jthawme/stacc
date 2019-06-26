@@ -13,7 +13,7 @@ import Icon from '../Icon/Icon';
 import "./DropArea.scss";
 
 function substringFromEnd(str, len) {
-  return str.substring(str.length - len, str.length);
+  return str.toLowerCase().substring(str.length - len, str.length);
 }
 
 class DropArea extends React.Component {
