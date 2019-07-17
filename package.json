@@ -8,6 +8,7 @@
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "dist:upgrade": "npm version patch && yarn compile && electron-builder",
     "component": "node ./helpers/new-component.js"
   },
   "dependencies": {
