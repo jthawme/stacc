@@ -55,7 +55,7 @@ class VideoPreview extends React.Component {
     const extname = file.path.split('.').pop();
     const valid = ['mp4', 'mov', 'webm'];
 
-    return valid.includes(extname);
+    return valid.includes(extname.toLowerCase());
   }
 
   onClick = e => {

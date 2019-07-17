@@ -132,7 +132,7 @@ class DropArea extends React.Component {
       accept.forEach(a => {
         if (!valid) {
           if (a.substring(0, 1) === '.') {
-            if (substringFromEnd(f.name, a.length) === a) {
+            if (substringFromEnd(f.name, a.length).toLowerCase() === a) {
               valid = true;
             }
           } else {
