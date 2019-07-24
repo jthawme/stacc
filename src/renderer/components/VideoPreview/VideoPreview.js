@@ -53,7 +53,7 @@ class VideoPreview extends React.Component {
     }
 
     const extname = file.path.split('.').pop();
-    const valid = ['mp4', 'mov', 'webm'];
+    const valid = ['mp4', 'webm'];
 
     return valid.includes(extname.toLowerCase());
   }
